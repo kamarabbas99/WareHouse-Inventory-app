@@ -89,8 +89,8 @@ feature will take 2 days to implement.
 ### Re-Ordering
 
 1. As an inventory management worker, I want to be able to reorder a specified quantity of a single existing item to the warehouse.
-	-Priority: HIGH
-	-Time Estimate: 1 day
+	- Priority: HIGH
+	- Time Estimate: 1 day
 2. As an inventory management worker, I want to be able to reorder specified quantities of multiple different existing items to the warehouse.
-	-Priority: LOW
-	-Time Estimate: 1 day
+	- Priority: LOW
+	- Time Estimate: 1 day
