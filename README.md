@@ -44,18 +44,6 @@ feature will take 2 days to implement.
 
 ## Iteration 1 User Stories
 
-### View Inventory
-
-1. As an inventory management worker, I want to be able to view individual items stored in the warehouse.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-2. As an inventory management worker, I want to be able to view all the items stored in the warehouse.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-3. As an inventory management worker, I want to be able to view all the items sorted by category.
-	- Priority: LOW
-	- Time Estimate: 1 day
-
 ### Add Inventory
 
 1. As an inventory management worker I want to be able to add a single item into the warehouse so that it is an accurate representation of our inventory.
