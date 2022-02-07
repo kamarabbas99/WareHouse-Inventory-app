@@ -75,7 +75,7 @@ feature will take 2 days to implement.
 1. As an inventory management worker I want to be able to remove a single item from the warehouse so that it is an accurate representation of our inventory.
 	- Priority: HIGH
 	- Time Estimate: 1 day
-2. As a worker I want to be able to remove different amounts of items from the appliwarehousecation so that it is an accurate representation of our inventory.
+2. As a worker I want to be able to remove different amounts of items from the warehouse so that it is an accurate representation of our inventory.
 	- Priority: HIGH
 	- Time Estimate: 1 day
 3. As a worker I want to be able to remove a list of items from the warehouse so that it is easier to add multiple items at once.
