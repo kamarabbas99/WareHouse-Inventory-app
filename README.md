@@ -13,14 +13,17 @@ This project will be deemed successful if firstly, both inventory managers and w
 
 ## Features
 
-2. Account Permissions
+### Account Permissions
+
 There will be one administrator of the Inventory and all the account permission requests will be emailed to him. The app will   prompt the user to enter first name, last name and employee ID and email address. He will get the response from the administrator with the credentials of his account. This feature will take 1 day to implement.
 
-10. Order Automation 
+### Order Automation 
+
 Some of the items(selected by user) will be automatically added to the cart everyday. The user can edit those items or add new 
 items and then place the order. The order wont be placed unless and until its confirmed by the user. This functionality will take two days to implement.
 
-12. Reports
+### Reports
+
 There will be weekly reports on the order history. It will specify the quantity of product orders and quantity of product 
 scraped(damaged items). It will be a tabular report which can be used to recognize popular items or non-popular items. This 
 feature will take 2 days to implement.
