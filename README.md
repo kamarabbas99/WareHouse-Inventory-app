@@ -13,10 +13,6 @@ This project will be deemed successful if firstly, both inventory managers and w
 
 ## Features
 
-### Account Creation
-
-A user will able to register an account on the application to use it. At minimum, the account will store the account name and it permission level. With an account, the user can sign-in and use our application and then sign-out when their work is done. This feature will take 5 days to implement.
-
 ### Account Permissions
 
 There will be one administrator of the Inventory and all the account permission requests will be emailed to him. The app will   prompt the user to enter first name, last name and employee ID and email address. He will get the response from the administrator with the credentials of his account. This feature will take 1 day to implement.
@@ -24,14 +20,6 @@ There will be one administrator of the Inventory and all the account permission 
 ### View Inventory
 
 A user can view the whole inventory stored in the warehouse. They can view individual items, view all different items in the warehouse, or view different items under the same category. This feature will take 3 days to implement.
-
-### Add Inventory
-
-A user will be able to add inventory from a list of items. Once the item is chosen the user can specify a quantity for the items they are adding. Adding an item will be reflected in the application. This feature will take 3 days to implement.
-
-### Remove Inventory
-
-A user is able to add inventory from the list of items currently available with a non-zero quantity. Once the item is chosen the user can specify a quantity for the amount of the item to remove. Removing an item will be reflected in the application. This feature will take 3 days to implement.
 
 ### Re-Ordering
 
@@ -61,30 +49,6 @@ feature will take 2 days to implement.
 3. As an inventory management worker, I want to be able to view all the items sorted by category.
 	- Priority: LOW
 	- Time Estimate: 1 day
-
-### Add Inventory
-
-1. As an inventory management worker I want to be able to add a single item into the warehouse so that it is an accurate representation of our inventory.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-2. As a worker I want to be able to add different amounts of items into the warehouse so that it is an accurate representation of our inventory.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-3. As a worker I want to be able to add a list of items into the warehouse so that it is easier to add multiple items at once.
-	- Priority: MEDIUM
-	- Time Estimate: 2 days
-
-### Remove Inventory
-
-1. As an inventory management worker I want to be able to remove a single item from the warehouse so that it is an accurate representation of our inventory.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-2. As a worker I want to be able to remove different amounts of items from the warehouse so that it is an accurate representation of our inventory.
-	- Priority: HIGH
-	- Time Estimate: 1 day
-3. As a worker I want to be able to remove a list of items from the warehouse so that it is easier to add multiple items at once.
-	- Priority: LOW
-	- Time Estimate: 2 days
 
 ### Re-Ordering
 
