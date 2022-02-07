@@ -21,6 +21,10 @@ A user will able to register an account on the application to use it. At minimum
 
 There will be one administrator of the Inventory and all the account permission requests will be emailed to him. The app will   prompt the user to enter first name, last name and employee ID and email address. He will get the response from the administrator with the credentials of his account. This feature will take 1 day to implement.
 
+### View Inventory
+
+A user can view the whole inventory stored in the warehouse. They can view individual items, view all different items in the warehouse, or view different items under the same category. This feature will take 3 days to implement.
+
 ### Add Inventory
 
 A user will be able to add inventory from a list of items. Once the item is chosen the user can specify a quantity for the items they are adding. Adding an item will be reflected in the application. This feature will take 3 days to implement.
@@ -41,6 +45,18 @@ scraped(damaged items). It will be a tabular report which can be used to recogni
 feature will take 2 days to implement.
 
 ## Iteration 1 User Stories
+
+### View Inventory
+
+1. As an inventory management worker, I want to be able to view individual items stored in the warehouse.
+	- Priority: HIGH
+	- Time Estimate: 1 day
+2. As an inventory management worker, I want to be able to view all the items stored in the warehouse.
+	- Priority: HIGH
+	- Time Estimate: 1 day
+3. As an inventory management worker, I want to be able to view all the items sorted by category.
+	- Priority: LOW
+	- Time Estimate: 1 day
 
 ### Add Inventory
 
