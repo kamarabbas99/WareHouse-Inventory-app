@@ -33,6 +33,10 @@ A user will be able to add inventory from a list of items. Once the item is chos
 
 A user is able to add inventory from the list of items currently available with a non-zero quantity. Once the item is chosen the user can specify a quantity for the amount of the item to remove. Removing an item will be reflected in the application. This feature will take 3 days to implement.
 
+### Re-Ordering
+
+A user can reorder an item that already exists in the warehouse. The user can reorder a specified quantity for a single item or multiple different items. This feature will take 2 days to implement.
+
 ### Order Automation 
 
 Some of the items(selected by user) will be automatically added to the cart everyday. The user can edit those items or add new 
@@ -81,3 +85,12 @@ feature will take 2 days to implement.
 3. As a worker I want to be able to remove a list of items from the warehouse so that it is easier to add multiple items at once.
 	- Priority: LOW
 	- Time Estimate: 2 days
+
+### Re-Ordering
+
+1. As an inventory management worker, I want to be able to reorder a specified quantity of a single existing item to the warehouse.
+	-Priority: HIGH
+	-Time Estimate: 1 day
+2. As an inventory management worker, I want to be able to reorder specified quantities of multiple different existing items to the warehouse.
+	-Priority: LOW
+	-Time Estimate: 1 day
