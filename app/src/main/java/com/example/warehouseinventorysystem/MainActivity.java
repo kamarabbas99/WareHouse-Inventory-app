@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+//Main Activity:
+//  Start activity of entire program
+//  Immediately starts up main layout
+//  Allows users to move between different pages in the app, and acts as a home page
 public class MainActivity extends AppCompatActivity {
 
     @Override
