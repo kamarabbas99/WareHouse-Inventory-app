@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Warehouse Inventory System</string>
+    <string name="welcome_text">Welcome to the Warehouse Inventory System (WIT)</string>
+    <string name="itemView_button">View Stock</string>
+    <string name="dummy_text">Dummy Button</string>
+    <string name="stock_welcome_text">Here is your current stock</string>
 </resources>
