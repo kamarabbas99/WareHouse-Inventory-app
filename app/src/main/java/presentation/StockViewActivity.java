@@ -1,4 +1,4 @@
-package com.example.warehouseinventorysystem.presentation;
+package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
