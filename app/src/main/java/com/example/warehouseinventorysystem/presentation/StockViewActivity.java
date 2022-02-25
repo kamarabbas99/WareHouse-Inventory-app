@@ -1,8 +1,10 @@
-package com.example.warehouseinventorysystem;
+package com.example.warehouseinventorysystem.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.warehouseinventorysystem.R;
 
 //Stock View Activity:
 //  Shows a list of every item currently in the database and displays their data

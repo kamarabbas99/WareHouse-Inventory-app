@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
         <activity
-            android:name=".StockViewActivity"
+            android:name=".presentation.StockViewActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".presentation.MainActivity"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity"/>
+            android:value=".presentation.MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,10 +1,12 @@
-package com.example.warehouseinventorysystem;
+package com.example.warehouseinventorysystem.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.warehouseinventorysystem.R;
 
 //Main Activity:
 //  Start activity of entire program
