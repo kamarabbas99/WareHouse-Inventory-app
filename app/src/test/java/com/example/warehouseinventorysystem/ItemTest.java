@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import objects.Item;
+
 public class ItemTest {
     Item newItem;
     Item defaultItem;
@@ -27,69 +29,69 @@ public class ItemTest {
 
     @Test
     public void nullConstructorTest(){
-        assertTrue(defaultItem.GetID() == -1);
-        assertNull(defaultItem.GetName());
-        assertNull(defaultItem.GetDescription());
-        assertTrue(defaultItem.GetQuantity() == -1);
-        assertNull(defaultItem.GetQuantityMetric());
-        assertTrue(defaultItem.GetLowThreshold() == -1);
+        assertTrue(defaultItem.getID() == -1);
+        assertNull(defaultItem.getName());
+        assertNull(defaultItem.getDescription());
+        assertTrue(defaultItem.getQuantity() == -1);
+        assertNull(defaultItem.getQuantityMetric());
+        assertTrue(defaultItem.getLowThreshold() == -1);
     }
 
     @Test
     public void constructorTest(){
-        assertTrue(newItem.GetID() == 1);
-        assertTrue(newItem.GetName().equals("test"));
-        assertTrue(newItem.GetDescription().equals("test description"));
-        assertTrue(newItem.GetQuantity() == 10);
-        assertTrue(newItem.GetQuantityMetric().equals("pkg"));
-        assertTrue(newItem.GetLowThreshold() == 2);
+        assertTrue(newItem.getID() == 1);
+        assertTrue(newItem.getName().equals("test"));
+        assertTrue(newItem.getDescription().equals("test description"));
+        assertTrue(newItem.getQuantity() == 10);
+        assertTrue(newItem.getQuantityMetric().equals("pkg"));
+        assertTrue(newItem.getLowThreshold() == 2);
     }
 
     @Test
     public void getID() {
-        assertTrue(newItem.GetID() == 1);
-        assertFalse(newItem.GetID() == -1);
+        assertTrue(newItem.getID() == 1);
+        assertFalse(newItem.getID() == -1);
     }
 
     @Test
     public void getName() {
-        assertTrue(newItem.GetName().equals("test"));
-        assertFalse(newItem.GetName().equals("test0"));
+        assertTrue(newItem.getName().equals("test"));
+        assertFalse(newItem.getName().equals("test0"));
     }
 
     @Test
     public void getDescription() {
-        assertTrue(newItem.GetDescription().equals("test description"));
-        assertFalse(newItem.GetDescription().equals("Test Description"));
+        assertTrue(newItem.getDescription().equals("test description"));
+        assertFalse(newItem.getDescription().equals("Test Description"));
     }
 
     @Test
     public void getQuantity() {
-        assertTrue(newItem.GetQuantity() == 10);
-        assertFalse(newItem.GetQuantity() == 0);
+        assertTrue(newItem.getQuantity() == 10);
+        assertFalse(newItem.getQuantity() == 0);
     }
 
     @Test
     public void getQuantityMetric() {
-        assertTrue(newItem.GetQuantityMetric().equals("pkg"));
-        assertFalse(newItem.GetQuantityMetric().equals("box"));
+        assertTrue(newItem.getQuantityMetric().equals("pkg"));
+        assertFalse(newItem.getQuantityMetric().equals("box"));
     }
 
     @Test
     public void getLowThreshold() {
-        assertTrue(newItem.GetLowThreshold() == 2);
-        assertFalse(newItem.GetLowThreshold() == 0);
+        assertTrue(newItem.getLowThreshold() == 2);
+        assertFalse(newItem.getLowThreshold() == 0);
     }
 
     @Test
     public void isEmpty() {
-        assertTrue(defaultItem.IsEmpty());
-        assertFalse(newItem.IsEmpty());
+        assertTrue(defaultItem.isEmpty());
+        assertFalse(newItem.isEmpty());
     }
 
     @Test
     public void isLow() {
-        assertTrue(defaultItem.IsLow());
-        assertFalse(newItem.IsLow());
+        assertTrue(defaultItem.isLow());
+        assertFalse(newItem.isLow());
     }
 }

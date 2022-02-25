@@ -1,4 +1,4 @@
-package com.example.warehouseinventorysystem;
+package objects;
 
 public class Item implements IDSO {
     // region
@@ -35,7 +35,7 @@ public class Item implements IDSO {
     // region $interfaceMethods
 
     @Override
-    public int GetID() {
+    public int getID() {
         return id;
     }
 
@@ -43,23 +43,23 @@ public class Item implements IDSO {
 
     // region $gettersAndSetters
 
-    public String GetName(){
+    public String getName(){
         return name;
     }
 
-    public String GetDescription(){
+    public String getDescription(){
         return description;
     }
 
-    public int GetQuantity(){
+    public int getQuantity(){
         return quantity;
     }
 
-    public String GetQuantityMetric(){
+    public String getQuantityMetric(){
         return quantityMetric;
     }
 
-    public int GetLowThreshold(){
+    public int getLowThreshold(){
         return lowThreshold;
     }
 
@@ -67,11 +67,11 @@ public class Item implements IDSO {
 
     // region $publicMethods
 
-    public boolean IsEmpty(){
+    public boolean isEmpty(){
         return quantity < 1;
     }
 
-    public boolean IsLow(){
+    public boolean isLow(){
         return quantity <= lowThreshold;
     }
 
