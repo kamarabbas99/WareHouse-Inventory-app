@@ -1,4 +1,5 @@
 package logic;
+import objects.Item;
 
 public class InventoryManager {
 
