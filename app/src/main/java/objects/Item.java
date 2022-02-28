@@ -1,6 +1,6 @@
 package objects;
 
-public class  Item implements IDSO {
+public class Item implements IDSO {
     // region
     private int id;
     private String name;
@@ -53,10 +53,6 @@ public class  Item implements IDSO {
 
     public int getQuantity(){
         return quantity;
-    }
-    public int setQuantity(int num){
-        this.quantity =  num;
-
     }
 
     public String getQuantityMetric(){
