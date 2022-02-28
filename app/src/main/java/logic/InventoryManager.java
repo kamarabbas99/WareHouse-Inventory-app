@@ -5,6 +5,7 @@ public class InventoryManager {
     private IDBLayer ItemDB;
 
     public InventoryManager() {
+        ItemDB=new IDBLayer();
     }
 
     public Item addItem(int id, int amount) {
@@ -37,5 +38,21 @@ public class InventoryManager {
         }
 
         return addedItems;
+    }
+
+    public Item[] removeMultipleItems(int[] ids, int[] amounts)
+    {
+        Item[] removedItems = new Item[ids.length];
+
+        for(int i=0;i<ids.length,i++)
+            removedItems[i]=ItemDB.removeItem(ids[i],amounts[i]);
+
+        return removedItems;
+
+    }
+
+    void viewInventory()
+    {
+
     }
 }
