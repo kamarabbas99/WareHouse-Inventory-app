@@ -1,4 +1,4 @@
-package com.example.warehouseinventorysystem;
+package objects;
 
 import static org.junit.Assert.*;
 
