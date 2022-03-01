@@ -31,7 +31,7 @@ public class Database {
     }
 
 
-    public Item AddItem(int id, int qty) {
+    public Item addItem(int id, int qty) {
         Item toReturn = null;
         int ind = -1;
         for (int i = 0; i < items.size(); i++) {
@@ -54,13 +54,13 @@ public class Database {
     }
 
 
-    public Item RemoveItem(int id, int qty) {
+    public Item removeItem(int id, int qty) {
 
-        return AddItem(id, -qty);
+        return addItem(id, -qty);
 
     }
 
-    public Item Get(int id) {
+    public Item get(int id) {
         Item r=null;
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getID() == id) {
@@ -70,10 +70,10 @@ public class Database {
         return r;
     }
 
-    public void Create(Item object){
+    public void create(Item object){
         items.add(object);
     }
-    public Item Delete(int id){
+    public Item delete(int id){
         Item toReturn = null;
         int ind = -1;
         for (int i = 0; i < items.size(); i++) {
@@ -87,7 +87,7 @@ public class Database {
         items.remove(ind);
         return toReturn;
     }
-    public Item[] GetDB(){
+    public Item[] getDB(){
         Item[] toReturn = new Item[items.size()];
         for (int i = 0; i < items.size(); i++) {
             toReturn[i]= items.get(i);
@@ -95,11 +95,11 @@ public class Database {
         }
         return toReturn;
     }
-    public void ClearDB(){
+    public void clearDB(){
         items=null;
         System.out.println("Cleared the databse!");
     }
-    public boolean VerifyID(int id){
+    public boolean verifyID(int id){
         boolean toReturn = false;
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getID() == id) {

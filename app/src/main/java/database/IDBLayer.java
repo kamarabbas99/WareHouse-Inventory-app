@@ -5,10 +5,10 @@ import objects.Item;
 
 public interface IDBLayer extends IDSO {
 
-    public IDSO Get(int id);
-	public IDSO Create(IDSO object);
-	public IDSO Delete(int id);
-	public IDSO[] GetDB();
-	public void ClearDB();
-    public boolean VerifyID(int id);
+    public IDSO get(int id);
+	public IDSO create(IDSO object);
+	public IDSO delete(int id);
+	public IDSO[] getDB();
+	public void clearDB();
+    public boolean verifyID(int id);
 }
