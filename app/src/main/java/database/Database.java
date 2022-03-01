@@ -49,6 +49,8 @@ public class Database {
         if (ind != -1) {
             toReturn = new Item(newID, newName, newDesc, newQuan, newQuanMet, newThres);
         }
+        items.remove(ind);
+        items.add(toReturn);
         return toReturn;
 
     }
