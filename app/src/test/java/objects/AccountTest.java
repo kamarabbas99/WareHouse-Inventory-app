@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.AbstractCollection;
+
 public class AccountTest {
     private Account newAccount;
     private Account defaultAccount;
@@ -23,6 +25,26 @@ public class AccountTest {
     public void tearDown() throws Exception {
         defaultAccount = null;
         newAccount = null;
+    }
+
+    @Test
+    public void nullConstructor(){
+        Account testAccount = new Account();
+        assertTrue(testAccount.getID() == -1);
+        assertTrue(testAccount.getUsername().equals("default"));
+        assertTrue(testAccount.getCompany().equals("default"));
+        assertTrue(testAccount.verifyPassword("123"));
+        assertNotNull(testAccount.getDateCreated());
+    }
+
+    @Test
+    public void constructor(){
+        Account testAccount = new Account(10, "porky-pig", "thatsAllFolks", "loonie toons");
+        assertTrue(testAccount.getID() == 10);
+        assertTrue(testAccount.getUsername().equals("porky-pig"));
+        assertTrue(testAccount.getCompany().equals("loonie toons"));
+        assertTrue(testAccount.verifyPassword("thatsAllFolks"));
+        assertNotNull(testAccount.getDateCreated());
     }
 
     @Test
