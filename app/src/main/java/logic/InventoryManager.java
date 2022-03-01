@@ -57,7 +57,17 @@ public class InventoryManager {
 
     }
 
-    public Item[] getAllItems(){
+    public Item getItem(int id){
+        Item toGet = null;
+
+        if (ItemDB.verifyID(id)) {
+            toGet = ItemDB.getItem(id);
+        }
+
+        return toGet;
+    }
+
+    public Item[] getInventory(){
         return ItemDB.getAll();
     }
 }
