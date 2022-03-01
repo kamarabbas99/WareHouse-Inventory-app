@@ -68,6 +68,6 @@ public class InventoryManager {
     }
 
     public Item[] getInventory(){
-        return ItemDB.getAll();
+        return ItemDB.getDB();
     }
 }
