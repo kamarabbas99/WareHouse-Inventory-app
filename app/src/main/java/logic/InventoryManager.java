@@ -61,7 +61,7 @@ public class InventoryManager {
         Item toGet = null;
 
         if (ItemDB.verifyID(id)) {
-            toGet = ItemDB.getItem(id);
+            toGet = ItemDB.get(id);
         }
 
         return toGet;
