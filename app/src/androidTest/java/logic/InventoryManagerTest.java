@@ -69,7 +69,7 @@ public class InventoryManagerTest extends TestCase {
     void viewInventory()
     {
 
-        
+
     }
 
 

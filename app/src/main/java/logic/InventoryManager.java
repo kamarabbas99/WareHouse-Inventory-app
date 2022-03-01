@@ -5,7 +5,12 @@ public class InventoryManager {
 
     private IDBLayer ItemDB;
 
+    public InventoryManager(IDBLayer db)
+    {
+        ItemDB = db;
+    }
     public InventoryManager() {
+
         ItemDB=new IDBLayer();
     }
 
