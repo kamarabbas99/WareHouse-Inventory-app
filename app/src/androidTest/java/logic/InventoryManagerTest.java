@@ -6,17 +6,18 @@ import org.junit.Test;
 
 public class InventoryManagerTest extends TestCase {
 
+    InventoryManager im=new InventoryManager();
     @Test
     void constructorT()
     {
-        InventoryManager im=new InventoryManager();
+
         assertNotNull(im);
     }
 
     @Test
     void addItemT()
     {
-        InventoryManager im=new InventoryManager();
+        //InventoryManager im=new InventoryManager();
         Item item1;
         item1=im.addItem(1,2);
         assertNotNull(item1);
@@ -30,7 +31,7 @@ public class InventoryManagerTest extends TestCase {
     @Test
     void removeItemT()
     {
-        InventoryManager im=new InventoryManager();
+        //InventoryManager im=new InventoryManager();
         Item item1=null;
         item1=im.removeItem(1,2);
         assertNull(item1);
@@ -45,7 +46,7 @@ public class InventoryManagerTest extends TestCase {
     @Test
     void addMultipleItemsT()
     {
-        InventoryManager im=new InventoryManager();
+        //InventoryManager im=new InventoryManager();
         //Item[] fewItems = {};
 
 
