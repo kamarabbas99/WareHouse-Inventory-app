@@ -57,8 +57,7 @@ public class InventoryManager {
 
     }
 
-    void viewInventory()
-    {
-
+    public Item[] getAllItems(){
+        return ItemDB.getAll();
     }
 }
