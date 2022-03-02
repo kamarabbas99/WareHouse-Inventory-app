@@ -4,4 +4,5 @@
     <string name="itemView_button">View Stock</string>
     <string name="dummy_text">Dummy Button</string>
     <string name="stock_welcome_text">Here is your current stock</string>
+    <string name="itemPageButton"><![CDATA[>]]></string>
 </resources>
