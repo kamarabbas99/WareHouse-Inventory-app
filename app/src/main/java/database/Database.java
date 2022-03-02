@@ -39,18 +39,18 @@ public class Database {
                 ind = i;
             }
         }
-        int newID = items.get(ind).getID();
-        String newName = items.get(ind).getName();
-        String newDesc = items.get(ind).getDescription();
-        int newQuan = items.get(ind).getQuantity() + qty;
-        String newQuanMet = items.get(ind).getQuantityMetric();
-        int newThres = items.get(ind).getLowThreshold();
-
         if (ind != -1) {
+            int newID = items.get(ind).getID();
+            String newName = items.get(ind).getName();
+            String newDesc = items.get(ind).getDescription();
+            int newQuan = items.get(ind).getQuantity() + qty;
+            String newQuanMet = items.get(ind).getQuantityMetric();
+            int newThres = items.get(ind).getLowThreshold();
             toReturn = new Item(newID, newName, newDesc, newQuan, newQuanMet, newThres);
+            items.remove(ind);
+            items.add(toReturn);
         }
-        items.remove(ind);
-        items.add(toReturn);
+
         return toReturn;
 
     }
@@ -85,8 +85,9 @@ public class Database {
         }
         if(ind!=-1){
             toReturn= items.get(ind);
+            items.remove(ind);
         }
-        items.remove(ind);
+
         return toReturn;
     }
     public Item[] getDB(){
