@@ -1,4 +1,6 @@
 package logic;
+import database.Database;
+import database.IDBLayer;
 import objects.Item;
 
 public class InventoryManager {
@@ -7,18 +9,18 @@ public class InventoryManager {
 
     public InventoryManager(IDBLayer db)
     {
-        ItemDB = db;
+        this.ItemDB = db;
     }
     public InventoryManager() {
 
-        ItemDB=new IDBLayer();
+        this.ItemDB= new Database();
     }
 
     public Item addItem(int id, int amount) {
         Item addedItem = null;
 
         if (ItemDB.verifyID(id)) {
-            addedItem = ItemDB.addItem(id, amount);
+            addedItem = (Item) ItemDB.addItem(id, amount);
         }
 
         return addedItem;
@@ -28,7 +30,7 @@ public class InventoryManager {
         Item removedItem = null;
 
         if (ItemDB.verifyID(id) && amount > 0) {
-            removedItem = ItemDB.removeItem(id, amount);
+            removedItem = (Item) ItemDB.removeItem(id, amount);
         }
 
         return removedItem;
@@ -39,7 +41,7 @@ public class InventoryManager {
 
         for (int i = 0; i < ids.length; i++) {
             if (ItemDB.verifyID(ids[i]) && amounts[i] > 0) {
-                addedItems[i] = ItemDB.addItem(ids[i], amounts[i]);
+                addedItems[i] = (Item) ItemDB.addItem(ids[i], amounts[i]);
             }
         }
 
@@ -50,8 +52,8 @@ public class InventoryManager {
     {
         Item[] removedItems = new Item[ids.length];
 
-        for(int i=0;i<ids.length,i++)
-            removedItems[i]=ItemDB.removeItem(ids[i],amounts[i]);
+        for(int i=0;i<ids.length;i++)
+            removedItems[i]= (Item) ItemDB.removeItem(ids[i],amounts[i]);
 
         return removedItems;
 
@@ -61,13 +63,13 @@ public class InventoryManager {
         Item toGet = null;
 
         if (ItemDB.verifyID(id)) {
-            toGet = ItemDB.get(id);
+            toGet = (Item) ItemDB.get(id);
         }
 
         return toGet;
     }
 
     public Item[] getInventory(){
-        return ItemDB.getDB();
+        return (Item[]) ItemDB.getDB();
     }
 }

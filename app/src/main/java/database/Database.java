@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import objects.IDSO;
 import objects.Item;
 
-public class Database {
+public class Database implements IDBLayer{
     private String name = "fakeDatabase";
     private ArrayList<Item> items;
 
@@ -72,8 +72,8 @@ public class Database {
         return r;
     }
 
-    public void create(Item object){
-        items.add(object);
+    public void create(IDSO object){
+        items.add((Item) object);
     }
     public Item delete(int id){
         Item toReturn = null;

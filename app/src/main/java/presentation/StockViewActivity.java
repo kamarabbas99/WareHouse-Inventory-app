@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import com.example.warehouseinventorysystem.R;
 
+import database.Database;
+import logic.InventoryManager;
 import objects.Item;
 
 //Stock View Activity:
@@ -19,6 +21,9 @@ public class StockViewActivity extends AppCompatActivity {
     //Holds every item object currently in the database
     Item[] items;
 
+    //Creates new inventory manager
+    InventoryManager inventory = new InventoryManager(new Database());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +33,7 @@ public class StockViewActivity extends AppCompatActivity {
         RecyclerView itemRV = findViewById(R.id.itemRV);
 
         //Gets the list of all item objects in database
-        items = itemTest();
+        items = inventory.getInventory();
 
         //Creates new item adapter and passes it the array of items
         ItemsAdapter adapter = new ItemsAdapter(items);
@@ -36,15 +41,5 @@ public class StockViewActivity extends AppCompatActivity {
         //Sets recycle view layout to vertical scroll, and attached adapter to recycle view to display items
         itemRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         itemRV.setAdapter(adapter);
-    }
-
-    private Item[] itemTest() {
-        Item[] items = new Item[20];
-
-        for(int i = 0; i < items.length; i++) {
-            items[i] = new Item(i, "Bagles", "I like bagels", i, "Pkg", 6);
-        }
-
-        return items;
     }
 }

@@ -63,7 +63,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ItemsAdapter.ViewHolder holder, int index) {
         //Get data for item object based on given index
-        Item item = stockItems[index];
+        Item item = (Item) stockItems[index];
 
         //Gets needed views from the passed item views
         TextView name = holder.itemName;
@@ -79,6 +79,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     //Returns total count of items currently in the array
     @Override
     public int getItemCount() {
-        return stockItems.length;
+        int length = -1;
+        if(stockItems != null){
+            length = stockItems.length;
+        }
+        return length;
     }
 }
