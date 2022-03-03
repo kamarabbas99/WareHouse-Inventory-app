@@ -1,13 +1,15 @@
 package objects;
 
 public class Item implements IDSO {
-    // region
+    // region $fields
     private int id;
     private String name;
     private String description;
     private int quantity;
     private String quantityMetric;
     private int lowThreshold;
+
+    // endregion
 
     // region $constructors
 
@@ -41,7 +43,7 @@ public class Item implements IDSO {
 
     // endregion
 
-    // region $gettersAndSetters
+    // region $getter
 
     public String getName(){
         return name;
