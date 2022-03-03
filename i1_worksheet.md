@@ -5,7 +5,7 @@ Adding a feature
 -----------------
 Feature: VIEW INVENTORY
 
-We are making a Warehouse Inventory Tracker. A core component of an inventory tracker is the ability to be able to see the inventory stored inside of the warehouse. So this was one of the first features we thought of implementing in our project. This feature can be split into multiple smaller steps. The user can view individual items in the inventory, view the whole inventory, and view the inventory by category/tag.
+We are making a Warehouse Inventory Tracker. A core component of an inventory tracker is the ability to be able to see the inventory stored inside of the warehouse and so this was one of the first features we thought of implementing in our project. This feature can be split into multiple smaller steps. The user can view individual items in the inventory, view the whole inventory, and view the inventory by category/tag.
 
 Connected Features:
 - https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/4
@@ -20,9 +20,7 @@ Merged requests:
 Exceptional code
 ----------------
 
-Provide a link to a test of exceptional code. In a few sentences,
-provide an explanation of why the exception is handled or thrown
-in the code you are testing.
+In our
 
 Branching
 ----------

@@ -1,5 +1,12 @@
 package objects;
 
+/*
+This class contains information related to items that are stored in the database.
+It is a Domain Specific Object that will be passed through the layers of our system.
+
+All manipulation of this classes fields are done through it's constructor.
+i.e. If you want to change the quantity of an Item, you must create a new Item.
+ */
 public class Item implements IDSO {
     // region $fields
     private int id;
