@@ -4,6 +4,13 @@ import android.text.SpanWatcher;
 
 import java.util.Date;
 
+/*
+This class contains information related to accounts that are stored in the database.
+It is a Domain Specific Object that will be passed through the layers of our system.
+
+An account will determine what a user can or cannot do with our system.
+e.g. can the create a new item, delete an item or add some amount to an item.
+ */
 public class Account implements IDSO {
     // region $fields
 
@@ -25,10 +32,24 @@ public class Account implements IDSO {
         dateCreated = new Date();
     }
 
-    public Account(int id, String username, String password, String company){
+    public Account(int id, String username, String password, String company) throws NullPointerException {
         this.id = id;
-        this.username = (username == null) ? "default" : username;
-        this.password = (password == null) ? "123" : password;
+        if (username == null)
+        {
+            throw new NullPointerException("Cannot create an account without a username.");
+        }
+        else
+        {
+            this.username = username;
+        }
+        if (password == null)
+        {
+            throw new NullPointerException("Cannot create an account without a password.");
+        }
+        else
+        {
+            this.password = password;
+        }
         this.company = (company == null) ? "default" : company;
         dateCreated = new Date();
     }

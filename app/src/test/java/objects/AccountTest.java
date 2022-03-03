@@ -45,6 +45,26 @@ public class AccountTest {
         assertTrue(testAccount.getCompany().equals("loonie toons"));
         assertTrue(testAccount.verifyPassword("thatsAllFolks"));
         assertNotNull(testAccount.getDateCreated());
+
+        // testing exceptions
+        try
+        {
+            Account nullUsernameAccount = new Account(10, null, "thatsAllFolks", "loonie toons");
+        }
+        catch(NullPointerException exception)
+        {
+            System.out.println(exception.getMessage());
+            assertNotNull(exception.getMessage());
+        }
+        try
+        {
+            Account nullPasswordAccount = new Account(10, "porky-pig", null, "loonie toons");
+        }
+        catch(NullPointerException exception)
+        {
+            System.out.println(exception.getMessage());
+            assertNotNull(exception.getMessage());
+        }
     }
 
     @Test
