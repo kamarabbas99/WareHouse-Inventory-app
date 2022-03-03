@@ -3,12 +3,14 @@ package database;
 import objects.IDSO;
 import objects.Item;
 
-public interface IDBLayer extends IDSO {
+public interface IDBLayer {
 
     public IDSO get(int id);
-	public IDSO create(IDSO object);
+	public int create(IDSO object);
 	public IDSO delete(int id);
 	public IDSO[] getDB();
 	public void clearDB();
     public boolean verifyID(int id);
+	public IDSO addItem(int id, int qty);
+	public IDSO removeItem(int id, int qty);
 }
