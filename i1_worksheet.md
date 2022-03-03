@@ -14,7 +14,7 @@ Connected User Stories:
 - https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/20
 - https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/19
 
-Merges requests:
+Merged requests:
 - https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/merge_requests/2
 
 Exceptional code
