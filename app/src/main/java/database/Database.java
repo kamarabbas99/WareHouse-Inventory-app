@@ -72,8 +72,10 @@ public class Database implements IDBLayer{
         return r;
     }
 
-    public void create(IDSO object){
+    public int create(IDSO object){
         items.add((Item) object);
+
+        return object.getID();
     }
     public Item delete(int id){
         Item toReturn = null;

@@ -6,7 +6,7 @@ import objects.Item;
 public interface IDBLayer {
 
     public IDSO get(int id);
-	public void create(IDSO object);
+	public int create(IDSO object);
 	public IDSO delete(int id);
 	public IDSO[] getDB();
 	public void clearDB();
