@@ -20,16 +20,14 @@ Merged requests:
 Exceptional code
 ----------------
 
-In our
+Our application will require the user to sign in before doing anything in the inventory. In order to make sure that an account is made with an appropriate username and password, we use NullExceptions in the constructor for the Account class. This can be seen in the [Account](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/main/java/objects/Account.java) class and the [AccountTest](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/test/java/objects/AccountTest.java) class. Similarly the "company" field in an Account object could be set to null. We decided to check for null and set it to "default" instead of throwing an exception because we do not consider it as a required field.
 
 Branching
 ----------
 
-Branching strategy is listed [here](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/main/README.md).
+Our branching strategy is listed [here](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/main/README.md) in the README file.
+A screen of a successful feature merge is found [here](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/it1-branch-strategy-example.PNG). In this picture, the stock-view branch was merged into our development branch. This event is highlight in yellow on the picture.
 
-Provide screen shot of a feature being added using your branching strategy
-successfully. The [GitLab Graph tool can do this](https://code.cs.umanitoba.ca/comp3350-summer2019/cook-eBook/-/network/develop),
-as well as using `git log --graph`.
 
 SOLID
 -----
@@ -45,3 +43,11 @@ https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system
 https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/29
 https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/34
 https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/33
+
+In addition to some of the UI features, we were not able to implement any adding or removing of Items from an inventory. We therefore decided to push these back to the next iteration. The following links are the issues we decided to push back: 
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/6
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/7
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/8
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/10
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/11
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/13
