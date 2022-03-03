@@ -20,12 +20,15 @@ Merged requests:
 Exceptional code
 ----------------
 
-Our application will require the user to sign in before doing anything in the inventory. In order to make sure that an account is made with an appropriate username and password, we use NullExceptions in the constructor for the Account class. This can be seen in the [Account](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/main/java/objects/Account.java) class and the [AccountTest](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/test/java/objects/AccountTest.java) class. Similarly the "company" field in an Account object could be set to null. We decided to check for null and set it to "default" instead of throwing an exception because we do not consider it as a required field.
+Our application will require the user to sign in before doing anything in the inventory. In order to make sure that an account is made with an appropriate username and password, we use NullExceptions in the constructor for the Account class. This can be seen in the [Account](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/main/java/objects/Account.java) class and the [AccountTest](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/test/java/objects/AccountTest.java) class. 
+
+Similarly the "company" field in an Account object could be set to null. We decided to check for null and set it to "default" instead of throwing an exception because we do not consider it as a required field.
 
 Branching
 ----------
 
 Our branching strategy is listed [here](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/main/README.md) in the README file.
+
 A screen of a successful feature merge is found [here](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/it1-branch-strategy-example.PNG). In this picture, the stock-view branch was merged into our development branch. This event is highlight in yellow on the picture.
 
 
