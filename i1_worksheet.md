@@ -4,12 +4,19 @@ Iteration 1 Worksheet
 Adding a feature
 -----------------
 
-Tell the story of how one of your features was added to the project.
-Provide links to the
-feature, user stories, and merge requests (if used), associated tests, and merge commit
-that was used complete the feature.
+###VIEW INVENTORY
 
-Use one or two paragraphs which can have point-form within them.
+We are making a Warehouse Inventory Tracker. A core component of an inventory tracker is the ability to be able to see the inventory stored inside of the warehouse. So this was one of the first features we thought of implementing in our project. This feature can be split into multiple smaller steps. The user can view individual items in the inventory, view the whole inventory, and view the inventory by category/tag.
+
+Connected Features:
+- https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/4
+
+Connected User Stories:
+- https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/20
+- https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/19
+
+Merges requests:
+- https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/merge_requests/2
 
 Exceptional code
 ----------------
