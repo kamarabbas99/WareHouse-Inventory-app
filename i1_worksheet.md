@@ -3,8 +3,7 @@ Iteration 1 Worksheet
 
 Adding a feature
 -----------------
-
-###VIEW INVENTORY
+Feature: VIEW INVENTORY
 
 We are making a Warehouse Inventory Tracker. A core component of an inventory tracker is the ability to be able to see the inventory stored inside of the warehouse. So this was one of the first features we thought of implementing in our project. This feature can be split into multiple smaller steps. The user can view individual items in the inventory, view the whole inventory, and view the inventory by category/tag.
 
