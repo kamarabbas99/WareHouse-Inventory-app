@@ -42,4 +42,8 @@ The issue created for the violation of a SOLID principal is [here](https://code.
 Agile Planning
 --------------
 
-Once we learned about how the UI layer operates in android studio, we changed the logic layer to add in a method to return an array of every item object in the system. This makes displaying the objects dynamically on the screen easier, but as we did not really know about how the UI systems are setup in android studio we had to change on the fly. We also ended up pushing the app colour pallete and the app dropdown features to iteration 2, as they were small low priority features that were not necessary to the functionality of the current iteration.
+Once we learned about how the UI layer operates in android studio, we changed the logic layer to add in a method to return an array of every item object in the system. This makes displaying the objects dynamically on the screen easier, but as we did not really know about how the UI systems are setup in android studio we had to change on the fly. We also ended up pushing the app colour pallete and the app dropdown features to iteration 2, as they were small low priority features that were not necessary to the functionality of the current iteration. We also had to push back the tasks related to viewing individual stock items and all of their related data at once as we ran low on time and it was not direclty relevent to the main UI feature of this iteration.
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/28
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/29
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/34
+https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/33
