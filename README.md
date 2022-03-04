@@ -13,11 +13,11 @@
 - The [architecture](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/architecture.md) diagram can be found here.
 
 ## Contributors
-###Kamarabbas Saiyed
-###Alex Lannon
-###Curtis McQuarrie
-###Yuvraj Waraich
-###Mansimar Bhasin
+### Kamarabbas Saiyed
+### Alex Lannon
+### Curtis McQuarrie
+### Yuvraj Waraich
+### Mansimar Bhasin
 
   
 
