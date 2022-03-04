@@ -7,15 +7,19 @@ public class InventoryManager {
 
     private IDBLayer ItemDB;
 
-    public InventoryManager(IDBLayer db)
-    {
-        this.ItemDB = db;
-    }
+    //default constructor
     public InventoryManager() {
 
         this.ItemDB= new Database();
     }
 
+    //constructor
+    public InventoryManager(IDBLayer db)
+    {
+        this.ItemDB = db;
+    }
+
+    //method that adds item to the quantity
     public Item addItem(int id, int amount) {
         Item addedItem = null;
 
@@ -26,6 +30,7 @@ public class InventoryManager {
         return addedItem;
     }
 
+    //method that removes item from quantity
     public Item removeItem(int id, int amount) {
         Item removedItem = null;
 
@@ -36,6 +41,7 @@ public class InventoryManager {
         return removedItem;
     }
 
+    //method that add multiple item amount to the quantity together
     public Item[] addMultipleItems(int[] ids, int[] amounts) {
         Item[] addedItems = new Item[ids.length];
 
@@ -48,6 +54,7 @@ public class InventoryManager {
         return addedItems;
     }
 
+    //method that removes multiple item amount to the quantity together
     public Item[] removeMultipleItems(int[] ids, int[] amounts)
     {
         Item[] removedItems = new Item[ids.length];
@@ -59,6 +66,7 @@ public class InventoryManager {
 
     }
 
+    //method that return the item requested
     public Item getItem(int id){
         Item toGet = null;
 
@@ -69,6 +77,7 @@ public class InventoryManager {
         return toGet;
     }
 
+    //method that return an array of all item in the system
     public Item[] getInventory(){
         return (Item[]) ItemDB.getDB();
     }
