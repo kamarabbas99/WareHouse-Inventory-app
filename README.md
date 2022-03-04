@@ -10,3 +10,13 @@ This system will be used purely to keep records of stock and does not directly c
 This system will be an improvement over other systems due to its centralized nature and will allow regular warehouse workers to be kept up to date on incoming stock added by managers. It will be superior to the old paper-based ledger systems which are harder to look up specific data in, and other spreadsheet applications which are often hard to read at a glance.
 
 This project will be deemed successful if firstly, both inventory managers and workers prefer this system over other contemporary options, and secondly, if the system can consistently keep track of all necessary inventory and order data without any errors. The first point can be decided via survey, and the second will be decided via vigorous testing throughout the creation of the project to ensure data is stored and modified correctly.
+
+## Branching Strategy
+We are following a strategy similiar to the Git branching strategy. The two main branches to be aware of are:
+
+1. The `main` branch. 
+	- Where fully working releases for each iteration will be. 
+2. The `development` branch.
+	- Where current development is being done. 
+
+In addition to these two main branches, each new feature will have their own branch that is created from the `development` branch. The specific names of these branches are determined by the team working on it. Once that branch has its work completed, it will then be merged into the 'development' branch and deleted.
