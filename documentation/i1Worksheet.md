@@ -16,6 +16,7 @@ Connected User Stories:
 
 Merged requests:
 - https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/merge_requests/2
+- https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/merge_requests/12
 
 Exceptional code
 ----------------
