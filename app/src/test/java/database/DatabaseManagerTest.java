@@ -22,13 +22,14 @@ public class DatabaseManagerTest {
 
     @Test
     public void setDBFilePath() {
-        dbManager.setDBFilePath("C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS.script");
+        assertEquals("WIS", dbManager.getDBFilePath());
+        dbManager.setDBFilePath("C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS");
     }
 
     @Test
     public void getDBFilePath() {
         String filePath = dbManager.getDBFilePath();
         assertNotNull(filePath);
-        assertEquals(filePath, "C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS.script");
+        assertEquals(filePath, "C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS");
     }
 }
