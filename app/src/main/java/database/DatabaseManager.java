@@ -6,13 +6,14 @@ public class DatabaseManager {
 
     // $region fields
     private String dbFilePath = "WIS";
+    private int activeInventory = 1; // set active inventory to the games inventory
+    private int activeAccount = 1; // set active account to first in list
     private static DatabaseManager Instance;
     // endregion
 
     // $region constructor
     private DatabaseManager ()
     {
-
     }
     // endregion
 
@@ -55,5 +56,13 @@ public class DatabaseManager {
     {
         return dbFilePath;
     }
+
+    public void setActiveInventory(int inventoryID) { activeInventory = inventoryID; }
+
+    public int getActiveInventory() { return activeInventory; }
+
+    public void setActiveAccount(int accountID) { activeAccount = accountID; }
+
+    public int getActiveAccount() { return activeAccount; }
     // endregion
 }

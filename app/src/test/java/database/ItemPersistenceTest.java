@@ -6,10 +6,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import objects.IDSO;
 import objects.Item;
 
 public class ItemPersistenceTest {
     ItemPersistence itemDB;
+    //TODO: currently hard-coded, will need to change for others to test
     String dbFilePath = "C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS";
 
     @Before
@@ -45,29 +50,65 @@ public class ItemPersistenceTest {
 
     @Test
     public void create() {
+        Item testItem = new Item("Test", "Test item", 1, "unit", 0);
+        int itemID = itemDB.create(testItem);
+        assertTrue(itemID > 0);
     }
 
     @Test
     public void delete() {
+        int deleteID = 11;
+        assertNotNull(itemDB.get(11));
+        itemDB.delete(deleteID);
     }
 
     @Test
     public void getDB() {
+        IDSO[] items = itemDB.getDB();
+        assertNotNull(items);
+        for (IDSO item: items)
+        {
+            assertNotNull(item);
+        }
     }
 
+    // a dangerous test (will remove data)
     @Test
     public void clearDB() {
+        itemDB.clearDB();
     }
 
     @Test
     public void verifyID() {
+
     }
 
     @Test
     public void addItem() {
+        int itemID = 1;
+        int amountToAdd = 5;
+        Item itemToAdd = (Item) itemDB.get(itemID);
+        int previousQty = itemToAdd.getQuantity();
+        itemToAdd = (Item) itemDB.add(itemID, amountToAdd);
+        assertEquals(itemToAdd.getQuantity(), previousQty + amountToAdd);
     }
 
     @Test
     public void removeItem() {
+        int itemID = 1;
+        int amountToRemove = 5;
+        Item itemToRemove = (Item) itemDB.get(itemID);
+        int previousQty = itemToRemove.getQuantity();
+        itemToRemove = (Item) itemDB.remove(itemID, amountToRemove);
+        // if the quantity goes below 0, there will be no update
+        if (previousQty - amountToRemove < 0)
+        {
+            assertEquals(itemToRemove.getQuantity(), previousQty);
+        }
+        // if the quantity does not go below 0, then it will be fine
+        else
+        {
+            assertEquals(itemToRemove.getQuantity(), previousQty - amountToRemove);
+        }
     }
 }
