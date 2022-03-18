@@ -1,4 +1,5 @@
 package logic;
+
 import database.Database;
 import database.IDBLayer;
 import objects.Item;
@@ -7,19 +8,23 @@ public class InventoryManager {
 
     private IDBLayer ItemDB;
 
-    //default constructor
+    // default constructor
     public InventoryManager() {
 
-        this.ItemDB= new Database();
+        this.ItemDB = new Database();
     }
 
-    //constructor
-    public InventoryManager(IDBLayer db)
-    {
+    // constructor
+    public InventoryManager(IDBLayer db) {
         this.ItemDB = db;
     }
 
-    //method that adds item to the quantity
+    // adds first instance of given item to database
+    public int createItem(Item toCreate) {
+        return ItemDB.create(toCreate);
+    }
+
+    // method that adds item to the quantity
     public Item addItem(int id, int amount) {
         Item addedItem = null;
 
@@ -30,7 +35,7 @@ public class InventoryManager {
         return addedItem;
     }
 
-    //method that removes item from quantity
+    // method that removes item from quantity
     public Item removeItem(int id, int amount) {
         Item removedItem = null;
 
@@ -41,7 +46,7 @@ public class InventoryManager {
         return removedItem;
     }
 
-    //method that add multiple item amount to the quantity together
+    // method that add multiple item amount to the quantity together
     public Item[] addMultipleItems(int[] ids, int[] amounts) {
         Item[] addedItems = new Item[ids.length];
 
@@ -54,20 +59,19 @@ public class InventoryManager {
         return addedItems;
     }
 
-    //method that removes multiple item amount to the quantity together
-    public Item[] removeMultipleItems(int[] ids, int[] amounts)
-    {
+    // method that removes multiple item amount to the quantity together
+    public Item[] removeMultipleItems(int[] ids, int[] amounts) {
         Item[] removedItems = new Item[ids.length];
 
-        for(int i=0;i<ids.length;i++)
-            removedItems[i]= (Item) ItemDB.removeItem(ids[i],amounts[i]);
+        for (int i = 0; i < ids.length; i++)
+            removedItems[i] = (Item) ItemDB.removeItem(ids[i], amounts[i]);
 
         return removedItems;
 
     }
 
-    //method that return the item requested
-    public Item getItem(int id){
+    // method that return the item requested
+    public Item getItem(int id) {
         Item toGet = null;
 
         if (ItemDB.verifyID(id)) {
@@ -77,8 +81,12 @@ public class InventoryManager {
         return toGet;
     }
 
-    //method that return an array of all item in the system
-    public Item[] getInventory(){
+    // method that return an array of all item in the system
+    public Item[] getInventory() {
         return (Item[]) ItemDB.getDB();
+    }
+
+    public void removeAllItems(){
+        ItemDB.clearDB();
     }
 }
