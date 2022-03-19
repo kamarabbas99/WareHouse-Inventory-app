@@ -13,29 +13,34 @@ import objects.*;
 
 public class ItemPersistenceTest {
     ItemPersistence itemDB;
+    DatabaseManager dbManager;
     //TODO: currently hard-coded, will need to change for others to test
     String dbFilePath = "C:\\Users\\Curtis\\Documents\\GitLab\\warehouse-inventory-system\\app\\src\\main\\assets\\db\\WIS";
 
     @Before
     public void setUp() throws Exception {
-        try
-        {
-            Class.forName("org.hsqldb.jdbcDriver").newInstance();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        itemDB = new ItemPersistence(dbFilePath);
+        // initialize dbManager
+        dbManager = DatabaseManager.getInstance();
+        // set db file path to hardcoded value
+        dbManager.setDBFilePath(dbFilePath);
+        // set active inventory to debug inventory
+        dbManager.setActiveInventory(0);
+        // create a new ItemPersistence
+        itemDB = new ItemPersistence(dbManager.getDBFilePath());
         assertNotNull(itemDB);
     }
 
     @After
     public void tearDown() throws Exception {
+        // set active inventory back to default
+        dbManager.setActiveInventory(1);
+        // set dbFilePath back to default
+        dbManager.setDBFilePath("WIS");
+        // free memory allocated to itemDB
         itemDB = null;
     }
 
-    @Test
+    @Test // not currently working
     public void testItemFound() {
         // add a test item
         // check if test item exists
@@ -99,12 +104,10 @@ public class ItemPersistenceTest {
     // a dangerous test (will remove data)
     @Test
     public void clearDB() {
-        itemDB.clearDB();
-    }
-
-    @Test
-    public void verifyID() {
-
+        // switch to testInventory
+        // add a pile of Items to the testInventory
+        // test clearDB
+        // switch back to default Inventory
     }
 
     @Test

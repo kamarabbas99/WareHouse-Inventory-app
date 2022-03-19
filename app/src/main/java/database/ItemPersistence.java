@@ -47,7 +47,7 @@ public class ItemPersistence implements IDBLayer{
         id              The Item object to look for in the active inventory.
     OUTPUT:
         Returns the obtained Item from the DB.
-        Returns NULL if no item was found.
+        Returns a null if the item is not found.
         Throws a Persistence Exception if something went wrong with the query.
      */
     @Override
@@ -66,7 +66,10 @@ public class ItemPersistence implements IDBLayer{
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
             // translate the result into the Item object if the result set found the item
-            item = decipherResultSet(resultSet); // may throw SQLException
+            if (resultSet.next())
+            {
+                item = decipherResultSet(resultSet); // may throw SQLException
+            }
             // close open connections
             resultSet.close();
             preparedStatement.close();
@@ -112,7 +115,7 @@ public class ItemPersistence implements IDBLayer{
         // connect to the DB
         try (final Connection connection = connect())
         {
-            int id; // the returned value
+            int id = itemToCreate.getID(); // the returned value
             // a check to see if an item with the given ID already exists
             // case: item with the same id wasn't found
             if (((Item) get(itemToCreate.getID())) == null) {
@@ -132,14 +135,9 @@ public class ItemPersistence implements IDBLayer{
 
                 // add the item to the InventoryManagers table
                 add(id, itemToCreate.getQuantity()); // may throw PersistenceException
-            }
-            // case: item with the same id WAS found
-            else
-            {
-                id = itemToCreate.getID();
-            }
 
-            // TODO: update transaction table (not currently time sensitive)
+                // TODO: update transaction table (not currently time sensitive)
+            }
 
             // return the itemID of the newly created item
             return id;
