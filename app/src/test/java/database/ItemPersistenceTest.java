@@ -9,8 +9,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import objects.IDSO;
-import objects.Item;
+import objects.*;
 
 public class ItemPersistenceTest {
     ItemPersistence itemDB;
@@ -38,6 +37,10 @@ public class ItemPersistenceTest {
 
     @Test
     public void testItemFound() {
+        // add a test item
+        // check if test item exists
+        // delete test item from inventory
+
         // relies on the first Item in the Games Inventory to exist and remain unchanged
         Item result = (Item) itemDB.get(1);
         assertNotNull(result);
@@ -52,23 +55,35 @@ public class ItemPersistenceTest {
     @Test
     public void testItemNotFound()
     {
-        // there should be no item with an id of -1
+        // there should never be an item with an id of -1
         Item nullItem = (Item) itemDB.get(-1);
         assertNull(nullItem);
     }
 
     @Test
     public void testCreatingItem() {
-        Item testItem = new Item("Test", "Test item", 1, "unit", 0);
+        Item testItem = new Item(0, "Test", "Entry for testing", 1, "unit", 0);
         int itemID = itemDB.create(testItem);
         assertTrue(itemID > 0);
     }
 
     @Test
-    public void delete() {
-        int deleteID = 11;
-        assertNotNull(itemDB.get(11));
-        itemDB.delete(deleteID);
+    public void testCreatingNonItem()
+    {
+        // this should return a -1 since Account is not an instance of Item
+        int id = itemDB.create(new Account());
+        assertEquals(-1, id);
+    }
+
+    @Test
+    public void deleteItem() {
+        // add test item to DB if not already exists
+        int testItemID = itemDB.create(new Item(0, "Test", "Entry for testing", 1, "unit", 0));
+        assertNotNull(itemDB.get(testItemID));
+        // add a quantity to test item
+        itemDB.add(testItemID, 1);
+
+        itemDB.delete(testItemID);
     }
 
     @Test
@@ -94,6 +109,7 @@ public class ItemPersistenceTest {
 
     @Test
     public void addItem() {
+
         int itemID = 1;
         int amountToAdd = 5;
         Item itemToAdd = (Item) itemDB.get(itemID);

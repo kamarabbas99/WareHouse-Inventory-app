@@ -84,13 +84,14 @@ public class ItemPersistence implements IDBLayer{
         Creates a new item with the values inside the given DSO.
     NOTES:
         Does not check if an item with the given name already exists.
-        This item is added to the Items database table and NOT the InventoryManagers table.
-        The created item will not show up in the active Inventory; you must create and then ADD the item.
+        This item is added to the Items database table and the InventoryManagers table.
+        If an item already exists with the same ID as the provided object parameter, then that ID is returned
+        and the quantity is NOT updated.
     INPUT:
         object              The Item object to create in the Items table.
     OUTPUT:
         Returns the itemID of the newly created item.
-        Returns -1 if the provided parameter is not an instance of the Item class.
+        Returns -1 if the provided parameter is not an instance of the Item class.\
         Throws a PersistenceException if something went wrong with query.
      */
     @Override
@@ -112,19 +113,31 @@ public class ItemPersistence implements IDBLayer{
         try (final Connection connection = connect())
         {
             int id; // the returned value
-            // prepare the query
-            final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?)");
-            // retrieve a new ID to give to the item.
-            id = createNewID();
-            // fill out the query variables
-            itemStatement.setString(1, Integer.toString(id));
-            itemStatement.setString(2, itemToCreate.getName());
-            itemStatement.setString(3, itemToCreate.getDescription());
-            itemStatement.setString(4, itemToCreate.getQuantityMetric());
-            // execute the query
-            itemStatement.executeUpdate();
-            // close open connections
-            itemStatement.close();
+            // a check to see if an item with the given ID already exists
+            // case: item with the same id wasn't found
+            if (((Item) get(itemToCreate.getID())) == null) {
+                // retrieve a new ID to give to the item.
+                id = createNewID();
+                // prepare the query
+                final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?)");
+                // fill out the query variables
+                itemStatement.setString(1, Integer.toString(id));
+                itemStatement.setString(2, itemToCreate.getName());
+                itemStatement.setString(3, itemToCreate.getDescription());
+                itemStatement.setString(4, itemToCreate.getQuantityMetric());
+                // execute the query
+                itemStatement.executeUpdate();
+                // close open connections
+                itemStatement.close();
+
+                // add the item to the InventoryManagers table
+                add(id, itemToCreate.getQuantity()); // may throw PersistenceException
+            }
+            // case: item with the same id WAS found
+            else
+            {
+                id = itemToCreate.getID();
+            }
 
             // TODO: update transaction table (not currently time sensitive)
 
@@ -134,6 +147,11 @@ public class ItemPersistence implements IDBLayer{
         catch (final SQLException exception)
         {
             throw new PersistenceException(exception);
+        }
+        // catch and throw the exception thrown by the get() and/or add() method call.
+        catch (final PersistenceException exception)
+        {
+            throw exception;
         }
     }
 
