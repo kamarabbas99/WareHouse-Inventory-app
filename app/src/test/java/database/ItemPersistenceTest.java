@@ -37,19 +37,28 @@ public class ItemPersistenceTest {
     }
 
     @Test
-    public void get() {
+    public void testItemFound() {
+        // relies on the first Item in the Games Inventory to exist and remain unchanged
         Item result = (Item) itemDB.get(1);
         assertNotNull(result);
         assertEquals(1, result.getID());
         assertEquals("ELDEN RING", result.getName());
         assertEquals("Top game on Steam.", result.getDescription());
-        assertEquals(10, result.getQuantity());
+        assertEquals(5, result.getQuantity());
         assertEquals("unit", result.getQuantityMetric());
         assertEquals(0, result.getLowThreshold());
     }
 
     @Test
-    public void create() {
+    public void testItemNotFound()
+    {
+        // there should be no item with an id of -1
+        Item nullItem = (Item) itemDB.get(-1);
+        assertNull(nullItem);
+    }
+
+    @Test
+    public void testCreatingItem() {
         Item testItem = new Item("Test", "Test item", 1, "unit", 0);
         int itemID = itemDB.create(testItem);
         assertTrue(itemID > 0);

@@ -10,279 +10,416 @@ import java.util.ArrayList;
 
 import objects.*;
 
+/* ITEMPERSISTENCE
+Used to interact with the database with Item objects.
+This class in total interacts with 3 tables:
+    1. Items
+    2. InventoryManagers
+    3. Transactions
+Modifies the above tables with the public methods.
+ */
 public class ItemPersistence implements IDBLayer{
 
-    // $region fields
+    // region $fields
+
     private final String dbFilePath;
     private DatabaseManager dbManager;
+
     // endregion
 
-    // $region constructor
+    // region $constructor
+
     public ItemPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
     }
-    // endregion
 
-    // $region dbSpecific
-    private Connection connect() throws SQLException
-    {
-        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbFilePath + ";shutdown=true", "SA", "");
-    }
+    // endregions
 
-    // reads the ResultSet and translates it into an Item object
-    private Item decipherResultSet(final ResultSet resultSet) throws SQLException
-    {
-        Item item = null;
-        if (resultSet.next())
-        {
-            // fill with data
-            String itemID = resultSet.getString("itemID");
-            String name = resultSet.getString("name");
-            String description = resultSet.getString("description");
-            String quantity = resultSet.getString("quantity");
-            String quantityMetric = resultSet.getString("quantityMetric");
-            String lowThreshold = resultSet.getString("lowThreshold");
-            item = new Item(Integer.valueOf(itemID), name, description, Integer.valueOf(quantity), quantityMetric, Integer.valueOf(lowThreshold));
-        }
-        else
-        {
-            // there is no data from the query
-            throw new SQLException("Query did not find any results.");
-        }
-        return item;
-    }
-    // endregion
+    // region $interfaceOverrides
 
-    // $region interfaceMethods
-    // retrieves the item with the given id.
+    /* GET
+    PURPOSE:
+        Retrieves the item with the given id if found in the database.
+        Looks for the itemID in the active Inventory.
+    INPUT:
+        id              The Item object to look for in the active inventory.
+    OUTPUT:
+        Returns the obtained Item from the DB.
+        Returns NULL if no item was found.
+        Throws a Persistence Exception if something went wrong with the query.
+     */
     @Override
     public IDSO get(int id)
     {
-        IDSO item = null;
+        // connect to the DB
         try (final Connection connection = connect())
         {
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID WHERE ITEMS.ITEMID = ? AND INVENTORYMANAGERS.INVENTORYID = ?");
+            Item item = null;
+            // prepare the query
+            final PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
+                            "WHERE ITEMS.ITEMID = ? AND INVENTORYMANAGERS.INVENTORYID = ?");
             preparedStatement.setString(1, Integer.toString(id));
             preparedStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
+            // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
-            item = decipherResultSet(resultSet);
+            // translate the result into the Item object if the result set found the item
+            item = decipherResultSet(resultSet); // may throw SQLException
+            // close open connections
             resultSet.close();
             preparedStatement.close();
+            // return the newly obtained Item
+            return item;
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
-        return item;
     }
 
-    // creates a new item with the values inside the given DSO.
-    // This item is added the ITEMS database table and NOT the INVENTORYMANAGERS table.
-    // Therefore, this will not be reflected in the stock view.
+    /* CREATE
+    PURPOSE:
+        Creates a new item with the values inside the given DSO.
+    NOTES:
+        Does not check if an item with the given name already exists.
+        This item is added to the Items database table and NOT the InventoryManagers table.
+        The created item will not show up in the active Inventory; you must create and then ADD the item.
+    INPUT:
+        object              The Item object to create in the Items table.
+    OUTPUT:
+        Returns the itemID of the newly created item.
+        Returns -1 if the provided parameter is not an instance of the Item class.
+        Throws a PersistenceException if something went wrong with query.
+     */
     @Override
     public int create(IDSO object)
     {
-        Item itemToCreate = null;
-        int id = -1;
-        try
+        Item itemToCreate;
+
+        // a check to verify the provided parameter is an instance of the Item class
+        if (object instanceof Item)
         {
             itemToCreate = (Item) object;
         }
-        catch (ClassCastException exception)
+        else
         {
-            exception.printStackTrace();
+            return -1;
         }
 
+        // connect to the DB
         try (final Connection connection = connect())
         {
-            // updates item table
+            int id; // the returned value
+            // prepare the query
             final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?)");
+            // retrieve a new ID to give to the item.
             id = createNewID();
-            String itemID = "";
-            if (id > 0){
-                itemID = Integer.toString(id);
-            }
-            itemStatement.setString(1, itemID);
+            // fill out the query variables
+            itemStatement.setString(1, Integer.toString(id));
             itemStatement.setString(2, itemToCreate.getName());
             itemStatement.setString(3, itemToCreate.getDescription());
             itemStatement.setString(4, itemToCreate.getQuantityMetric());
+            // execute the query
             itemStatement.executeUpdate();
+            // close open connections
             itemStatement.close();
-            //TODO update transaction table
-        }
-        catch (SQLException exception)
-        {
-            exception.printStackTrace();
-        }
 
-        return id;
+            // TODO: update transaction table (not currently time sensitive)
+
+            // return the itemID of the newly created item
+            return id;
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
-    // Deletes the entry in the INVENTORYMANAGERS table and not the ITEMS table.
-    // This is to prevent the deletion of transaction history.
+    /* DELETE
+    PURPOSE:
+        Deletes the entry in the InventoryManagers table and NOT the Items table.
+        This is to prevent the deletion of transaction history.
+    INPUT:
+        id              The itemID to look for and delete from the InventoryManagers table.
+    OUTPUT:
+        Throws a PersistenceException if something went wrong with the query.
+    */
     @Override
     public void delete(int id) {
+        // connect to DB
         try (final Connection connection = connect())
         {
-            // updates the inventorymanager table
+            // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORYMANAGERS WHERE ITEMID = ? AND INVENTORYID = ?");
             inventoryStatement.setString(1, Integer.toString(id));
             inventoryStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
+            // execute the query
             inventoryStatement.executeUpdate();
+            // close open connections
             inventoryStatement.close();
-            //TODO update transaction table
+
+            // TODO: update transaction table (not currently time sensitive)
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
     }
 
-    // retrieves an inventory from the INVENTORYMANAGERS table
+    /* GETDB
+    PURPOSE:
+        Retrieves all the items associated with the active inventory.
+    OUTPUT:
+        Returns an array of all the Items found within the active inventory.
+        Returns NULL if not items were found within the active inventory.
+        Throws a PersistenceException if something went wrong with the query.
+     */
     @Override
     public IDSO[] getDB() {
-        ArrayList<IDSO> items = new ArrayList<IDSO>();
-        IDSO[] returnArray = null;
-
+        // connect to DB
         try (final Connection connection = connect())
         {
-            final PreparedStatement inventoryStatement = connection.prepareStatement("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID WHERE INVENTORYMANAGERS.INVENTORYID = ?");
+            // initialize collections
+            ArrayList<IDSO> itemsList = new ArrayList<IDSO>();
+            IDSO[] itemsArray = null; // the returned array
+            // prepare the query
+            final PreparedStatement inventoryStatement = connection.prepareStatement("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
+                    "WHERE INVENTORYMANAGERS.INVENTORYID = ?");
             inventoryStatement.setString(1, Integer.toString(dbManager.getActiveInventory()));
+            // execute the query
             final ResultSet resultSet = inventoryStatement.executeQuery();
+            // cycle through the result and add the items to the list
             while(resultSet.next())
             {
                 final Item item = decipherResultSet(resultSet);
-                items.add(item);
+                itemsList.add(item);
             }
+            // close open connections
             resultSet.close();
             inventoryStatement.close();
+            // convert the arraylist to an array if it has any entries
+            if (itemsList.size() > 0)
+            {
+                itemsArray = new IDSO[itemsList.size()];
+                itemsList.toArray(itemsArray);
+            }
+            // return the array with all the items
+            return itemsArray;
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
-
-        returnArray = new IDSO[items.size()];
-        items.toArray(returnArray);
-
-        return returnArray;
     }
 
+    /* CLEARDB
+    PURPOSE:
+        Completely removes all items from the active inventory.
+        This only affects the InventoryManagers table.
+    OUTPUT:
+        Throws a SQLException if something went wrong with the query.
+     */
     @Override
     public void clearDB() {
         try (final Connection connection = connect())
         {
-            // updates the inventorymanager table
+            // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORYMANAGERS WHERE INVENTORYID = ?");
             inventoryStatement.setString(1, Integer.toString(dbManager.getActiveInventory()));
+            // execute the query
             inventoryStatement.executeUpdate();
+            // close open connections
             inventoryStatement.close();
-            //TODO update transaction table
+
+            // TODO: update transaction table (not currently time sensitive)
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
     }
 
+    // Unsure about this methods' purpose (mcquarrc)
     @Override
     public boolean verifyID(int id) {
         return false;
     }
 
+    /* ADD
+    PURPOSE:
+        Adds the specified quantity to an item, with specified id, in the active inventory.
+    NOTES:
+        If the item does not exist the method will throw a PersistenceException.
+    INPUT:
+        id              The itemID to look for in the active inventory.
+        quantity        The amount to increase the quantity of the item by.
+    OUTPUT:
+        Returns the updated item object in the DB.
+        Throws a PersistenceException if something went wrong with the query.
+     */
     @Override
     public IDSO add(int id, int quantity)
     {
-        Item itemToAdd = null;
+        // connect to DB
         try (final Connection connection = connect())
         {
-            // retrieve the Item first to get value.
-            itemToAdd = (Item) get(id);
+            // retrieve the item from DB
+            Item itemToAdd = (Item) get(id); // may throw a PersistenceException
+            // store previous quantity
             int previousQuantity = Integer.valueOf(itemToAdd.getQuantity());
+            // set new quantity
             String newQuantity = Integer.toString(previousQuantity + quantity);
+            // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
-
             inventoryStatement.setString(1, newQuantity);
             inventoryStatement.setString(2, Integer.toString(id));
             inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
-
+            // execute the query
             inventoryStatement.executeUpdate();
+            // close open connections
             inventoryStatement.close();
-
             // update old reference to item
             itemToAdd = (Item) get(id);
+            // return updated item
+            return itemToAdd;
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
-        return itemToAdd;
+        // catch and throw the exception thrown by the get() method call.
+        catch (final PersistenceException exception)
+        {
+            throw exception;
+        }
     }
 
+    /* REMOVE
+    PURPOSE:
+        Removes the specified quantity from the item with the given itemID inside the active inventory.
+    NOTES:
+        If the item does not exist, the method will throw a PersistenceException.
+        If the specified quantity is greater than or equal to the current quantity, then the method will
+        remove that item from the DB and return null.
+    INPUT:
+        id              The itemID to look for in the active inventory.
+        quantity        The amount to decrease the quantity of the item by.
+    OUTPUT:
+        Returns the updated item object in the DB.
+        Returns null if the new item quantity is 0 or lower.
+        Throws a PersistenceException if something went wrong with the query.
+     */
     @Override
     public IDSO remove(int id, int quantity) {
-        Item itemToRemove = null;
+        // connect to DB
         try (final Connection connection = connect())
         {
-            // retrieve the Item first to get value.
-            itemToRemove = (Item) get(id);
+            // retrieve the Item first to get quantity
+            Item itemToRemove = (Item) get(id); // may throw a PersistenceException
+            // store previous quantity
             int previousQuantity = Integer.valueOf(itemToRemove.getQuantity());
-            String newQuantity;
-            // make sure new value isn't negative
-            if (previousQuantity - quantity < 0)
+
+            // a check to see if the removal will delete the object
+            // case: removal does delete the item
+            if (previousQuantity - quantity <= 0)
             {
-                newQuantity = Integer.toString(previousQuantity);
-                // TODO: throw new exception
+                delete(id); // may throw a PersistenceException
+                itemToRemove = null;
             }
-            else
-            {
-                newQuantity = Integer.toString(previousQuantity - quantity);
+            // case: removal does not delete the item
+            else {
+                String newQuantity = Integer.toString(previousQuantity - quantity);
+                // prepare the query
+                final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
+                inventoryStatement.setString(1, newQuantity);
+                inventoryStatement.setString(2, Integer.toString(id));
+                inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
+                // execute the query
+                inventoryStatement.executeUpdate();
+                // close open connections
+                inventoryStatement.close();
+                // update old reference to item
+                itemToRemove = (Item) get(id);
             }
-            final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
-
-            inventoryStatement.setString(1, newQuantity);
-            inventoryStatement.setString(2, Integer.toString(id));
-            inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
-
-            inventoryStatement.executeUpdate();
-            inventoryStatement.close();
-
-            // update old reference to item
-            itemToRemove = (Item) get(id);
+            // return updated item from DB
+            return itemToRemove;
         }
         catch (SQLException exception)
         {
-            exception.printStackTrace();
+            throw new PersistenceException(exception);
         }
-        return itemToRemove;
+        // catch and throw the exception thrown by the get() or delete() method call.
+        catch (final PersistenceException exception)
+        {
+            throw exception;
+        }
     }
+
     // endregion
 
-    // $region updating
-    // retrieves the largest item id and increments it by one
-    private int createNewID()
+    // region $utility
+
+    /* CONNECT
+    PURPOSE:
+        Attempts to get a connection to the Database .script file found in dbFilePath.
+    OUTPUT:
+        Returns the newly established connection to the DB.
+        Throws an SQLException is the connection was a failure.
+     */
+    private Connection connect() throws SQLException
     {
-        int id = -1;
+        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbFilePath + ";shutdown=true", "SA", "");
+    }
+
+    /* DECIPHERRESULTSET
+    PURPOSE:
+        Reads the ResultSet and translates it into an Item object.
+    INPUT:
+        resultSet               The ResultSet to get values from.
+    OUTPUT:
+        Returns an Item object with values retrieved from the DB.
+        Throws an exception if the ResultSet does not have one of the named columns.
+     */
+    private Item decipherResultSet(final ResultSet resultSet) throws SQLException
+    {
+        String itemID = resultSet.getString("itemID");
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        String quantity = resultSet.getString("quantity");
+        String quantityMetric = resultSet.getString("quantityMetric");
+        String lowThreshold = resultSet.getString("lowThreshold");
+        return new Item(Integer.valueOf(itemID), name, description, Integer.valueOf(quantity), quantityMetric, Integer.valueOf(lowThreshold));
+    }
+
+    /* CREATENEWID
+    PURPOSE:
+        Retrieves the largest item id and increments it by one.
+    OUTPUT:
+        Returns a new itemID that is unique.
+        Throws a SQLException if something went wrong with the query.
+     */
+    private int createNewID () throws SQLException
+    {
+        // connect to DB
         try (final Connection connection = connect())
         {
+            int id;
+            // prepare the query
             final Statement statement = connection.createStatement();
+            // execute the query
             final ResultSet resultSet = statement.executeQuery("SELECT * FROM ITEMS WHERE ITEMID = (SELECT MAX(ITEMID) FROM ITEMS)");
-            if (resultSet.next())
-            {
-                String itemID = resultSet.getString("itemID");
-                id = Integer.valueOf(itemID);
-            }
+            // translate the query result into an integer
+            id = Integer.valueOf(resultSet.getString("itemID"));
+            // close open connections
             resultSet.close();
             statement.close();
+            // return the new incremented id
+            return id + 1;
         }
-        catch (SQLException exception)
-        {
-            exception.printStackTrace();
-        }
-        return id + 1;
     }
+
     // endregion
 
 }

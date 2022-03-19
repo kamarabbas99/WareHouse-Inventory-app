@@ -1,23 +1,34 @@
 package database;
 
-// A singleton class to hold the reference to the database file path.
-// Required because it needs to be used on startup.
+/*
+A singleton class to hold the reference to the database file path.
+Required because it needs to be used on startup.
+Also used to get track of important values like the active account and inventory.
+*/
 public class DatabaseManager {
 
-    // $region fields
+    // region $fields
+
     private String dbFilePath = "WIS";
-    private int activeInventory = 1; // set active inventory to the games inventory
-    private int activeAccount = 1; // set active account to first in list
+    private int activeInventory = 1; // set default active inventory to the games inventory
+    private int activeAccount = 1; // set default active account to first in list
     private static DatabaseManager Instance;
+
     // endregion
 
-    // $region constructor
+    // region $constructor
+
     private DatabaseManager ()
     {
     }
+
     // endregion
 
-    // $region singletonMethods
+    // region $singletonMethods
+
+    /*
+    Retrieves the existing instance or creates a new instance if one does not already exist.
+     */
     public static DatabaseManager getInstance()
     {
         if (Instance == null)
@@ -26,10 +37,16 @@ public class DatabaseManager {
         }
         return Instance;
     }
+
     // endregion
 
-    // $region gettersAndSetters
-    // sets the path for the database file
+    // region $gettersAndSetters
+
+    public String getDBFilePath()
+    {
+        return dbFilePath;
+    }
+
     public void setDBFilePath(final String path)
     {
         try
@@ -51,18 +68,13 @@ public class DatabaseManager {
         dbFilePath = path;
     }
 
-    // gets the path for the database file
-    public String getDBFilePath()
-    {
-        return dbFilePath;
-    }
+    public int getActiveInventory() { return activeInventory; }
 
     public void setActiveInventory(int inventoryID) { activeInventory = inventoryID; }
 
-    public int getActiveInventory() { return activeInventory; }
+    public int getActiveAccount() { return activeAccount; }
 
     public void setActiveAccount(int accountID) { activeAccount = accountID; }
 
-    public int getActiveAccount() { return activeAccount; }
     // endregion
 }
