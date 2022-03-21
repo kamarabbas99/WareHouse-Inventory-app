@@ -42,7 +42,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:onClick="stockViewSwitch"
+        android:onClick="addItemSwitch"
         android:text="@string/addItemView_button"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

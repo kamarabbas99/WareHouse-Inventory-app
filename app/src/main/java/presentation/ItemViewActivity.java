@@ -7,14 +7,16 @@ import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
 
+import database.Database;
+import logic.InventoryManager;
 import objects.Item;
 
 //This activity displays all the information about a passed item object
 //The amount of the item can be increased/decreased
 //The item can also be deleted from the system entirely
 public class ItemViewActivity extends AppCompatActivity {
+    InventoryManager inventory = new InventoryManager(new Database());
     Item item;
-    String test;
 
     //Text views and buttons on page
     TextView itemName;
@@ -25,8 +27,8 @@ public class ItemViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Gets the passed object
-        test = getIntent().getStringExtra("test");
+        //Gets the item according to the passed item id
+        item = inventory.getItem(getIntent().getIntExtra("itemID", -1));
 
         setContentView(R.layout.activity_item_view);
 
@@ -35,9 +37,14 @@ public class ItemViewActivity extends AppCompatActivity {
         itemAmount = this.findViewById(R.id.itemAmount);
         itemDescription = this.findViewById(R.id.itemDesc);
 
-        //Sets screen content based on the passed item
-        itemName.append(test);
-        itemAmount.append(test + " " + test);
-        itemDescription.setText(test);
+        try {
+            //Sets screen content based on the passed item
+            itemName.append(item.getName());
+            itemAmount.append(item.getQuantity() + " " + item.getQuantityMetric());
+            itemDescription.setText(item.getDescription());
+        }
+        catch (Exception e){
+            System.out.println("Id not found");
+        }
     }
 }

@@ -47,7 +47,7 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
     @Override
     public void onItemClick(int index) {
         Intent getItemView = new Intent(this, ItemViewActivity.class);
-        getItemView.putExtra("test", items[index].getName());
+        getItemView.putExtra("itemID", items[index].getID());
         startActivity(getItemView);
     }
 }
