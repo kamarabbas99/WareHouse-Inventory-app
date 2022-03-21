@@ -6,9 +6,13 @@
     <string name="stock_welcome_text">Here is your current stock</string>
     <string name="itemPageButton"><![CDATA[>]]></string>
     <string name="addItemMsg">Please input data for the new item:</string>
-    <string name="descriptionText">Enter description of item</string>
-    <string name="amountText">Enter amount of item</string>
-    <string name="qtyText">Enter quantity label of item</string>
-    <string name="nameText">Enter name of item</string>
+    <string name="descriptionText">Description</string>
+    <string name="amountText">Amount</string>
+    <string name="qtyText">Quantity Type</string>
+    <string name="nameText">Name</string>
     <string name="itemCreateButton">Create Item</string>
+    <string name="itemStart">Showing information for\u0020</string>
+    <string name="showAmount">Current amount:\u0020</string>
+    <string name="EditStock">Add/Remove Stock</string>
+    <string name="DeleteItem">Delete Item From Inventory</string>
 </resources>

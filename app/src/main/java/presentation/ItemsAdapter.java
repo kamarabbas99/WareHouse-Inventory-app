@@ -91,16 +91,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         TextView quantity = holder.itemQuantity;
         TextView unit = holder.itemUnit;
 
-        //Gets button id from holder
-        Button getItemView = holder.goToItemView;
-
         //Assigns views data from the current object
         name.setText(item.getName());
         quantity.setText(Integer.toString(item.getQuantity()));
         unit.setText(item.getQuantityMetric());
-
-        //Sets button on click listener to move to item view for current item
-
     }
 
     //Returns total count of items currently in the array
