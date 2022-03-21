@@ -1,10 +1,12 @@
-package com.example.warehouseinventorysystem;
+package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.warehouseinventorysystem.R;
 
 
 //This class allows a user to add a brand new item to the system
