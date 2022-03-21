@@ -10,12 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
         <activity
+            android:name=".ItemAddActivity"
+            android:exported="false" />
+        <activity
             android:name="presentation.StockViewActivity"
             android:exported="false"
-            android:parentActivityName="presentation.MainActivity"/>
+            android:parentActivityName="presentation.MainActivity" />
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="presentation.MainActivity"/>
+            android:value="presentation.MainActivity" />
+
         <activity
             android:name="presentation.MainActivity"
             android:exported="true">

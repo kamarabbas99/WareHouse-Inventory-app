@@ -2,6 +2,13 @@
     <string name="app_name">Warehouse Inventory System</string>
     <string name="welcome_text">Welcome to the Warehouse Inventory System (WIT)</string>
     <string name="itemView_button">View Stock</string>
+    <string name="addItemView_button">Add New Items</string>
     <string name="stock_welcome_text">Here is your current stock</string>
     <string name="itemPageButton"><![CDATA[>]]></string>
+    <string name="addItemMsg">Please input data for the new item:</string>
+    <string name="descriptionText">Enter description of item</string>
+    <string name="amountText">Enter amount of item</string>
+    <string name="qtyText">Enter quantity label of item</string>
+    <string name="nameText">Enter name of item</string>
+    <string name="itemCreateButton">Create Item</string>
 </resources>

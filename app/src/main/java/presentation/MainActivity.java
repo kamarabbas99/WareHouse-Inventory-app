@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.warehouseinventorysystem.ItemAddActivity;
 import com.example.warehouseinventorysystem.R;
 
 //Main Activity:
@@ -25,5 +26,10 @@ public class MainActivity extends AppCompatActivity {
     public void stockViewSwitch(View view){
         Intent stockView = new Intent(this, StockViewActivity.class);
         startActivity(stockView);
+    }
+
+    public void addItemSwitch(View view) {
+        Intent addView = new Intent(this, ItemAddActivity.class);
+        startActivity(addView);
     }
 }

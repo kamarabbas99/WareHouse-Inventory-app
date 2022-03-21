@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemAddActivity">
+
+    <TextView
+        android:id="@+id/addItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/addItemMsg"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        tools:ignore="LabelFor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputName"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/nameText"
+        tools:ignore="LabelFor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addItemText"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/inputAmount"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/amountText"
+        tools:ignore="LabelFor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputName"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/inputQty"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/qtyText"
+        tools:ignore="LabelFor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputAmount"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/inputDescription"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/descriptionText"
+        tools:ignore="LabelFor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputQty"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/itemCreate"
+        android:layout_width="401dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="16dp"
+        android:onClick="createItem"
+        android:text="@string/itemCreateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
