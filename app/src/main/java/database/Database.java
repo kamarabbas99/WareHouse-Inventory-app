@@ -102,14 +102,5 @@ public class Database implements IDBLayer{
         items=null;
         System.out.println("Cleared the databse!");
     }
-    public boolean verifyID(int id){
-        boolean toReturn = false;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getID() == id) {
-                toReturn=true;
-            }
-        }
-        return toReturn;
-    }
 
 }
