@@ -169,7 +169,7 @@ public class ItemPersistence implements IDBLayer{
         {
             // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORYMANAGERS WHERE ITEMID = ? AND INVENTORYID = ?");
-            inventoryStatement.setString(1, Integer.toString(id));
+            inventoryStatement.setString(1, Integer.toString(id) );
             inventoryStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
             // execute the query
             inventoryStatement.executeUpdate();
