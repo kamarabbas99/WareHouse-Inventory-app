@@ -31,7 +31,7 @@ public class Database implements IDBLayer{
     }
 
 
-    public Item addItem(int id, int qty) {
+    public Item add(int id, int quantity) {
         Item toReturn = null;
         int ind = -1;
         for (int i = 0; i < items.size(); i++) {
@@ -43,7 +43,7 @@ public class Database implements IDBLayer{
             int newID = items.get(ind).getID();
             String newName = items.get(ind).getName();
             String newDesc = items.get(ind).getDescription();
-            int newQuan = items.get(ind).getQuantity() + qty;
+            int newQuan = items.get(ind).getQuantity() + quantity;
             String newQuanMet = items.get(ind).getQuantityMetric();
             int newThres = items.get(ind).getLowThreshold();
             toReturn = new Item(newID, newName, newDesc, newQuan, newQuanMet, newThres);
@@ -56,9 +56,9 @@ public class Database implements IDBLayer{
     }
 
 
-    public Item removeItem(int id, int qty) {
+    public Item remove(int id, int quantity) {
 
-        return addItem(id, -qty);
+        return add(id, -quantity);
 
     }
 
@@ -77,7 +77,7 @@ public class Database implements IDBLayer{
 
         return object.getID();
     }
-    public Item delete(int id){
+    public void delete(int id){
         Item toReturn = null;
         int ind = -1;
         for (int i = 0; i < items.size(); i++) {
@@ -89,8 +89,6 @@ public class Database implements IDBLayer{
             toReturn= items.get(ind);
             items.remove(ind);
         }
-
-        return toReturn;
     }
     public Item[] getDB(){
         Item[] toReturn = new Item[items.size()];
