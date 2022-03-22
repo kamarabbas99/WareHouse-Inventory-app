@@ -1,13 +1,17 @@
 package logic;
 
 import database.IDBLayer;
+import objects.IDSO;
 import objects.Account;
 
-public class AccountManager {
+public class AccountAccesser {
 
     private IDBLayer AccountDB;
 
-    public AccountManager(IDBLayer db) {
+    // default constructor needs to be updated after the singleton class for getting AccountPersistence instance is complete
+
+    // constructor
+    public AccountAccesser(IDBLayer db) {
         this.AccountDB = db;
     }
 
@@ -36,7 +40,14 @@ public class AccountManager {
     }
 
     public Account[] getAllAccounts() {
-        return (Account[]) AccountDB.getDB();
+        IDSO[] accountsAsIDSO = AccountDB.getDB();
+        Account[] accounts = new Item[accountsAsIDSO.length];
+
+        for (int i = 0; i < accountsAsIDSO.length; i++) {
+            accounts[i] = (Account) accountsAsIDSO[i];
+        }
+
+        return accounts;
     }
 
     public void deleteAllAccounts() {
