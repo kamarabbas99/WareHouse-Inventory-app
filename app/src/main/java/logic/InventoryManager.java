@@ -24,7 +24,7 @@ public class InventoryManager {
         Item addedItem = null;
 
         if (ItemDB.verifyID(id)) {
-            addedItem = (Item) ItemDB.add(id, amount);
+            addedItem = (Item) ItemDB.addItem(id, amount);
         }
 
         return addedItem;
@@ -35,7 +35,7 @@ public class InventoryManager {
         Item removedItem = null;
 
         if (ItemDB.verifyID(id) && amount > 0) {
-            removedItem = (Item) ItemDB.remove(id, amount);
+            removedItem = (Item) ItemDB.removeItem(id, amount);
         }
 
         return removedItem;
@@ -47,7 +47,7 @@ public class InventoryManager {
 
         for (int i = 0; i < ids.length; i++) {
             if (ItemDB.verifyID(ids[i]) && amounts[i] > 0) {
-                addedItems[i] = (Item) ItemDB.add(ids[i], amounts[i]);
+                addedItems[i] = (Item) ItemDB.addItem(ids[i], amounts[i]);
             }
         }
 
@@ -60,7 +60,7 @@ public class InventoryManager {
         Item[] removedItems = new Item[ids.length];
 
         for(int i=0;i<ids.length;i++)
-            removedItems[i]= (Item) ItemDB.remove(ids[i],amounts[i]);
+            removedItems[i]= (Item) ItemDB.removeItem(ids[i],amounts[i]);
 
         return removedItems;
 
