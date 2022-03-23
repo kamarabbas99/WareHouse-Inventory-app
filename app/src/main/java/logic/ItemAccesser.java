@@ -22,10 +22,18 @@ public class ItemAccesser {
 
     // adds first instance of given item to database
     public Item createItem(String name, String description, int quantity, String quantityMetric, int lowThreshold) {
-        Item newItem = new Item(-1, name, description, quantity, quantityMetric, lowThreshold);
-        int id = ItemDB.create(toCreate);
-        newItem.setID(id);
-        return newItem;
+        try {
+            Item newItem = new Item(-1, name, description, quantity, quantityMetric, lowThreshold);
+            int id = ItemDB.create(toCreate);
+            newItem = newItem.get(id);
+            if (newItem == null) {
+                System.out.println("Null Item");
+            }
+            return newItem;
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception: " + exception.getMessage());
+        }
+
     }
 
     // method that adds item to the quantity
@@ -37,7 +45,7 @@ public class ItemAccesser {
             }
             return addedItem;
         } catch (final PersistenceExecption exception) {
-            System.out.println("Persistence Exception");
+            System.out.println("Persistence Exception: " + exception.getMessage());
         }
     }
 
@@ -50,7 +58,7 @@ public class ItemAccesser {
             }
             return removedItem;
         } catch (final PersistenceExecption exception) {
-            System.out.println("Persistence Exception");
+            System.out.println("Persistence Exception: " + exception.getMessage());
         }
     }
 
@@ -63,7 +71,7 @@ public class ItemAccesser {
             }
             return gotItem;
         } catch (final PersistenceExecption exception) {
-            System.out.println("Persistence Exception");
+            System.out.println("Persistence Exception: " + exception.getMessage());
         }
     }
 
@@ -79,7 +87,7 @@ public class ItemAccesser {
 
             return items;
         } catch (final PersistenceExecption exception) {
-            System.out.println("Persistence Exception");
+            System.out.println("Persistence Exception: " + exception.getMessage());
         }
     }
 
@@ -88,7 +96,7 @@ public class ItemAccesser {
         try {
             ItemDB.clearDB();
         } catch (final PersistenceExecption exception) {
-            System.out.println("Persistence Exception");
+            System.out.println("Persistence Exception: " + exception.getMessage());
         }
     }
 }
