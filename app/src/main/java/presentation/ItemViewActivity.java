@@ -15,7 +15,7 @@ import objects.Item;
 //The amount of the item can be increased/decreased
 //The item can also be deleted from the system entirely
 public class ItemViewActivity extends AppCompatActivity {
-    InventoryManager inventory = new InventoryManager(new Database());
+    ItemAccesser inventory = new ItemAccesser(new Database());
     Item item;
 
     //Text views and buttons on page
