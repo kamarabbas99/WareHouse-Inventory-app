@@ -1,7 +1,5 @@
 package database;
 
-import logic.InventoryManager;
-
 /*
 A singleton class to hold the reference to the database file path.
 Required because it needs to be used on startup.

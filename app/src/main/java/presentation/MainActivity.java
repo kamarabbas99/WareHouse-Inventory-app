@@ -37,7 +37,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(stockView);
     }
 
-<<<<<<< HEAD
+
+    //Called when user taps the "Add Item" Button
+    //Creates a new Intent to move activities to ItemAddActivity, and immediately moves there
+    public void addItemSwitch(View view) {
+        Intent addView = new Intent(this, ItemAddActivity.class);
+        startActivity(addView);
+    }
+
     private void copyDatabaseToDevice() {
         final String DB_PATH = "db";
 
@@ -90,12 +97,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
-=======
-    public void addItemSwitch(View view) {
-        Intent addView = new Intent(this, ItemAddActivity.class);
-        startActivity(addView);
-    }
->>>>>>> UI
 }
