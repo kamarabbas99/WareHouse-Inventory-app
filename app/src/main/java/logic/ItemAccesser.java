@@ -1,6 +1,8 @@
 package logic;
 
 import database.IDBLayer;
+import database.DatabaseManager;
+import database.PersistenceExeption;
 import objects.IDSO;
 import objects.Item;
 
@@ -8,7 +10,10 @@ public class ItemAccesser {
 
     private IDBLayer ItemDB;
 
-    // default constructor needs to be updated after the singleton class for getting ItemPersistence instance is complete
+    // default constructor
+    public ItemAccesser() {
+        this.ItemDB = DatabaseManager.getItemPersistence();
+    }
 
     // constructor
     public ItemAccesser(IDBLayer db) {
@@ -16,57 +21,74 @@ public class ItemAccesser {
     }
 
     // adds first instance of given item to database
-    public int createItem(Item toCreate) {
-        return ItemDB.create(toCreate);
+    public Item createItem(String name, String description, int quantity, String quantityMetric, int lowThreshold) {
+        Item newItem = new Item(-1, name, description, quantity, quantityMetric, lowThreshold);
+        int id = ItemDB.create(toCreate);
+        newItem.setID(id);
+        return newItem;
     }
 
     // method that adds item to the quantity
     public Item addItem(int id, int amount) {
-        Item addedItem = null;
-
-        if (ItemDB.verifyID(id)) {
-            addedItem = (Item) ItemDB.add(id, amount);
+        try {
+            Item addedItem = (Item) ItemDB.add(id, amount);
+            if (addedItem == null) {
+                System.out.println("Null Item");
+            }
+            return addedItem;
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception");
         }
-
-        return addedItem;
     }
 
     // method that removes item from quantity
     public Item removeItem(int id, int amount) {
-        Item removedItem = null;
-
-        if (ItemDB.verifyID(id) && amount > 0) {
-            removedItem = (Item) ItemDB.remove(id, amount);
+        try {
+            Item removedItem = (Item) ItemDB.remove(id, amount);
+            if (removedItem == null) {
+                System.out.println("Null Item");
+            }
+            return removedItem;
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception");
         }
-
-        return removedItem;
     }
 
     // method that return the item requested
     public Item getItem(int id) {
-        Item toGet = null;
-
-        if (ItemDB.verifyID(id)) {
-            toGet = (Item) ItemDB.get(id);
+        try {
+            Item gotItem = (Item) ItemDB.get(id);
+            if (gotItem == null) {
+                System.out.println("Null Item");
+            }
+            return gotItem;
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception");
         }
-
-        return toGet;
     }
 
     // method that return an array of all item in the system
     public Item[] getAllItems() {
-        IDSO[] itemsAsIDSO = ItemDB.getDB();
-        Item[] items = new Item[itemsAsIDSO.length];
+        try {
+            IDSO[] itemsAsIDSO = ItemDB.getDB();
+            Item[] items = new Item[itemsAsIDSO.length];
 
-        for (int i = 0; i < itemsAsIDSO.length; i++) {
-            items[i] = (Item) itemsAsIDSO[i];
+            for (int i = 0; i < itemsAsIDSO.length; i++) {
+                items[i] = (Item) itemsAsIDSO[i];
+            }
+
+            return items;
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception");
         }
-
-        return items;
     }
 
     // removes all items from active inventory
     public void removeAllItems() {
-        ItemDB.clearDB();
+        try {
+            ItemDB.clearDB();
+        } catch (final PersistenceExecption exception) {
+            System.out.println("Persistence Exception");
+        }
     }
 }
