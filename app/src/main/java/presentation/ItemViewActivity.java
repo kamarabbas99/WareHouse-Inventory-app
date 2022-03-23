@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.warehouseinventorysystem.R;
 
 import database.Database;
-import logic.InventoryManager;
+import logic.ItemAccesser;
 import objects.Item;
 
 //This activity displays all the information about a passed item object

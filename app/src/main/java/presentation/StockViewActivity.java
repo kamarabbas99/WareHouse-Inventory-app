@@ -10,7 +10,7 @@ import android.os.Bundle;
 import com.example.warehouseinventorysystem.R;
 
 import database.Database;
-import logic.InventoryManager;
+import logic.ItemAccesser;
 import objects.Item;
 
 //Stock View Activity:
@@ -34,7 +34,7 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
         RecyclerView itemRV = findViewById(R.id.itemRV);
 
         //Gets the list of all item objects in database
-        items = inventory.getInventory();
+        items = inventory.getAllItems();
 
         //Creates new item adapter and passes it the array of items
         ItemsAdapter adapter = new ItemsAdapter(items, this);
