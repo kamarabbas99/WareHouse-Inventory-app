@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(stockView);
     }
 
+<<<<<<< HEAD
     private void copyDatabaseToDevice() {
         final String DB_PATH = "db";
 
@@ -91,4 +92,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+=======
+    public void addItemSwitch(View view) {
+        Intent addView = new Intent(this, ItemAddActivity.class);
+        startActivity(addView);
+    }
+>>>>>>> UI
 }
