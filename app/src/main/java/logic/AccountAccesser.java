@@ -20,28 +20,16 @@ public class AccountAccesser {
     }
 
     public Account getAccount(int id) {
-        Account toGet = null;
-
-        if (AccountDB.verifyID(id)) {
-            toGet = (Account) AccountDB.get(id);
-        }
-
-        return toGet;
+        return (Account) AccountDB.get(id);
     }
 
-    public Account deleteAccount(int id) {
-        Account deleted = null;
-
-        if (AccountDB.verifyID(id)) {
-            deleted = (Account) AccountDB.delete(id);
-        }
-
-        return deleted;
+    public void deleteAccount(int id) {
+        AccountDB.delete(id);
     }
 
     public Account[] getAllAccounts() {
         IDSO[] accountsAsIDSO = AccountDB.getDB();
-        Account[] accounts = new Item[accountsAsIDSO.length];
+        Account[] accounts = new Account[accountsAsIDSO.length];
 
         for (int i = 0; i < accountsAsIDSO.length; i++) {
             accounts[i] = (Account) accountsAsIDSO[i];
