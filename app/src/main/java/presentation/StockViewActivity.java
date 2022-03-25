@@ -23,7 +23,7 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
     Item[] items;
 
     //Creates new inventory manager
-    ItemAccesser inventory = new ItemAccesser(new Database());
+    ItemAccesser inventory = new ItemAccesser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
