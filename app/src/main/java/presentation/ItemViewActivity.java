@@ -1,7 +1,9 @@
 package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ import objects.Item;
 //This activity displays all the information about a passed item object
 //The amount of the item can be increased/decreased
 //The item can also be deleted from the system entirely
-public class ItemViewActivity extends AppCompatActivity {
+public class ItemViewActivity extends AppCompatActivity implements AlertBox.AlertListener {
     ItemAccesser inventory = new ItemAccesser();
     Item item;
 
@@ -49,9 +51,13 @@ public class ItemViewActivity extends AppCompatActivity {
         }
     }
 
-    //On click of the delete item button, the item is removed
+    //On click of the delete item button, a warning box is shown
+    //If yes is selected onPositiveClick is called and the item is removed
+    //If no is selected, then nothing happens
     public void deleteItem(View view){
-        inventory.removeItem(item.getID(), item.getQuantity());
+        //Declares and shows warning to user
+        DialogFragment warning = new AlertBox();
+        warning.show(getSupportFragmentManager(), "warn");
     }
 
     public void addStock(View view) {
@@ -60,5 +66,12 @@ public class ItemViewActivity extends AppCompatActivity {
 
     public void removeStock(View view) {
 
+    }
+
+    //On positive button click, the items amount is set to 0, and the page returns to stock view
+    @Override
+    public void onPositiveClick(DialogFragment dialog) {
+        inventory.removeItem(item.getID(), item.getQuantity());
+        finish();
     }
 }

@@ -16,4 +16,5 @@
     <string name="addStock">Add Stock</string>
     <string name="delStock">Remove Stock</string>
     <string name="DeleteItem">Delete Item From Inventory</string>
+    <string name="DialogDeleteWarning">Are you sure you want to delete this item?</string>
 </resources>
