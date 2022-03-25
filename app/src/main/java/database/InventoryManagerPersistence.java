@@ -8,17 +8,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import objects.*;
+import objects.IDSO;
+import objects.Item;
 
-/* ITEMPERSISTENCE
-Used to interact with the database with Item objects.
+/* INVENTORYMANAGERPERSISTENCE
+Used to interact with the InventoryManager table in .
 This class in total interacts with 3 tables:
     1. Items
     2. InventoryManagers
     3. Transactions
 Modifies the above tables with the public methods.
  */
-public class ItemPersistence implements IDBLayer{
+public class InventoryManagerPersistence implements IDBLayer {
 
     // region $fields
 
@@ -29,21 +30,21 @@ public class ItemPersistence implements IDBLayer{
 
     // region $constructor
 
-    public ItemPersistence(final String dbFilePath)
+    public InventoryManagerPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
     }
 
     // endregions
-
     // region $interfaceOverrides
 
     /* GET
     PURPOSE:
-        Retrieves the item with the given id if found in the database.
+        Retrieves the item with the given id if found in the inventorymanager database.
+        Looks for the itemID associated with the active Inventory.
     INPUT:
-        id              The Item object to look for.
+        id              The Item object to look for in the active inventory.
     OUTPUT:
         Returns the obtained Item from the DB.
         Returns a null if the item is not found.
@@ -57,8 +58,11 @@ public class ItemPersistence implements IDBLayer{
         {
             Item item = null;
             // prepare the query
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ITEMS ON WHERE ITEMS.ITEMID = ?");
+            final PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
+                            "WHERE ITEMS.ITEMID = ? AND INVENTORYMANAGERS.INVENTORYID = ?");
             preparedStatement.setString(1, Integer.toString(id));
+            preparedStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
             // translate the result into the Item object if the result set found the item
@@ -83,7 +87,9 @@ public class ItemPersistence implements IDBLayer{
         Creates a new item with the values inside the given DSO.
     NOTES:
         Does not check if an item with the given name already exists.
-        If an item already exists with the same ID as the provided object parameter, then that ID is returned.
+        This item is added to the Items database table and the InventoryManagers table.
+        If an item already exists with the same ID as the provided object parameter, then that ID is returned
+        and the quantity is NOT updated.
     INPUT:
         object              The Item object to create in the Items table.
     OUTPUT:
@@ -397,8 +403,10 @@ public class ItemPersistence implements IDBLayer{
         String itemID = resultSet.getString("itemID");
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
+        String quantity = resultSet.getString("quantity");
         String quantityMetric = resultSet.getString("quantityMetric");
-        return new Item(Integer.valueOf(itemID), name, description, 0, quantityMetric, 0);
+        String lowThreshold = resultSet.getString("lowThreshold");
+        return new Item(Integer.valueOf(itemID), name, description, Integer.valueOf(quantity), quantityMetric, Integer.valueOf(lowThreshold));
     }
 
     /* CREATENEWID
@@ -429,5 +437,4 @@ public class ItemPersistence implements IDBLayer{
     }
 
     // endregion
-
 }
