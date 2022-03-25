@@ -3,6 +3,7 @@ package presentation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
@@ -46,5 +47,18 @@ public class ItemViewActivity extends AppCompatActivity {
         catch (Exception e){
             System.out.println("Id not found");
         }
+    }
+
+    //On click of the delete item button, the item is removed
+    public void deleteItem(View view){
+        inventory.removeItem(item.getID(), item.getQuantity());
+    }
+
+    public void addStock(View view) {
+
+    }
+
+    public void removeStock(View view) {
+
     }
 }
