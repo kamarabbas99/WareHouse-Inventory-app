@@ -17,7 +17,7 @@ import objects.Item;
 //This activity displays all the information about a passed item object
 //The amount of the item can be increased/decreased
 //The item can also be deleted from the system entirely
-public class ItemViewActivity extends AppCompatActivity implements AlertBox.AlertListener {
+public class ItemViewActivity extends AppCompatActivity implements AlertBox.AlertListener, AmountBox.AmountListener {
     ItemAccesser inventory = new ItemAccesser();
     Item item;
 
@@ -60,12 +60,16 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
         warning.show(getSupportFragmentManager(), "warn");
     }
 
+    //On an add stock button press, a AmountBox with id 'add' is created and shown to user
     public void addStock(View view) {
-
+        DialogFragment add = new AmountBox();
+        add.show(getSupportFragmentManager(), "add");
     }
 
+    //On an remove stock button press, a AmountBox with id 'remove' is created and shown to user
     public void removeStock(View view) {
-
+        DialogFragment add = new AmountBox();
+        add.show(getSupportFragmentManager(), "remove");
     }
 
     //On positive button click, the items amount is set to 0, and the page returns to stock view
@@ -73,5 +77,26 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
     public void onPositiveClick(DialogFragment dialog) {
         inventory.removeItem(item.getID(), item.getQuantity());
         finish();
+    }
+
+    //On a call from a AmountBox this method fires
+    //Figures out what action needs to be performed based on the id of the box
+    //      add --> the given amount integer needs to be added to the current items stock
+    //      remove --> the given amount integer needs to be removed to the current items stock
+    @Override
+    public void onChangeClick(DialogFragment dialog, int amount) {
+        //Adds item to current stock
+        if(dialog.getTag().equals("add")){
+            inventory.addItem(item.getID(), amount);
+        }
+
+        //Removes item from current stock
+        else if(dialog.getTag().equals("remove")){
+            inventory.removeItem(item.getID(), amount);
+        }
+
+        //Reloads the activity to have the page updated
+        finish();
+        startActivity(getIntent());
     }
 }

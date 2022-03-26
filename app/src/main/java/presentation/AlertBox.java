@@ -13,20 +13,21 @@ import com.example.warehouseinventorysystem.R;
 public class AlertBox extends DialogFragment {
     AlertListener listener;
 
+    //Creates a AlertDialog with a warning message and yes or no buttons
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.DialogDeleteWarning)
+                //If yes button is clicked, message is sent to calling class via the listener
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id){
                         listener.onPositiveClick(AlertBox.this);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id){
-                    }
-                });
+                //If no button is clicked nothing is sent and the text dialog exits
+                .setNegativeButton("No", null);
 
+        //Returns a created box
         return builder.create();
     }
 
