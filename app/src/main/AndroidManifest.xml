@@ -9,13 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
+
+        <activity
+            android:name="presentation.ItemViewActivity"
+            android:exported="false"
+            android:parentActivityName="presentation.StockViewActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="presentation.MainActivity" />
+
+        <activity
+            android:name="presentation.ItemAddActivity"
+            android:exported="false"
+            android:parentActivityName="presentation.MainActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="presentation.MainActivity" />
+
         <activity
             android:name="presentation.StockViewActivity"
             android:exported="false"
-            android:parentActivityName="presentation.MainActivity"/>
+            android:parentActivityName="presentation.MainActivity" />
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="presentation.MainActivity"/>
+            android:value="presentation.MainActivity" />
+
         <activity
             android:name="presentation.MainActivity"
             android:exported="true">

@@ -13,6 +13,7 @@ public class DatabaseManager {
     private int activeInventory = 1; // set default active inventory to the games inventory
     private int activeAccount = 1; // set default active account to first in list
     private static DatabaseManager Instance;
+    private static ItemPersistence itemPersistence = null;
 
     // endregion
 
@@ -36,6 +37,18 @@ public class DatabaseManager {
             Instance = new DatabaseManager();
         }
         return Instance;
+    }
+
+    /*
+    Retrieves and (if needed) creates an ItemPersistence.
+     */
+    public static ItemPersistence getItemPersistence()
+    {
+        if (itemPersistence == null)
+        {
+            itemPersistence = new ItemPersistence(DatabaseManager.Instance.getDBFilePath());
+        }
+        return itemPersistence;
     }
 
     // endregion

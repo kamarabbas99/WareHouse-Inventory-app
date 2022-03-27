@@ -21,6 +21,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/stock_welcome_text"
         android:textAlignment="center"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

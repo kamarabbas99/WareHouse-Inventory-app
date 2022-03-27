@@ -9,7 +9,6 @@ public interface IDBLayer {
 	public void delete(int id);
 	public IDSO[] getDB();
 	public void clearDB();
-    public boolean verifyID(int id);
 	public IDSO add(int id, int quantity);
 	public IDSO remove(int id, int quantity);
 }
