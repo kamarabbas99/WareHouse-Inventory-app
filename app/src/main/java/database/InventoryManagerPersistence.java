@@ -8,14 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import objects.*;
+import objects.IDSO;
+import objects.Item;
 
-/* ITEMPERSISTENCE
-The intent of this class is to interact with Items table.
-Modifies the above table with the public methods.
- */
-public class ItemPersistence implements IDBLayer{
-
+public class InventoryManagerPersistence implements IDBLayer
+{
     // region $fields
 
     private final String dbFilePath;
@@ -25,7 +22,7 @@ public class ItemPersistence implements IDBLayer{
 
     // region $constructor
 
-    public ItemPersistence(final String dbFilePath)
+    public InventoryManagerPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
