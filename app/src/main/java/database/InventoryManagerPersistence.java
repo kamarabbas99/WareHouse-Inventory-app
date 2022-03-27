@@ -8,17 +8,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import objects.*;
+import objects.IDSO;
+import objects.Item;
 
-/* ITEMPERSISTENCE
-Used to interact with the database with Item objects.
+/* INVENTORYMANAGERPERSISTENCE
+Used to interact with the InventoryManager table in .
 This class in total interacts with 3 tables:
     1. Items
     2. InventoryManagers
     3. Transactions
 Modifies the above tables with the public methods.
  */
-public class ItemPersistence implements IDBLayer{
+public class InventoryManagerPersistence implements IDBLayer {
 
     // region $fields
 
@@ -29,21 +30,21 @@ public class ItemPersistence implements IDBLayer{
 
     // region $constructor
 
-    public ItemPersistence(final String dbFilePath)
+    public InventoryManagerPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
     }
 
     // endregions
-
     // region $interfaceOverrides
 
     /* GET
     PURPOSE:
-        Retrieves the item with the given id if found in the database.
+        Retrieves the item with the given id if found in the inventorymanager database.
+        Looks for the itemID associated with the active Inventory.
     INPUT:
-        id              The Item object to look for.
+        id              The Item object to look for in the active inventory.
     OUTPUT:
         Returns the obtained Item from the DB.
         Returns a null if the item is not found.
@@ -57,8 +58,11 @@ public class ItemPersistence implements IDBLayer{
         {
             Item item = null;
             // prepare the query
-            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ITEMS ON WHERE ITEMS.ITEMID = ?");
+            final PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
+                            "WHERE ITEMS.ITEMID = ? AND INVENTORYMANAGERS.INVENTORYID = ?");
             preparedStatement.setString(1, Integer.toString(id));
+            preparedStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
             // translate the result into the Item object if the result set found the item
@@ -83,12 +87,14 @@ public class ItemPersistence implements IDBLayer{
         Creates a new item with the values inside the given DSO.
     NOTES:
         Does not check if an item with the given name already exists.
-        If an item already exists with the same ID as the provided object parameter, then that ID is returned.
+        This item is added to the Items database table and the InventoryManagers table.
+        If an item already exists with the same ID as the provided object parameter, then that ID is returned
+        and the quantity is NOT updated.
     INPUT:
         object              The Item object to create in the Items table.
     OUTPUT:
         Returns the itemID of the newly created item.
-        Returns -1 if the provided parameter is not an instance of the Item class.
+        Returns -1 if the provided parameter is not an instance of the Item class.\
         Throws a PersistenceException if something went wrong with query.
      */
     @Override
@@ -110,10 +116,9 @@ public class ItemPersistence implements IDBLayer{
         try (final Connection connection = connect())
         {
             int id = itemToCreate.getID(); // the returned value
-            Item foundItem;
             // a check to see if an item with the given ID already exists
             // case: item with the same id wasn't found
-            if ((foundItem = (Item) get(itemToCreate.getID())) == null) {
+            if (((Item) get(itemToCreate.getID())) == null) {
                 // retrieve a new ID to give to the item.
                 id = createNewID();
                 // prepare the query
@@ -132,11 +137,6 @@ public class ItemPersistence implements IDBLayer{
                 add(id, itemToCreate.getQuantity()); // may throw PersistenceException
 
                 // TODO: update transaction table (not currently time sensitive)
-            }
-            // case: item with the same id was found
-            else if (foundItem != null)
-            {
-                add(foundItem.getID(), itemToCreate.getQuantity()); // may throw PersistenceException
             }
 
             // return the itemID of the newly created item
@@ -257,6 +257,12 @@ public class ItemPersistence implements IDBLayer{
         }
     }
 
+    // Unsure about this methods' purpose (mcquarrc)
+    @Override
+    public boolean verifyID(int id) {
+        return false;
+    }
+
     /* ADD
     PURPOSE:
         Adds the specified quantity to an item, with specified id, in the active inventory.
@@ -267,7 +273,6 @@ public class ItemPersistence implements IDBLayer{
         quantity        The amount to increase the quantity of the item by.
     OUTPUT:
         Returns the updated item object in the DB.
-        Returns a null if the item object was not found in the DB.
         Throws a PersistenceException if something went wrong with the query.
      */
     @Override
@@ -278,23 +283,21 @@ public class ItemPersistence implements IDBLayer{
         {
             // retrieve the item from DB
             Item itemToAdd = (Item) get(id); // may throw a PersistenceException
-            if (itemToAdd != null) {
-                // store previous quantity
-                int previousQuantity = Integer.valueOf(itemToAdd.getQuantity());
-                // set new quantity
-                String newQuantity = Integer.toString(previousQuantity + quantity);
-                // prepare the query
-                final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
-                inventoryStatement.setString(1, newQuantity);
-                inventoryStatement.setString(2, Integer.toString(id));
-                inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
-                // execute the query
-                inventoryStatement.executeUpdate();
-                // close open connections
-                inventoryStatement.close();
-                // update old reference to item
-                itemToAdd = (Item) get(id);
-            }
+            // store previous quantity
+            int previousQuantity = Integer.valueOf(itemToAdd.getQuantity());
+            // set new quantity
+            String newQuantity = Integer.toString(previousQuantity + quantity);
+            // prepare the query
+            final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
+            inventoryStatement.setString(1, newQuantity);
+            inventoryStatement.setString(2, Integer.toString(id));
+            inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
+            // execute the query
+            inventoryStatement.executeUpdate();
+            // close open connections
+            inventoryStatement.close();
+            // update old reference to item
+            itemToAdd = (Item) get(id);
             // return updated item
             return itemToAdd;
         }
@@ -322,7 +325,6 @@ public class ItemPersistence implements IDBLayer{
     OUTPUT:
         Returns the updated item object in the DB.
         Returns null if the new item quantity is 0 or lower.
-        Returns null if the item was not found.
         Throws a PersistenceException if something went wrong with the query.
      */
     @Override
@@ -332,36 +334,30 @@ public class ItemPersistence implements IDBLayer{
         {
             // retrieve the Item first to get quantity
             Item itemToRemove = (Item) get(id); // may throw a PersistenceException
-            if (itemToRemove != null) {
-                // store previous quantity
-                int previousQuantity = Integer.valueOf(itemToRemove.getQuantity());
+            // store previous quantity
+            int previousQuantity = Integer.valueOf(itemToRemove.getQuantity());
 
-                // a check to see if the removal will delete the object
-                // case: removal does delete the item
-                if (previousQuantity - quantity == 0)
-                {
-                    delete(id); // may throw a PersistenceException
-                    itemToRemove = null;
-                }
-                else if (previousQuantity - quantity == 0)
-                {
-                    throw new PersistenceException(new Exception("The amount specified to remove was too large."));
-                }
-                // case: removal does not delete the item
-                else {
-                    String newQuantity = Integer.toString(previousQuantity - quantity);
-                    // prepare the query
-                    final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
-                    inventoryStatement.setString(1, newQuantity);
-                    inventoryStatement.setString(2, Integer.toString(id));
-                    inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
-                    // execute the query
-                    inventoryStatement.executeUpdate();
-                    // close open connections
-                    inventoryStatement.close();
-                    // update old reference to item
-                    itemToRemove = (Item) get(id);
-                }
+            // a check to see if the removal will delete the object
+            // case: removal does delete the item
+            if (previousQuantity - quantity <= 0)
+            {
+                delete(id); // may throw a PersistenceException
+                itemToRemove = null;
+            }
+            // case: removal does not delete the item
+            else {
+                String newQuantity = Integer.toString(previousQuantity - quantity);
+                // prepare the query
+                final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
+                inventoryStatement.setString(1, newQuantity);
+                inventoryStatement.setString(2, Integer.toString(id));
+                inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
+                // execute the query
+                inventoryStatement.executeUpdate();
+                // close open connections
+                inventoryStatement.close();
+                // update old reference to item
+                itemToRemove = (Item) get(id);
             }
             // return updated item from DB
             return itemToRemove;
@@ -407,8 +403,10 @@ public class ItemPersistence implements IDBLayer{
         String itemID = resultSet.getString("itemID");
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
+        String quantity = resultSet.getString("quantity");
         String quantityMetric = resultSet.getString("quantityMetric");
-        return new Item(Integer.valueOf(itemID), name, description, 0, quantityMetric, 0);
+        String lowThreshold = resultSet.getString("lowThreshold");
+        return new Item(Integer.valueOf(itemID), name, description, Integer.valueOf(quantity), quantityMetric, Integer.valueOf(lowThreshold));
     }
 
     /* CREATENEWID
@@ -439,5 +437,4 @@ public class ItemPersistence implements IDBLayer{
     }
 
     // endregion
-
 }
