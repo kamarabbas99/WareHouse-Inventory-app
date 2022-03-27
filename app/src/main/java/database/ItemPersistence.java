@@ -238,7 +238,6 @@ public class ItemPersistence implements IDBLayer{
     {
         Exception exception = new Exception("Cannot add a quantity to the Items table since it does not have a quantity column.");
         throw new PersistenceException(exception);
-
     }
 
     /* REMOVE
@@ -290,7 +289,7 @@ public class ItemPersistence implements IDBLayer{
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
         String quantityMetric = resultSet.getString("quantityMetric");
-        return new Item(Integer.valueOf(itemID), name, description, 0, quantityMetric, 0);
+        return new Item(Integer.parseInt(itemID), name, description, 0, quantityMetric, 0);
     }
 
     /* CREATENEWID
