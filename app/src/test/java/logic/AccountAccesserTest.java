@@ -21,21 +21,25 @@ public class AccountAccesserTest {
         aa=new AccountAccesser(new Database());
         assertNotNull(aa);
 
+
         acc=new Account();
         assertNotNull(acc);
 
-        aa.createAccount(acc);
-        assertNotEquals(1,aa.createAccount(acc));
+        System.out.println(acc.getID());
+
+
     }
+
 
     @Test
     public void testCreateAccount() {
-        assertEquals(-1,aa.createAccount(acc));
+        aa.createAccount(acc);
+        //assertEquals(-1,aa.createAccount(acc));
     }
 
     @Test
     public void testGetAccount() {
-        assertEquals(-1,aa.getAccount(-1));
+        assertEquals(-1,aa.getAccount(-1).getID());
     }
 
     @Test (expected = PersistenceException.class)
@@ -56,4 +60,7 @@ public class AccountAccesserTest {
         aa.deleteAllAccounts();
         aa.deleteAllAccounts();
     }
+
+
+
 }

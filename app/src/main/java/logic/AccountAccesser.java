@@ -42,7 +42,7 @@ public class AccountAccesser {
         return accounts;
     }
 
-    //method that delete all account 
+    //method that delete all account
     public void deleteAllAccounts() {
         AccountDB.clearDB();
     }

@@ -1,17 +1,13 @@
 
 package logic;
 
-
 import static org.junit.Assert.*;
-
-import database.IDBLayer;
-import database.PersistenceException;
-import objects.Item;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import database.Database;
-import database.IDBLayer;
+import objects.Item;
+
 
 public class ItemAccesserTest {
 
@@ -20,17 +16,20 @@ public class ItemAccesserTest {
     @Before
     public void setUp()
     {
-        im=new ItemAccesser();
+        im=new ItemAccesser(new Database());
         assertNotNull(im);
 
-        ItemAccesser withCons=new ItemAccesser(new Database());
-        assertNotNull(withCons);
+        //ItemAccesser withCons=new ItemAccesser(new Database());
+        //assertNotNull(withCons);
     }
 
     @Test
     public void testCreateItem() {
+
+
         Item newItem=im.createItem("default","desc",2,"metric",5);
         assertNotNull(newItem);
+
         assertEquals(newItem.getName(),"default");
     }
 
@@ -61,14 +60,14 @@ public class ItemAccesserTest {
     public void testGetAllItems() {
 
         Item newItem=im.createItem("default","desc",2,"metric",5);
-        assertEquals(im.getAllItems()[0].getName(),"default");
+        assertEquals(im.getAllItems()[0].getName(),"Item1");
 
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test
     public void testRemoveAllItems() {
         Item newItem=im.createItem("default","desc",2,"metric",5);
         im.removeAllItems();
-        im.removeAllItems();
+        assertNull(im.getAllItems());
     }
 }

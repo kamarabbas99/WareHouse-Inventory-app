@@ -12,7 +12,7 @@ import database.IDBLayer;
 
 public class InventoryManagerTest {
 
-
+/*
     @Test
     public void constructorT()
     {
@@ -116,6 +116,6 @@ public class InventoryManagerTest {
 
 
     }
-
+*/
 
 }
