@@ -23,8 +23,6 @@ public class ItemPersistenceTest {
         dbManager = DatabaseManager.getInstance();
         // set db file path to hardcoded value
         dbManager.setDBFilePath(dbFilePath);
-        // set active inventory to debug inventory
-        dbManager.setActiveInventory(0);
         // create a new ItemPersistence
         itemDB = new ItemPersistence(dbManager.getDBFilePath());
         assertNotNull(itemDB);
@@ -32,27 +30,19 @@ public class ItemPersistenceTest {
 
     @After
     public void tearDown() throws Exception {
-        // set active inventory back to default
-        dbManager.setActiveInventory(1);
-        // set dbFilePath back to default
-        dbManager.setDBFilePath("WIS");
         // free memory allocated to itemDB
         itemDB = null;
     }
 
     @Test // not currently working
     public void testItemFound() {
-        // add a test item
-        // check if test item exists
-        // delete test item from inventory
-
         // relies on the first Item in the Games Inventory to exist and remain unchanged
         Item result = (Item) itemDB.get(1);
         assertNotNull(result);
         assertEquals(1, result.getID());
         assertEquals("ELDEN RING", result.getName());
         assertEquals("Top game on Steam.", result.getDescription());
-        assertEquals(5, result.getQuantity());
+        assertEquals(0, result.getQuantity());
         assertEquals("unit", result.getQuantityMetric());
         assertEquals(0, result.getLowThreshold());
     }
@@ -67,7 +57,7 @@ public class ItemPersistenceTest {
 
     @Test
     public void testCreatingItem() {
-        Item testItem = new Item(0, "Test", "Entry for testing", 1, "unit", 0);
+        Item testItem = new Item("Test", "Entry for testing", 1, "unit", 0);
         int itemID = itemDB.create(testItem);
         assertTrue(itemID > 0);
     }
@@ -80,15 +70,10 @@ public class ItemPersistenceTest {
         assertEquals(-1, id);
     }
 
-    @Test
+    @Test (expected = PersistenceException.class)
     public void deleteItem() {
         // add test item to DB if not already exists
-        int testItemID = itemDB.create(new Item(0, "Test", "Entry for testing", 1, "unit", 0));
-        assertNotNull(itemDB.get(testItemID));
-        // add a quantity to test item
-        itemDB.add(testItemID, 1);
-
-        itemDB.delete(testItemID);
+        itemDB.delete(1);
     }
 
     @Test
@@ -102,41 +87,18 @@ public class ItemPersistenceTest {
     }
 
     // a dangerous test (will remove data)
-    @Test
+    @Test (expected = PersistenceException.class)
     public void clearDB() {
-        // switch to testInventory
-        // add a pile of Items to the testInventory
-        // test clearDB
-        // switch back to default Inventory
+        itemDB.clearDB();
     }
 
-    @Test
+    @Test (expected = PersistenceException.class)
     public void addItem() {
-
-        int itemID = 1;
-        int amountToAdd = 5;
-        Item itemToAdd = (Item) itemDB.get(itemID);
-        int previousQty = itemToAdd.getQuantity();
-        itemToAdd = (Item) itemDB.add(itemID, amountToAdd);
-        assertEquals(itemToAdd.getQuantity(), previousQty + amountToAdd);
+        itemDB.add(1, 5);
     }
 
-    @Test
+    @Test (expected = PersistenceException.class)
     public void removeItem() {
-        int itemID = 1;
-        int amountToRemove = 5;
-        Item itemToRemove = (Item) itemDB.get(itemID);
-        int previousQty = itemToRemove.getQuantity();
-        itemToRemove = (Item) itemDB.remove(itemID, amountToRemove);
-        // if the quantity goes below 0, there will be no update
-        if (previousQty - amountToRemove < 0)
-        {
-            assertEquals(itemToRemove.getQuantity(), previousQty);
-        }
-        // if the quantity does not go below 0, then it will be fine
-        else
-        {
-            assertEquals(itemToRemove.getQuantity(), previousQty - amountToRemove);
-        }
+        itemDB.remove(1, 5);
     }
 }
