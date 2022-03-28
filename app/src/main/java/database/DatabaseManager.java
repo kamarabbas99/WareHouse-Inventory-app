@@ -14,6 +14,7 @@ public class DatabaseManager {
     private int activeAccount = 1; // set default active account to first in list
     private static DatabaseManager Instance;
     private static ItemPersistence itemPersistence = null;
+    private static InventoryManagerPersistence inventoryManagerPersistence = null;
 
     // endregion
 
@@ -49,6 +50,19 @@ public class DatabaseManager {
             itemPersistence = new ItemPersistence(DatabaseManager.Instance.getDBFilePath());
         }
         return itemPersistence;
+    }
+
+    /*
+    /*
+    Retrieves and (if needed) creates an InventoryManagerPersistence.
+     */
+    public static InventoryManagerPersistence getInventoryManagerPersistence()
+    {
+        if (inventoryManagerPersistence == null)
+        {
+            inventoryManagerPersistence = new InventoryManagerPersistence(DatabaseManager.Instance.getDBFilePath());
+        }
+        return inventoryManagerPersistence;
     }
 
     // endregion
