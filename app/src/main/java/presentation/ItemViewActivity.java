@@ -3,22 +3,20 @@ package presentation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
 
-import database.Database;
-import logic.ItemAccesser;
+import logic.InventoryManagerAccessor;
 import objects.Item;
 
 //This activity displays all the information about a passed item object
 //The amount of the item can be increased/decreased
 //The item can also be deleted from the system entirely
 public class ItemViewActivity extends AppCompatActivity implements AlertBox.AlertListener, AmountBox.AmountListener {
-    ItemAccesser inventory = new ItemAccesser();
+    InventoryManagerAccessor inventory = new InventoryManagerAccessor();
     Item item;
 
     //Text views and buttons on page

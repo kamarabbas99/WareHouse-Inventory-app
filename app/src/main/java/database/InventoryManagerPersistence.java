@@ -261,7 +261,7 @@ public class InventoryManagerPersistence implements IDBLayer
                 // case A: item exists in the Items table
                 if (foundItem != null)
                 {
-                    final PreparedStatement inventoryStatement = connection.prepareStatement("INSERT INTO INVENTORYMANAGERS (?, ?, ?, ?)");
+                    final PreparedStatement inventoryStatement = connection.prepareStatement("INSERT INTO INVENTORYMANAGERS VALUES (?, ?, ?, ?)");
                     inventoryStatement.setString(1, Integer.toString(id));
                     inventoryStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
                     inventoryStatement.setString(3, Integer.toString(quantity));

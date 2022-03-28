@@ -9,8 +9,7 @@ import android.os.Bundle;
 
 import com.example.warehouseinventorysystem.R;
 
-import database.Database;
-import logic.ItemAccesser;
+import logic.InventoryManagerAccessor;
 import objects.Item;
 
 //Stock View Activity:
@@ -23,7 +22,7 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
     Item[] items;
 
     //Creates new inventory manager
-    ItemAccesser inventory = new ItemAccesser();
+    InventoryManagerAccessor inventory = new InventoryManagerAccessor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
