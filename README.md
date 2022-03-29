@@ -10,7 +10,7 @@
 -  [branching strategy](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/BranchingStrategy.md) is discussed in this document.
 
 ## Architecture
-- The [architecture](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/architecture.md) diagram can be found here.
+- The [architecture](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/documentation/architecture.png) diagram can be found here.
 
 ## Contributors
 - Kamarabbas Saiyed
