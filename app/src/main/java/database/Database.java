@@ -64,9 +64,11 @@ public class Database implements IDBLayer{
 
     public Item get(int id) {
         Item r=null;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getID() == id) {
-                r = items.get(i);
+        if(items!=null) {
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getID() == id) {
+                    r = items.get(i);
+                }
             }
         }
         return r;

@@ -2,63 +2,72 @@ package logic;
 
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import database.PersistenceException;
+import database.AccountPersistance;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import objects.Account;
-import database.Database;
 
 
 public class AccountAccesserTest {
 
     AccountAccesser aa;
     Account acc;
+    AccountPersistance accPerMock;
 
     @Before
     public void setUp() {
-        aa=new AccountAccesser(new Database());
-        assertNotNull(aa);
 
 
-        acc=new Account();
-        assertNotNull(acc);
-
-        System.out.println(acc.getID());
-
+        acc=new Account(1,"test1","test1","company");
+        accPerMock=mock(AccountPersistance.class);
+        aa=new AccountAccesser(accPerMock);
 
     }
 
 
     @Test
     public void testCreateAccount() {
-        aa.createAccount(acc);
-        //assertEquals(-1,aa.createAccount(acc));
+        when(accPerMock.create(acc)).thenReturn(acc.getID());
+        assertEquals(1,aa.createAccount(acc));
+
     }
 
     @Test
     public void testGetAccount() {
-        assertEquals(-1,aa.getAccount(-1).getID());
+        when(accPerMock.get(1)).thenReturn(acc);
+        assertEquals(1,aa.getAccount(1).getID());
+        assertNull(aa.getAccount(2));
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test
     public void testDeleteAccount() {
-        aa.deleteAccount(0);
+        int del=2;
+        aa.deleteAccount(del);
+        verify(accPerMock).delete(del);
+
 
     }
 
 
     @Test
     public void testGetAllAccounts() {
-        Account bc[]=aa.getAllAccounts();
-        assertEquals(-1,bc[0].getID());
+       Account[] toReturn={new Account(1,"test1","test1","company")};
+       when(accPerMock.getDB()).thenReturn(toReturn);
+       assertArrayEquals(toReturn,aa.getAllAccounts());
     }
 
-    @Test (expected = PersistenceException.class)
+
+    @Test
     public void testDeleteAllAccounts() {
         aa.deleteAllAccounts();
-        aa.deleteAllAccounts();
+        verify(accPerMock).clearDB();
+
     }
 
 
