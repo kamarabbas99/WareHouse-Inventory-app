@@ -22,9 +22,11 @@
 
     <EditText
         android:id="@+id/inputName"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/nameText"
         android:importantForAutofill="no"
@@ -38,9 +40,11 @@
 
     <EditText
         android:id="@+id/inputAmount"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/amountText"
         android:importantForAutofill="no"
@@ -53,9 +57,11 @@
 
     <EditText
         android:id="@+id/inputQty"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/qtyText"
         android:importantForAutofill="no"
@@ -69,9 +75,11 @@
 
     <EditText
         android:id="@+id/inputDescription"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="@string/descriptionText"
         android:importantForAutofill="no"
@@ -85,9 +93,11 @@
 
     <Button
         android:id="@+id/itemCreate"
-        android:layout_width="401dp"
+        android:layout_width="0dp"
         android:layout_height="66dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:onClick="createItem"
         android:text="@string/itemCreateButton"
         app:layout_constraintEnd_toEndOf="parent"
