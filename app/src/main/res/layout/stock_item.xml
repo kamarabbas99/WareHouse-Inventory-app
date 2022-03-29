@@ -10,28 +10,10 @@
 
     <TextView
         android:id="@+id/itemName"
-        android:layout_width="0dp"
+        android:layout_width="348dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textAlignment="center"
-        android:textColor="?attr/colorOnBackground"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/itemQuantity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:textColor="?attr/colorOnBackground"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/itemUnit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="?attr/colorOnBackground"
         android:textSize="24sp" />
 
