@@ -3,6 +3,7 @@ package presentation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -73,8 +74,9 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
     //On positive button click, the items amount is set to 0, and the page returns to stock view
     @Override
     public void onPositiveClick(DialogFragment dialog) {
+        Intent back = new Intent(this, StockViewActivity.class);
         inventory.removeItem(item.getID(), item.getQuantity());
-        finish();
+        startActivity(back);
     }
 
     //On a call from a AmountBox this method fires
