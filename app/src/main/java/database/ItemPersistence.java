@@ -311,7 +311,7 @@ public class ItemPersistence implements IDBLayer{
             // translate the query result into an integer
             if (resultSet.next())
             {
-                id = Integer.valueOf(resultSet.getString("maxID"));
+                id = resultSet.getInt("maxID");
             }
 
             // close open connections
