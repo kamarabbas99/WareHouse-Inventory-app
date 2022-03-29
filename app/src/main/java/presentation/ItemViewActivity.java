@@ -46,7 +46,7 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
             itemDescription.setText(item.getDescription());
         }
         catch (Exception e){
-            System.out.println("Id not found");
+            Messages.itemNotFound(this, "ERROR: Item could not be found, please restart app and try again");
         }
     }
 
