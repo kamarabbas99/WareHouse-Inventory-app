@@ -22,46 +22,31 @@ public class InventoryManagerAccessor {
 
     // adds first instance of given item to database
     public Item createItem(String name, String description, int quantity, String quantityMetric, int lowThreshold) {
-        try {
-            Item newItem = new Item(-1, name, description, quantity, quantityMetric, lowThreshold);
-            int id = ItemDB.create(newItem);
-            newItem = (Item) ItemDB.get(id);
-            if (newItem == null) {
-                System.out.println("Null Item at id: " + id);
-            }
-            return newItem;
-        } catch (final PersistenceException exception) {
-            exception.printStackTrace();
-            return null;
+        Item newItem = new Item(-1, name, description, quantity, quantityMetric, lowThreshold);
+        int id = ItemDB.create(newItem);
+        newItem = (Item) ItemDB.get(id);
+        if (newItem == null) {
+            System.out.println("Null Item at id: " + id);
         }
+        return newItem;
     }
 
     // method that adds item to the quantity
     public Item addItem(int id, int amount) {
-        try {
-            Item addedItem = (Item) ItemDB.add(id, amount);
-            if (addedItem == null) {
-                System.out.println("Null Item");
-            }
-            return addedItem;
-        } catch (final PersistenceException exception) {
-            exception.printStackTrace();
-            return null;
+        Item addedItem = (Item) ItemDB.add(id, amount);
+        if (addedItem == null) {
+            System.out.println("Null Item");
         }
+        return addedItem;
     }
 
     // method that removes item from quantity
     public Item removeItem(int id, int amount) {
-        try {
-            Item removedItem = (Item) ItemDB.remove(id, amount);
-            if (removedItem == null) {
-                System.out.println("Null Item");
-            }
-            return removedItem;
-        } catch (final PersistenceException exception) {
-            exception.printStackTrace();
-            return null;
+        Item removedItem = (Item) ItemDB.remove(id, amount);
+        if (removedItem == null) {
+            System.out.println("Null Item");
         }
+        return removedItem;
     }
 
     // method that return the item requested
@@ -89,10 +74,8 @@ public class InventoryManagerAccessor {
             }
 
             return items;
-        } catch (final PersistenceException persException) {
-            persException.printStackTrace();
-            return null;
-        } catch (final NullPointerException nullException) {
+        }
+        catch (final NullPointerException nullException) {
             nullException.printStackTrace();
             return null;
         }

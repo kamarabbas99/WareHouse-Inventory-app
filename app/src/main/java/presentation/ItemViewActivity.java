@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
 
+import database.PersistenceException;
 import logic.InventoryManagerAccessor;
 import objects.Item;
 
@@ -46,7 +47,7 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
             itemDescription.setText(item.getDescription());
         }
         catch (Exception e){
-            System.out.println("Id not found");
+            Messages.itemNotFound(this, "ERROR: Item could not be found, please restart app and try again");
         }
     }
 
@@ -85,18 +86,24 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
     //      remove --> the given amount integer needs to be removed to the current items stock
     @Override
     public void onChangeClick(DialogFragment dialog, int amount) {
-        //Adds item to current stock
-        if(dialog.getTag().equals("add")){
-            inventory.addItem(item.getID(), amount);
+        try {
+            //Adds item to current stock
+            if (dialog.getTag().equals("add")) {
+                inventory.addItem(item.getID(), amount);
+            }
+
+            //Removes item from current stock
+            else if (dialog.getTag().equals("remove")) {
+                inventory.removeItem(item.getID(), amount);
+            }
+
+            //Reloads the activity to have the page updated
+            finish();
+            startActivity(getIntent());
         }
 
-        //Removes item from current stock
-        else if(dialog.getTag().equals("remove")){
-            inventory.removeItem(item.getID(), amount);
+        catch (PersistenceException e){
+            Messages.itemFailEdit(this, e.getMessage()+ "\nPlease try restarting the application");
         }
-
-        //Reloads the activity to have the page updated
-        finish();
-        startActivity(getIntent());
     }
 }

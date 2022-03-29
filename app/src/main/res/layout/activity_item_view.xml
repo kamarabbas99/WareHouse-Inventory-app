@@ -22,9 +22,11 @@
 
     <TextView
         android:id="@+id/ItemWelcomeMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/itemStart"
         android:textAlignment="center"
         android:textColor="?attr/colorOnBackground"
@@ -35,7 +37,7 @@
 
     <TextView
         android:id="@+id/itemAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="179dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/showAmount"
@@ -48,9 +50,11 @@
 
     <Button
         android:id="@+id/AddStock"
-        android:layout_width="588dp"
+        android:layout_width="0dp"
         android:layout_height="85dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:onClick="addStock"
         android:text="@string/addStock"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +64,11 @@
 
     <Button
         android:id="@+id/RemoveStock"
-        android:layout_width="588dp"
+        android:layout_width="0dp"
         android:layout_height="85dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:onClick="removeStock"
         android:text="@string/delStock"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,9 +77,11 @@
 
     <Button
         android:id="@+id/DeleteItem"
-        android:layout_width="588dp"
+        android:layout_width="0dp"
         android:layout_height="85dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:backgroundTint="#E40404"
         android:onClick="deleteItem"
         android:text="@string/DeleteItem"

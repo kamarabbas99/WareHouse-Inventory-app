@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.example.warehouseinventorysystem.R;
 
+import database.PersistenceException;
 import logic.InventoryManagerAccessor;
 import objects.Item;
 
@@ -29,18 +30,23 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_view);
 
-        //Gets the recycler view in stock activity layout
-        RecyclerView itemRV = findViewById(R.id.itemRV);
+        try {
+            //Gets the recycler view in stock activity layout
+            RecyclerView itemRV = findViewById(R.id.itemRV);
 
-        //Gets the list of all item objects in database
-        items = inventory.getAllItems();
+            //Gets the list of all item objects in database
+            items = inventory.getAllItems();
 
-        //Creates new item adapter and passes it the array of items
-        ItemsAdapter adapter = new ItemsAdapter(items, this);
+            //Creates new item adapter and passes it the array of items
+            ItemsAdapter adapter = new ItemsAdapter(items, this);
 
-        //Sets recycle view layout to vertical scroll, and attached adapter to recycle view to display items
-        itemRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        itemRV.setAdapter(adapter);
+            //Sets recycle view layout to vertical scroll, and attached adapter to recycle view to display items
+            itemRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            itemRV.setAdapter(adapter);
+        }
+        catch(PersistenceException e){
+            Messages.itemNotFound(this, e.getMessage());
+        }
     }
 
     @Override

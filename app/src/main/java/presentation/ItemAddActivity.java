@@ -42,7 +42,10 @@ public class ItemAddActivity extends AppCompatActivity {
             added.show(getSupportFragmentManager(), "added");
         }
         catch(NumberFormatException e){
-            System.out.println("A number was not specified for quantity");
+            Messages.integerError(this, "Please give a correct number for the amount of the item");
+        }
+        catch(PersistenceException e){
+            Messages.itemFailAdd(this, e.getMessage() + "\nPlease try restarting the application");
         }
     }
 }

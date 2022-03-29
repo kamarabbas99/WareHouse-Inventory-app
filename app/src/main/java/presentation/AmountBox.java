@@ -1,5 +1,6 @@
 package presentation;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,7 +42,7 @@ public class AmountBox extends DialogFragment {
 
                     //If the data in amount is not a number, an error is thrown
                     catch(NumberFormatException e) {
-                        System.out.println("A number was not specified");
+                        Messages.integerError((Activity) listener, "Please enter a valid number for the amount");
                     }
                 }
             })

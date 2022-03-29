@@ -26,8 +26,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         //Member variables for every view element in stock_item.xml
         //These will hold the data to be displayed in the recycler view
         public TextView itemName;
-        public TextView itemQuantity;
-        public TextView itemUnit;
         public Button goToItemView;
 
         //Item listener object for handling what happens when the current view holder is tapped
@@ -40,8 +38,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
             //Sets all text view variables to their corresponding layout in the given view
             itemName = itemView.findViewById(R.id.itemName);
-            itemQuantity = itemView.findViewById(R.id.itemQuantity);
-            itemUnit = itemView.findViewById(R.id.itemUnit);
             goToItemView = itemView.findViewById(R.id.itemPageButton);
 
             //Sets the passed item listener to the listener for this view
@@ -87,13 +83,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         //Gets needed views from the passed item views
         TextView name = holder.itemName;
-        TextView quantity = holder.itemQuantity;
-        TextView unit = holder.itemUnit;
 
         //Assigns views data from the current object
-        name.setText(item.getName());
-        quantity.setText(Integer.toString(item.getQuantity()));
-        unit.setText(item.getQuantityMetric());
+        name.setText(item.getName() + " (" + Integer.toString(item.getQuantity()) + " " + item.getQuantityMetric() + ")");
     }
 
     //Returns total count of items currently in the array
