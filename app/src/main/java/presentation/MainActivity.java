@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(addView);
     }
 
+    /* code based off of provided sample-project by instructors */
     private void copyDatabaseToDevice() {
         final String DB_PATH = "db";
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /* code based off of provided sample-project by instructors */
     public void copyAssetsToDirectory(String[] assets, File directory) throws IOException {
         AssetManager assetManager = getAssets();
 
