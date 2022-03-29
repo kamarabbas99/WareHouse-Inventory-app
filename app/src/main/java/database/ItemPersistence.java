@@ -53,8 +53,7 @@ public class ItemPersistence implements IDBLayer{
         {
             Item item = null;
             // prepare the query
-            final PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM ITEMS WHERE ITEMID = ?");
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ITEMS WHERE ITEMID = ?");
             preparedStatement.setString(1, Integer.toString(id));
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -314,6 +313,7 @@ public class ItemPersistence implements IDBLayer{
             {
                 id = Integer.valueOf(resultSet.getString("maxID"));
             }
+
             // close open connections
             resultSet.close();
             statement.close();
