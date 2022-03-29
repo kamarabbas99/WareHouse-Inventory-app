@@ -47,15 +47,27 @@
         app:layout_constraintTop_toBottomOf="@+id/ItemWelcomeMessage" />
 
     <Button
-        android:id="@+id/EditStock"
+        android:id="@+id/AddStock"
         android:layout_width="588dp"
         android:layout_height="85dp"
         android:layout_marginTop="16dp"
-        android:text="@string/EditStock"
+        android:onClick="addStock"
+        android:text="@string/addStock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemDesc" />
+
+    <Button
+        android:id="@+id/RemoveStock"
+        android:layout_width="588dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="16dp"
+        android:onClick="removeStock"
+        android:text="@string/delStock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddStock" />
 
     <Button
         android:id="@+id/DeleteItem"
@@ -63,8 +75,9 @@
         android:layout_height="85dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#E40404"
+        android:onClick="deleteItem"
         android:text="@string/DeleteItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditStock" />
+        app:layout_constraintTop_toBottomOf="@+id/RemoveStock" />
 </androidx.constraintlayout.widget.ConstraintLayout>
