@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.example.warehouseinventorysystem.R;
 
+import database.PersistenceException;
 import logic.InventoryManagerAccessor;
 
 
@@ -42,6 +43,9 @@ public class ItemAddActivity extends AppCompatActivity {
         }
         catch(NumberFormatException e){
             Messages.integerError(this, "Please give a correct number for the amount of the item");
+        }
+        catch(PersistenceException e){
+            Messages.itemFailAdd(this, e.getMessage() + "\nPlease try restarting the application");
         }
     }
 }

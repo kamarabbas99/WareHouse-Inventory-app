@@ -19,7 +19,7 @@ public class Messages {
     public static void itemNotFound(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
-        dialog.setTitle("Error Item Not Found");
+        dialog.setTitle("Error: Item Not Found");
         dialog.setMessage(message);
 
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
@@ -31,16 +31,26 @@ public class Messages {
         dialog.show();
     }
 
-    public static void fatalError(final Activity owner, String message){
+    public static void itemFailAdd(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
-        dialog.setTitle("Fatal Error");
+        dialog.setTitle("Error: Item could not be created");
         dialog.setMessage(message);
 
+        dialog.show();
+    }
+
+    public static void itemFailEdit(final Activity owner, String message){
+        AlertDialog dialog = new AlertDialog.Builder(owner).create();
+
+        dialog.setTitle("Error: Item could not be edited");
+        dialog.setMessage(message);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
             public void onCancel(DialogInterface dialog) {
                 owner.finish();
             }
         });
+
+        dialog.show();
     }
 }
