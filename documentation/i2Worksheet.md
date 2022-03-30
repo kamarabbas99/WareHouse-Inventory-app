@@ -3,7 +3,7 @@ Iteration 2 Worksheet
 
 Paying off Technical Debt
 -----------------
-
+1. We had reckless-deliberate technical debt on our logic layer by creating a class that would only work with the fake database. This was reckless-deliberate because we did not know how the database layer would actually work at the time and used the `InventoryManager` class as a temporary solution. We knew at the time that it would have to be redone and the following [commit](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/commit/8a01b96e26372b8c7e5a4de65d8fa23b309ddc82) show us completely removing this class and replacing it with several other classes that actually work with the existing database.
 
 SOLID
 ----------------
