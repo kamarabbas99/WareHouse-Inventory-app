@@ -7,7 +7,7 @@ Paying off Technical Debt
 2. Another case of technical debt was when the creation of the ItemPersistence which was initially designed to modify multiple tables in the database at once. This would be classified as reckless-inadvertent technical debt because at the time we had thought that it would make sense. After writing the entire class and doing some retrospection, we found that it made more sense to modify each table individually from separate classes. The following commits show us paying off this technical debt.
 	- [Created InventoryManagerPersistence class](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/commit/83ec76b33d87508057919aeaf86c97fff8e8586e).
 	- [Reimplemented ItemPersistence class to only interact with the Items table](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/commit/48974f2e69d976858a2ab307f2a3b3b4e9525ec0).
-	- (Implement InventoryManagerPersistence class to handle modifications to the InventoryManagers table)[https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/commit/d53b445786ab6e5ba4b8afb45b4dbf69f5a4a16f].
+	- [Implement InventoryManagerPersistence class to handle modifications to the InventoryManagers table](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/commit/d53b445786ab6e5ba4b8afb45b4dbf69f5a4a16f).
 
 SOLID
 ----------------
@@ -21,7 +21,7 @@ Retrospective
 
 Design Patterns
 -----
-In our [DatabaseManager class](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/main/java/database/DatabaseManager.java), we used the Singleton design pattern to ensure that the class could only be instantiated once. In this class we also used the Singleton pattern to enforce only a single instance of all the Persistence classes.
+In our [DatabaseManager class](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/main/java/database/DatabaseManager.java), we used the Singleton design pattern to ensure that the class could only be instantiated once. In this class we also used the Singleton pattern to enforce that only a single instance of each of the Persistence classes could be created.
 
 
 Iteration 1 Feedback Fixes
