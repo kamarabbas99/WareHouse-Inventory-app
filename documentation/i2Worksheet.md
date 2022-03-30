@@ -16,7 +16,7 @@ SOLID
 
 Retrospective
 ----------
-
+We realized that we did not verify changes to code withe eachother before working in the last iteration. This led to some confusion, and one reverted commit, about how code should be implemented. In this iteration we communicated about changes way more before commiting so we had less problems. There is not really any direct evidence of this, except that there are less revert merges this iteration. In general this iteration was a lot smoother and the code that was commited was better and up to the standard about what we as  group needed.
 
 
 Design Patterns
