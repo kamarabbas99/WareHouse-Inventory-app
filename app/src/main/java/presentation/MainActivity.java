@@ -2,11 +2,20 @@ package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.warehouseinventorysystem.R;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import database.DatabaseManager;
 
 //Main Activity:
 //  Start activity of entire program
@@ -18,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        copyDatabaseToDevice();
     }
 
     //Called when user taps the "View Stock" Button
@@ -26,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Intent stockView = new Intent(this, StockViewActivity.class);
         startActivity(stockView);
     }
-<<<<<<< HEAD
 
 
     //Called when user taps the "Add Item" Button
@@ -90,6 +99,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-=======
->>>>>>> 11a6b7c7ba5cadfb111dcaf3c6aa8d4fbaa214b2
 }
