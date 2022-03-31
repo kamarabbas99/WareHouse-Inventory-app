@@ -30,15 +30,6 @@ public class Item implements IDSO {
         lowThreshold = -1;
     }
 
-    public Item(String name, String description, int quantity, String quantityMetric, int lowThreshold){
-        id = -1;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.quantityMetric = quantityMetric;
-        this.lowThreshold = lowThreshold;
-    }
-
     public Item(int id, String name, String description, int quantity, String quantityMetric, int lowThreshold){
         this.id = id;
         this.name = name;
