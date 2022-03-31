@@ -8,13 +8,14 @@
 
     <TextView
         android:id="@+id/WelcomeText"
-        android:layout_width="588dp"
-        android:layout_height="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/welcome_text"
         android:textAlignment="center"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,5 +34,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WelcomeText" />
+
+    <Button
+        android:id="@+id/AddItemButton"
+        android:layout_width="0dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="addItemSwitch"
+        android:text="@string/addItemView_button"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ItemViewButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

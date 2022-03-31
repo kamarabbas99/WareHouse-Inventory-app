@@ -2,6 +2,22 @@
     <string name="app_name">Warehouse Inventory System</string>
     <string name="welcome_text">Welcome to the Warehouse Inventory System (WIT)</string>
     <string name="itemView_button">View Stock</string>
-    <string name="stock_welcome_text">Here is your current stock</string>
+    <string name="addItemView_button">Add New Items</string>
+    <string name="stock_welcome_text">Current Stock</string>
     <string name="itemPageButton"><![CDATA[>]]></string>
+    <string name="addItemMsg">Please input data for the new item:</string>
+    <string name="descriptionText">Description</string>
+    <string name="amountText">Amount</string>
+    <string name="qtyText">Quantity Type</string>
+    <string name="nameText">Name</string>
+    <string name="itemCreateButton">Create Item</string>
+    <string name="itemStart">Showing information for\u0020</string>
+    <string name="showAmount">Current amount:\u0020</string>
+    <string name="addStock">Add Stock</string>
+    <string name="delStock">Remove Stock</string>
+    <string name="DeleteItem">Delete Item From Inventory</string>
+    <string name="DialogDeleteWarning">Are you sure you want to delete this item?</string>
+    <string name="ItemAddedMessage">Item added successfully</string>
+    <string name="askNumber">Please enter a value:</string>
+    <string name="integerError">ERROR: Valid number not given</string>
 </resources>
