@@ -11,6 +11,12 @@ Paying off Technical Debt
 
 SOLID
 ----------------
+Dependency Inversion Principle
+
+They use a private FlashCardPersistenceHSQLDB variable for the database in the FlashcardProcessor.java file, whereas they should be using a generic database interface variable for the database. This is a violation of the dependency inversion principle because they are using a concrete class instead of a generic interface. They do the same thing in the FolderProcessor.java file.
+
+Violation: https://code.cs.umanitoba.ca/winter-2022-a02/group-12/quizzing-tool-a02-group-12/-/blob/main/app/src/main/java/comp3350/quizem/logic/FlashcardProcessor.java
+Commit: https://code.cs.umanitoba.ca/winter-2022-a02/group-12/quizzing-tool-a02-group-12/-/commit/c1b9c85ecf84d5ea6848c71177b3d46b7b006d9c
 
 
 
