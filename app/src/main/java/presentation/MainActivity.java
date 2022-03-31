@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             dbManager.setDBFilePath(dataDirectory.toString() + "/" + dbManager.getDBFilePath());
 
         } catch (final IOException ioe) {
-            // TODO: implement messages
             //Messages.warning(this, "Unable to access application data: " + ioe.getMessage());
         }
     }

@@ -125,7 +125,6 @@ public class ItemPersistence implements IDBLayer{
                 // close open connections
                 itemStatement.close();
 
-                // TODO: update transactions table (not currently time sensitive)
             }
             // case: item with the same id was found (do nothing)
 

@@ -117,8 +117,6 @@ public class InventoryManagerPersistence implements IDBLayer
                 throw new PersistenceException(new Exception("Item with provide itemID already exists. Cannot create Item."));
             }
 
-            // TODO: update transaction table (not currently time sensitive)
-
             // return the itemID of the newly created item
             return id;
         }
@@ -150,8 +148,6 @@ public class InventoryManagerPersistence implements IDBLayer
             inventoryStatement.executeUpdate();
             // close open connections
             inventoryStatement.close();
-
-            // TODO: update transaction table (not currently time sensitive)
         }
         catch (final SQLException exception)
         {
@@ -223,8 +219,6 @@ public class InventoryManagerPersistence implements IDBLayer
             inventoryStatement.executeUpdate();
             // close open connections
             inventoryStatement.close();
-
-            // TODO: update transaction table (not currently time sensitive)
         }
         catch (final SQLException exception)
         {
