@@ -7,6 +7,7 @@ import logic.ItemAccesserTest;
 import objects.AccountTest;
 import objects.ItemTest;
 import logic.InventoryManagerTest;
+import objects.InventoryTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -15,7 +16,8 @@ import logic.InventoryManagerTest;
         InventoryManagerTest.class,
         AccountAccesserTest.class,
         ItemAccesserTest.class,
-        InventoryManagerIntegrationTest.class
+        InventoryManagerIntegrationTest.class,
+        InventoryTest.class
 })
 public class AllTests {
 }
