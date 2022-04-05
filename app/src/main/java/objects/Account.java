@@ -17,7 +17,7 @@ public class Account implements IDSO {
     private int id;
     private String username;
     private String password;
-    private String company;
+    private int privilege;
     private Date dateCreated;
 
     // endregion
@@ -28,11 +28,11 @@ public class Account implements IDSO {
         id = -1;
         username = "default";
         password = "123";
-        company = "default";
+        privilege = 1;
         dateCreated = new Date();
     }
 
-    public Account(int id, String username, String password, String company) throws NullPointerException {
+    public Account(int id, String username, String password, int privilege) throws NullPointerException {
         this.id = id;
         if (username == null)
         {
@@ -50,7 +50,7 @@ public class Account implements IDSO {
         {
             this.password = password;
         }
-        this.company = (company == null) ? "default" : company;
+        this.privilege = privilege;
         dateCreated = new Date();
     }
 
@@ -75,8 +75,12 @@ public class Account implements IDSO {
         return dateCreated;
     }
 
-    public String getCompany(){
-        return company;
+    public Boolean isAdmin(){
+        return (privilege == 0);
+    }
+
+    public int getPrivilege(){
+        return privilege;
     }
     // endregion
 

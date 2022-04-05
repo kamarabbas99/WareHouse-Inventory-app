@@ -15,7 +15,7 @@ public class AccountTest {
     @Before
     public void setUp() throws Exception {
         defaultAccount = new Account();
-        newAccount = new Account(1, "bugs-bunny", "whatsupdoc?", "loonie toons");
+        newAccount = new Account(1, "bugs-bunny", "whatsupdoc?", 1);
 
         assertNotNull(defaultAccount);
         assertNotNull(newAccount);
@@ -32,24 +32,24 @@ public class AccountTest {
         Account testAccount = new Account();
         assertTrue(testAccount.getID() == -1);
         assertTrue(testAccount.getUsername().equals("default"));
-        assertTrue(testAccount.getCompany().equals("default"));
+        assertTrue(testAccount.getPrivilege() == 1);
         assertTrue(testAccount.verifyPassword("123"));
         assertNotNull(testAccount.getDateCreated());
     }
 
     @Test
     public void constructor(){
-        Account testAccount = new Account(10, "porky-pig", "thatsAllFolks", "loonie toons");
+        Account testAccount = new Account(10, "porky-pig", "thatsAllFolks", 1);
         assertTrue(testAccount.getID() == 10);
         assertTrue(testAccount.getUsername().equals("porky-pig"));
-        assertTrue(testAccount.getCompany().equals("loonie toons"));
+        assertTrue(testAccount.getPrivilege() == 1);
         assertTrue(testAccount.verifyPassword("thatsAllFolks"));
         assertNotNull(testAccount.getDateCreated());
 
         // testing exceptions
         try
         {
-            Account nullUsernameAccount = new Account(10, null, "thatsAllFolks", "loonie toons");
+            Account nullUsernameAccount = new Account(10, null, "thatsAllFolks", 1);
         }
         catch(NullPointerException exception)
         {
@@ -58,7 +58,7 @@ public class AccountTest {
         }
         try
         {
-            Account nullPasswordAccount = new Account(10, "porky-pig", null, "loonie toons");
+            Account nullPasswordAccount = new Account(10, "porky-pig", null, 1);
         }
         catch(NullPointerException exception)
         {
@@ -90,11 +90,11 @@ public class AccountTest {
     }
 
     @Test
-    public void getCompany(){
-        assertTrue(defaultAccount.getCompany().equals("default"));
-        assertFalse(defaultAccount.getCompany().equals("loonie toons"));
-        assertTrue(newAccount.getCompany().equals("loonie toons"));
-        assertFalse(newAccount.getCompany().equals("default"));
+    public void getPrivilege(){
+        assertTrue(defaultAccount.getPrivilege() == 1);
+        assertFalse(defaultAccount.getPrivilege() == 0);
+        assertTrue(newAccount.getPrivilege() == 1);
+        assertFalse(newAccount.getPrivilege() == 0);
     }
 
     @Test
@@ -123,7 +123,7 @@ public class AccountTest {
     @Test
     public void testEquals() {
         Account defaultTestAccount = new Account();
-        Account newTestAccount = new Account(1, "Porky Pig", "thatsAllFolks", "loonie toons");
+        Account newTestAccount = new Account(1, "Porky Pig", "thatsAllFolks", 1);
         assertTrue(defaultAccount.equals(defaultTestAccount));
         assertFalse(newAccount.equals(defaultTestAccount));
         assertTrue(newAccount.equals(newTestAccount));
