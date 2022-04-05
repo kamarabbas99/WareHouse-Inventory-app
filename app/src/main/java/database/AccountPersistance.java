@@ -47,7 +47,7 @@ public class AccountPersistance implements IDBLayer{
             // close open connections
             resultSet.close();
             preparedStatement.close();
-            // return the newly obtained accout
+            // return the newly obtained account
             return acc;
         }
         catch (final SQLException exception)
@@ -97,7 +97,7 @@ public class AccountPersistance implements IDBLayer{
                 accStatement.setString(1, Integer.toString(id));
                 accStatement.setString(2, accToCreate.getUsername());
                 accStatement.setString(3, "123456");
-                accStatement.setString(4, accToCreate.getCompany());
+                accStatement.setString(4, Integer.toString(accToCreate.getPrivilege()));
                 accStatement.setString(5, String.valueOf(accToCreate.getDateCreated()));
                 // execute the query
                 accStatement.executeUpdate();
@@ -151,7 +151,8 @@ public class AccountPersistance implements IDBLayer{
 
     @Override
     public IDSO add(int id, int quantity)
-    {return null;
+    {
+        return null;
     }
 
     @Override
@@ -227,13 +228,6 @@ public class AccountPersistance implements IDBLayer{
             throw new PersistenceException(exception);
         }
     }
-
-    // Unsure about this methods' purpose (mcquarrc)
-    public boolean verifyID(int id) {
-        return false;
-    }
-
-
     // endregion
 
     // region $utility
@@ -264,8 +258,8 @@ public class AccountPersistance implements IDBLayer{
         String accountID = resultSet.getString("ACCOUNTID");
         String username = resultSet.getString("USERNAME");
         String pass = resultSet.getString("ACCOUNTPASSWORD");
-        String company = resultSet.getString("COMPANY");
-        return new Account(Integer.valueOf(accountID), username, pass, company);
+        String privilege = resultSet.getString("PRIVILEGE");
+        return new Account(Integer.parseInt(accountID), username, pass, Integer.parseInt(privilege));
     }
 
     /* CREATENEWID

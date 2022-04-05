@@ -24,7 +24,7 @@ public class AccountAccesserTest {
     public void setUp() {
 
 
-        acc=new Account(1,"test1","test1","company");
+        acc=new Account(1,"test1","test1",1);
         accPerMock=mock(AccountPersistance.class);
         aa=new AccountAccesser(accPerMock);
 
@@ -50,14 +50,12 @@ public class AccountAccesserTest {
         int del=2;
         aa.deleteAccount(del);
         verify(accPerMock).delete(del);
-
-
     }
 
 
     @Test
     public void testGetAllAccounts() {
-       Account[] toReturn={new Account(1,"test1","test1","company")};
+       Account[] toReturn={new Account(1,"test1","test1",1)};
        when(accPerMock.getDB()).thenReturn(toReturn);
        assertArrayEquals(toReturn,aa.getAllAccounts());
     }
