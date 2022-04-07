@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import database.AccountPersistance;
+import database.AccountPersistence;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +18,14 @@ public class AccountAccesserTest {
 
     AccountAccesser aa;
     Account acc;
-    AccountPersistance accPerMock;
+    AccountPersistence accPerMock;
 
     @Before
     public void setUp() {
 
 
         acc=new Account(1,"test1","test1",1);
-        accPerMock=mock(AccountPersistance.class);
+        accPerMock=mock(AccountPersistence.class);
         aa=new AccountAccesser(accPerMock);
 
     }

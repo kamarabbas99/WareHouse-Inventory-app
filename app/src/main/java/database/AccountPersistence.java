@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import objects.*;
 
-public class AccountPersistance implements IDBLayer{
+public class AccountPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
@@ -19,7 +19,7 @@ public class AccountPersistance implements IDBLayer{
 
     // region $constructor
 
-    public AccountPersistance(final String dbFilePath)
+    public AccountPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();

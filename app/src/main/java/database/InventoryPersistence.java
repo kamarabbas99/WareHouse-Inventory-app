@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import objects.*;
 
-public class InventoryPersistance implements IDBLayer{
+public class InventoryPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
@@ -20,7 +20,7 @@ public class InventoryPersistance implements IDBLayer{
 
     // region $constructor
 
-    public InventoryPersistance(final String dbFilePath)
+    public InventoryPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
