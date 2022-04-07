@@ -22,7 +22,7 @@ public class AccountAccessor {
 
     public int getCurrentPrivilege() {
         int id = DatabaseManager.getActiveAccount();
-        Account account = AccountDB.get(id);
+        Account account = (Account) AccountDB.get(id);
         if (account != null) {
             return account.getPrivilege();
         }
