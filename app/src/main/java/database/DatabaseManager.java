@@ -10,8 +10,8 @@ public class DatabaseManager {
     // region $fields
 
     private String dbFilePath = "WIS";
-    private int activeInventory = 1; // set default active inventory to the games inventory
-    private int activeAccount = 1; // set default active account to first in list
+    private static int activeInventory = 1; // set default active inventory to the games inventory
+    private static int activeAccount = 1; // set default active account to first in list
     private static DatabaseManager Instance;
     private static ItemPersistence itemPersistence = null;
     private static InventoryManagerPersistence inventoryManagerPersistence = null;
@@ -120,13 +120,13 @@ public class DatabaseManager {
         dbFilePath = path;
     }
 
-    public int getActiveInventory() { return activeInventory; }
+    public static int getActiveInventory() { return activeInventory; }
 
-    public void setActiveInventory(int inventoryID) { activeInventory = inventoryID; }
+    public static void setActiveInventory(int inventoryID) { activeInventory = inventoryID; }
 
-    public int getActiveAccount() { return activeAccount; }
+    public static int getActiveAccount() { return activeAccount; }
 
-    public void setActiveAccount(int accountID) { activeAccount = accountID; }
+    public static void setActiveAccount(int accountID) { activeAccount = accountID; }
 
     // endregion
 }

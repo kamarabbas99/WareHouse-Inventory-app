@@ -6,7 +6,6 @@ public class Inventory implements IDSO {
 
     private int id;
     private String name;
-    private String company;
     private Date dateCreated;
 
     // endregion
@@ -16,11 +15,10 @@ public class Inventory implements IDSO {
     public Inventory(){
         id = -1;
         name = "default";
-        company = "default";
         dateCreated = new Date();
     }
 
-    public Inventory(int id, String name, String company) throws NullPointerException {
+    public Inventory(int id, String name) throws NullPointerException {
         this.id = id;
         if (name == null)
         {
@@ -30,7 +28,6 @@ public class Inventory implements IDSO {
         {
             this.name = name;
         }
-        this.company = (company == null) ? "default" : company;
         dateCreated = new Date();
     }
 
@@ -55,9 +52,6 @@ public class Inventory implements IDSO {
         return dateCreated;
     }
 
-    public String getCompany(){
-        return company;
-    }
     // endregion
 
     // region $verification

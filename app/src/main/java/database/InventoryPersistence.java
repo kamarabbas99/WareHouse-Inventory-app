@@ -92,11 +92,10 @@ public class InventoryPersistence implements IDBLayer{
                 // retrieve a new ID to give to the Inventory.
                 id = createNewID();
                 // prepare the query
-                final PreparedStatement invStatement = connection.prepareStatement("INSERT INTO INVENTORIES VALUES (?, ?, ?, ?)");
+                final PreparedStatement invStatement = connection.prepareStatement("INSERT INTO INVENTORIES VALUES (?, ?, ?)");
                 // fill out the query variables
                 invStatement.setString(1, Integer.toString(id));
                 invStatement.setString(2, invToCreate.getName());
-                invStatement.setString(4, invToCreate.getCompany());
                 invStatement.setString(5, String.valueOf(invToCreate.getDateCreated()));
                 // execute the query
                 invStatement.executeUpdate();
@@ -262,8 +261,7 @@ public class InventoryPersistence implements IDBLayer{
     {
         String invID = resultSet.getString("INVENTORYID");
         String name = resultSet.getString("NAME");
-        String company = resultSet.getString("COMPANY");
-        return new Inventory(Integer.valueOf(invID), name, company);
+        return new Inventory(Integer.valueOf(invID), name);
     }
 
     /* CREATENEWID
