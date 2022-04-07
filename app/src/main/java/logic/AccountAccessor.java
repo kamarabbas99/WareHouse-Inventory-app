@@ -20,10 +20,20 @@ public class AccountAccessor {
         this.AccountDB = db;
     }
 
+    public int getCurrentPrivilege() {
+        int id = DatabaseManager.getActiveAccount();
+        Account account = AccountDB.get(id);
+        if (account != null) {
+            return account.getPrivilege();
+        }
+        return 0;
+    }
+
     // method that creates the account
     public Account createAccount(String username, String password, int privilege) {
         Account newAccount = new Account(-1, username, password, privilege);
         int id = AccountDB.create(newAccount);
+        DatabaseManager.setActiveAccount(id);
         newAccount = (Account) AccountDB.get(id);
         if (newAccount == null) {
             System.out.println("Null account");
@@ -42,6 +52,7 @@ public class AccountAccessor {
         Account[] accounts = getAllAccounts();
         for (Account account : accounts) {
             if (account.getUsername().equals(username) && account.verifyPassword(password)) {
+                DatabaseManager.setActiveAccount(account.getID());
                 return true;
             }
         }
