@@ -30,7 +30,7 @@ public class InventoryAccessor {
     }
 
     public Inventory getInventory(int id){
-        Inventory gotItem = InventoryDB.get(id);
+        Inventory gotItem = (Inventory) InventoryDB.get(id);
         if (gotItem == null){
             System.out.println("Null Inventory");
         }
