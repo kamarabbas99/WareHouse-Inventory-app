@@ -15,6 +15,8 @@ public class DatabaseManager {
     private static DatabaseManager Instance;
     private static ItemPersistence itemPersistence = null;
     private static InventoryManagerPersistence inventoryManagerPersistence = null;
+    private static InventoryPersistence inventoryPersistence = null;
+    private static AccountPersistence accountPersistence = null;
 
     // endregion
 
@@ -53,7 +55,6 @@ public class DatabaseManager {
     }
 
     /*
-    /*
     Retrieves and (if needed) creates an InventoryManagerPersistence.
      */
     public static InventoryManagerPersistence getInventoryManagerPersistence()
@@ -63,6 +64,30 @@ public class DatabaseManager {
             inventoryManagerPersistence = new InventoryManagerPersistence(DatabaseManager.Instance.getDBFilePath());
         }
         return inventoryManagerPersistence;
+    }
+
+    /*
+    Retrieves and (if needed) creates an InventoryPersistence.
+     */
+    public static InventoryPersistence getInventoryPersistence()
+    {
+        if (inventoryPersistence == null)
+        {
+            inventoryPersistence = new InventoryPersistence(DatabaseManager.Instance.getDBFilePath());
+        }
+        return inventoryPersistence;
+    }
+
+    /*
+    Retrieves and (if needed) creates an InventoryManagerPersistence.
+     */
+    public static AccountPersistence getAccountPersistence()
+    {
+        if (accountPersistence == null)
+        {
+            accountPersistence = new AccountPersistence(DatabaseManager.Instance.getDBFilePath());
+        }
+        return accountPersistence;
     }
 
     // endregion

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import database.AccountPersistance;
+import database.AccountPersistence;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +18,14 @@ public class AccountAccesserTest {
 
     AccountAccesser aa;
     Account acc;
-    AccountPersistance accPerMock;
+    AccountPersistence accPerMock;
 
     @Before
     public void setUp() {
 
 
-        acc=new Account(1,"test1","test1","company");
-        accPerMock=mock(AccountPersistance.class);
+        acc=new Account(1,"test1","test1",1);
+        accPerMock=mock(AccountPersistence.class);
         aa=new AccountAccesser(accPerMock);
 
     }
@@ -50,14 +50,12 @@ public class AccountAccesserTest {
         int del=2;
         aa.deleteAccount(del);
         verify(accPerMock).delete(del);
-
-
     }
 
 
     @Test
     public void testGetAllAccounts() {
-       Account[] toReturn={new Account(1,"test1","test1","company")};
+       Account[] toReturn={new Account(1,"test1","test1",1)};
        when(accPerMock.getDB()).thenReturn(toReturn);
        assertArrayEquals(toReturn,aa.getAllAccounts());
     }

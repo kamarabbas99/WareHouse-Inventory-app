@@ -1,3 +1,4 @@
+
 package database;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 import objects.*;
 
-public class AccountPersistance implements IDBLayer{
+public class InventoryPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
@@ -19,12 +20,11 @@ public class AccountPersistance implements IDBLayer{
 
     // region $constructor
 
-    public AccountPersistance(final String dbFilePath)
+    public InventoryPersistence(final String dbFilePath)
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
     }
-
 
     @Override
     public IDSO get(int id)
@@ -32,23 +32,23 @@ public class AccountPersistance implements IDBLayer{
         // connect to the DB
         try (final Connection connection = connect())
         {
-            Account acc = null;
+            Inventory inv = null;
             // prepare the query
             final PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = ?");
+                    ("SELECT * FROM INVENTORIES WHERE INVENTORYID = ?");
             preparedStatement.setString(1, Integer.toString(id));
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
-            // translate the result into the account object if the result set found the account
+            // translate the result into the Inventory object if the result set found the Inventory
             if (resultSet.next())
             {
-                acc = decipherResultSet(resultSet); // may throw SQLException
+                inv = decipherResultSet(resultSet); // may throw SQLException
             }
             // close open connections
             resultSet.close();
             preparedStatement.close();
-            // return the newly obtained accout
-            return acc;
+            // return the newly obtained Inventory
+            return inv;
         }
         catch (final SQLException exception)
         {
@@ -58,24 +58,24 @@ public class AccountPersistance implements IDBLayer{
 
     /* CREATE
     PURPOSE:
-        Creates a new account with the values inside the given DSO.
+        Creates a new Inventory with the values inside the given DSO.
 
     INPUT:
-        The account object to create in the account table.
+        The Inventory object to create in the account table.
     OUTPUT:
-        Returns the ACCOUNTID of the newly created account.
-        Returns -1 if the provided parameter is not an instance of the Account class.\
+        Returns the INVENTORYID of the newly created Inventory.
+        Returns -1 if the provided parameter is not an instance of the Inventory class.\
         Throws a PersistenceException if something went wrong with query.
      */
     @Override
     public int create(IDSO object)
     {
-        Account accToCreate;
+        Inventory invToCreate;
 
-        // a check to verify the provided parameter is an instance of the Item class
-        if (object instanceof Account)
+        // a check to verify the provided parameter is an instance of the Inventory class
+        if (object instanceof Inventory)
         {
-            accToCreate = (Account) object;
+            invToCreate = (Inventory) object;
         }
         else
         {
@@ -85,28 +85,27 @@ public class AccountPersistance implements IDBLayer{
         // connect to the DB
         try (final Connection connection = connect())
         {
-            int id = accToCreate.getID(); // the returned value
-            // a check to see if an account with the given ID already exists
-            // case: account with the same id wasn't found
-            if (((Account) get(accToCreate.getID())) == null) {
-                // retrieve a new ID to give to the account.
+            int id = invToCreate.getID(); // the returned value
+            // a check to see if an Inventory with the given ID already exists
+            // case: Inventory with the same id wasn't found
+            if (((Inventory) get(invToCreate.getID())) == null) {
+                // retrieve a new ID to give to the Inventory.
                 id = createNewID();
                 // prepare the query
-                final PreparedStatement accStatement = connection.prepareStatement("INSERT INTO ACCOUNTS VALUES (?, ?, ?, ?, ?)");
+                final PreparedStatement invStatement = connection.prepareStatement("INSERT INTO INVENTORIES VALUES (?, ?, ?, ?)");
                 // fill out the query variables
-                accStatement.setString(1, Integer.toString(id));
-                accStatement.setString(2, accToCreate.getUsername());
-                accStatement.setString(3, "123456");
-                accStatement.setString(4, accToCreate.getCompany());
-                accStatement.setString(5, String.valueOf(accToCreate.getDateCreated()));
+                invStatement.setString(1, Integer.toString(id));
+                invStatement.setString(2, invToCreate.getName());
+                invStatement.setString(4, invToCreate.getCompany());
+                invStatement.setString(5, String.valueOf(invToCreate.getDateCreated()));
                 // execute the query
-                accStatement.executeUpdate();
+                invStatement.executeUpdate();
                 // close open connections
-                accStatement.close();
+                invStatement.close();
 
             }
 
-            // return the ACCOUNTID of the newly created item
+            // return the INVENTORYID of the newly created Inventory
             return id;
         }
         catch (final SQLException exception)
@@ -122,10 +121,10 @@ public class AccountPersistance implements IDBLayer{
 
     /* DELETE
     PURPOSE:
-        Deletes the entry in the account.
+        Deletes the entry in the Inventories table.
 
     INPUT:
-        The ACCOUNTID to look for and delete from the account table.
+        The INVENTORYID to look for and delete from the INVENTORIES table.
     OUTPUT:
         Throws a PersistenceException if something went wrong with the query.
     */
@@ -135,7 +134,7 @@ public class AccountPersistance implements IDBLayer{
         try (final Connection connection = connect())
         {
             // prepare the query
-            final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE ACCOUNTID = ?");
+            final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORIES WHERE INVENTORYID = ?");
             inventoryStatement.setString(1, Integer.toString(id) );
             // execute the query
             inventoryStatement.executeUpdate();
@@ -161,10 +160,10 @@ public class AccountPersistance implements IDBLayer{
 
     /* GETDB
     PURPOSE:
-        Retrieves all the accounts.
+        Retrieves all the inventories.
     OUTPUT:
-        Returns an array of all the accounts.
-        Returns NULL if no accounts were found.
+        Returns an array of all the inventories.
+        Returns NULL if no inventories were found.
         Throws a PersistenceException if something went wrong with the query.
      */
     @Override
@@ -173,29 +172,29 @@ public class AccountPersistance implements IDBLayer{
         try (final Connection connection = connect())
         {
             // initialize collections
-            ArrayList<IDSO> accountsList = new ArrayList<IDSO>();
-            IDSO[] accountsArray = null; // the returned array
+            ArrayList<IDSO> invList = new ArrayList<IDSO>();
+            IDSO[] invArray = null; // the returned array
             // prepare the query
-            final PreparedStatement inventoryStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS");
+            final PreparedStatement inventoryStatement = connection.prepareStatement("SELECT * FROM INVENTORIES");
             // execute the query
             final ResultSet resultSet = inventoryStatement.executeQuery();
-            // cycle through the result and add the accounts to the list
+            // cycle through the result and add the inventories to the list
             while(resultSet.next())
             {
-                final Account item = decipherResultSet(resultSet);
-                accountsList.add(item);
+                final Inventory inv = decipherResultSet(resultSet);
+                invList.add(inv);
             }
             // close open connections
             resultSet.close();
             inventoryStatement.close();
             // convert the arraylist to an array if it has any entries
-            if (accountsList.size() > 0)
+            if (invList.size() > 0)
             {
-                accountsArray = new IDSO[accountsList.size()];
-                accountsList.toArray(accountsArray);
+                invArray = new IDSO[invList.size()];
+                invList.toArray(invArray);
             }
-            // return the array with all the accounts
-            return accountsArray;
+            // return the array with all the inventories
+            return invArray;
         }
         catch (final SQLException exception)
         {
@@ -205,8 +204,8 @@ public class AccountPersistance implements IDBLayer{
 
     /* CLEARDB
     PURPOSE:
-        Completely removes all accounts.
-        This only affects the accounts table.
+        Completely removes all INVENTORIES.
+        This only affects the INVENTORIES table.
     OUTPUT:
         Throws a SQLException if something went wrong with the query.
      */
@@ -215,11 +214,11 @@ public class AccountPersistance implements IDBLayer{
         try (final Connection connection = connect())
         {
             // prepare the query
-            final PreparedStatement accountStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE 1=1");
+            final PreparedStatement invStatement = connection.prepareStatement("DELETE FROM INVENTORIES WHERE 1=1");
             // execute the query
-            accountStatement.executeUpdate();
+            invStatement.executeUpdate();
             // close open connections
-            accountStatement.close();
+            invStatement.close();
 
         }
         catch (final SQLException exception)
@@ -252,27 +251,26 @@ public class AccountPersistance implements IDBLayer{
 
     /* DECIPHERRESULTSET
     PURPOSE:
-        Reads the ResultSet and translates it into an account object.
+        Reads the ResultSet and translates it into an Inventory object.
     INPUT:
-        resultSet               The ResultSet to get values from.
+        resultSet The ResultSet to get values from.
     OUTPUT:
-        Returns an account object with values retrieved from the DB.
+        Returns an Inventory object with values retrieved from the DB.
         Throws an exception if the ResultSet does not have one of the named columns.
      */
-    private Account decipherResultSet(final ResultSet resultSet) throws SQLException
+    private Inventory decipherResultSet(final ResultSet resultSet) throws SQLException
     {
-        String accountID = resultSet.getString("ACCOUNTID");
-        String username = resultSet.getString("USERNAME");
-        String pass = resultSet.getString("ACCOUNTPASSWORD");
+        String invID = resultSet.getString("INVENTORYID");
+        String name = resultSet.getString("NAME");
         String company = resultSet.getString("COMPANY");
-        return new Account(Integer.valueOf(accountID), username, pass, company);
+        return new Inventory(Integer.valueOf(invID), name, company);
     }
 
     /* CREATENEWID
     PURPOSE:
-        Retrieves the largest account id and increments it by one.
+        Retrieves the largest Inventory id and increments it by one.
     OUTPUT:
-        Returns a new ACCOUNT that is unique.
+        Returns a new Inventory that is unique.
         Throws a SQLException if something went wrong with the query.
      */
     private int createNewID () throws SQLException
@@ -284,9 +282,9 @@ public class AccountPersistance implements IDBLayer{
             // prepare the query
             final Statement statement = connection.createStatement();
             // execute the query
-            final ResultSet resultSet = statement.executeQuery("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = (SELECT MAX(ACCOUNTID) FROM ACCOUNTS)");
+            final ResultSet resultSet = statement.executeQuery("SELECT * FROM INVENTORIES WHERE INVENTORYID = (SELECT MAX(INVENTORYID) FROM INVENTORIES)");
             // translate the query result into an integer
-            id = Integer.valueOf(resultSet.getString("ACCOUNTID"));
+            id = Integer.valueOf(resultSet.getString("INVENTORYID"));
             // close open connections
             resultSet.close();
             statement.close();
@@ -297,3 +295,4 @@ public class AccountPersistance implements IDBLayer{
 
 
 }
+
