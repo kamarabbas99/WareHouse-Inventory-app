@@ -10,6 +10,7 @@ public class Messages {
     public static void integerError(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
+        //Sets message parameters
         dialog.setTitle(owner.getString(R.string.integerError));
         dialog.setMessage(message);
 
@@ -19,9 +20,9 @@ public class Messages {
     public static void itemNotFound(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
+        //Sets message parameters
         dialog.setTitle("Error: Item Not Found");
         dialog.setMessage(message);
-
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
             public void onCancel(DialogInterface dialog) {
                 owner.finish();
@@ -34,6 +35,7 @@ public class Messages {
     public static void itemFailAdd(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
+        //Sets message parameters
         dialog.setTitle("Error: Item could not be created");
         dialog.setMessage(message);
 
@@ -43,6 +45,7 @@ public class Messages {
     public static void itemFailEdit(final Activity owner, String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
+        //Sets message parameters
         dialog.setTitle("Error: Item could not be edited");
         dialog.setMessage(message);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
@@ -50,6 +53,16 @@ public class Messages {
                 owner.finish();
             }
         });
+
+        dialog.show();
+    }
+
+    public static void incorrectLogin(final Activity owner, String message){
+        AlertDialog dialog = new AlertDialog.Builder(owner).create();
+
+        //Sets message parameters
+        dialog.setTitle("Error: User could not be found");
+        dialog.setMessage(message);
 
         dialog.show();
     }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.warehouseinventorysystem.R;
 
@@ -16,23 +17,43 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import database.DatabaseManager;
+import logic.AccountAccessor;
 
 //Main Activity:
 //  Start activity of entire program
 //  Immediately starts up main layout
 //  Allows users to move between different pages in the app, and acts as a home page
 public class MainActivity extends AppCompatActivity {
+    AccountAccessor accounts;
+    EditText username;
+    EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Gets database on device and grabs account database
         copyDatabaseToDevice();
+        accounts = new AccountAccessor();
     }
 
+    //Checks if the username and password are valid, if so logs user in and switches to the main menu
+    //Otherwise an error message is shown to the user
     public void logInSwitch(View view){
-        Intent main = new Intent(this, MainMenuActivity.class);
-        startActivity(main);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+
+        //If username and password are correct
+        if(accounts.verifyLogin(username.getText().toString(), password.getText().toString())){
+            Intent main = new Intent(this, MainMenuActivity.class);
+            startActivity(main);
+        }
+
+        //If username or password are incorrect
+        else {
+           Messages.incorrectLogin(this, "Please try a correct username and password");
+        }
     }
 
     /* code based off of provided sample-project by instructors */

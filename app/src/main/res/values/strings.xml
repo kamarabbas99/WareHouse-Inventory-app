@@ -20,4 +20,7 @@
     <string name="ItemAddedMessage">Item added successfully</string>
     <string name="askNumber">Please enter a value:</string>
     <string name="integerError">ERROR: Valid number not given</string>
+    <string name="loginMsg">Please log in:</string>
+    <string name="logInButton">Log In</string>
+    <string name="createAccountText">Create Account</string>
 </resources>
