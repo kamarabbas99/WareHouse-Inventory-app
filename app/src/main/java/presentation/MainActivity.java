@@ -30,19 +30,9 @@ public class MainActivity extends AppCompatActivity {
         copyDatabaseToDevice();
     }
 
-    //Called when user taps the "View Stock" Button
-    //Creates a new Intent to move activities to Stock View, and immediately moves there
-    public void stockViewSwitch(View view){
-        Intent stockView = new Intent(this, StockViewActivity.class);
-        startActivity(stockView);
-    }
-
-
-    //Called when user taps the "Add Item" Button
-    //Creates a new Intent to move activities to ItemAddActivity, and immediately moves there
-    public void addItemSwitch(View view) {
-        Intent addView = new Intent(this, ItemAddActivity.class);
-        startActivity(addView);
+    public void logInSwitch(View view){
+        Intent main = new Intent(this, MainMenuActivity.class);
+        startActivity(main);
     }
 
     /* code based off of provided sample-project by instructors */

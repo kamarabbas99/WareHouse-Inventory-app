@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
-
+        <activity
+            android:name="presentation.MainMenuActivity"
+            android:exported="false" />
         <activity
             android:name="presentation.ItemViewActivity"
             android:exported="false"
@@ -22,7 +24,7 @@
         <activity
             android:name="presentation.ItemAddActivity"
             android:exported="false"
-            android:parentActivityName="presentation.MainActivity" />
+            android:parentActivityName="presentation.MainMenuActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
@@ -31,7 +33,7 @@
         <activity
             android:name="presentation.StockViewActivity"
             android:exported="false"
-            android:parentActivityName="presentation.MainActivity" />
+            android:parentActivityName="presentation.MainMenuActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
