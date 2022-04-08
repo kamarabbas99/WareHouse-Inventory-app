@@ -32,8 +32,8 @@ public class ItemAddActivity extends AppCompatActivity {
         DialogFragment added = new ConfirmationBox();
 
         try {
-            EditText name = (EditText) findViewById(R.id.inputUser);
-            EditText amount = (EditText) findViewById(R.id.inputPassword);
+            EditText name = (EditText) findViewById(R.id.inputName);
+            EditText amount = (EditText) findViewById(R.id.inputAmount);
             EditText qtyLabel = (EditText) findViewById(R.id.inputQty);
             EditText description = (EditText) findViewById(R.id.inputDescription);
 
@@ -45,7 +45,7 @@ public class ItemAddActivity extends AppCompatActivity {
             Messages.integerError(this, "Please give a correct number for the amount of the item");
         }
         catch(PersistenceException e){
-            Messages.itemFailAdd(this, e.getMessage() + "\nPlease try restarting the application");
+            Messages.itemFailAdd(this,"Item" ,e.getMessage() + "\nPlease try restarting the application");
         }
     }
 }

@@ -23,7 +23,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/inputUser"
+        android:id="@+id/inputName"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
@@ -41,7 +41,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/inputPassword"
+        android:id="@+id/inputAmount"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
@@ -55,7 +55,7 @@
         android:textColorHint="?attr/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputUser" />
+        app:layout_constraintTop_toBottomOf="@+id/inputName" />
 
     <EditText
         android:id="@+id/inputQty"
@@ -72,7 +72,7 @@
         android:textColorHint="?attr/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword"
+        app:layout_constraintTop_toBottomOf="@+id/inputAmount"
         tools:ignore="LabelFor" />
 
     <EditText

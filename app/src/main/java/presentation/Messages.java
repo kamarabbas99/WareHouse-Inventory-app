@@ -32,11 +32,11 @@ public class Messages {
         dialog.show();
     }
 
-    public static void itemFailAdd(final Activity owner, String message){
+    public static void itemFailAdd(final Activity owner, String type,String message){
         AlertDialog dialog = new AlertDialog.Builder(owner).create();
 
         //Sets message parameters
-        dialog.setTitle("Error: Item could not be created");
+        dialog.setTitle("Error: " + type + " could not be created");
         dialog.setMessage(message);
 
         dialog.show();
@@ -62,6 +62,16 @@ public class Messages {
 
         //Sets message parameters
         dialog.setTitle("Error: User could not be found");
+        dialog.setMessage(message);
+
+        dialog.show();
+    }
+
+    public static void matchPassword(final Activity owner, String message){
+        AlertDialog dialog = new AlertDialog.Builder(owner).create();
+
+        //Sets message parameters
+        dialog.setTitle("Error: Passwords do not match");
         dialog.setMessage(message);
 
         dialog.show();
