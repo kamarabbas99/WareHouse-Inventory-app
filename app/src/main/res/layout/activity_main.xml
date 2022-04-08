@@ -89,7 +89,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:onClick="logInSwitch"
+        android:onClick="createAccountSwitch"
         android:text="@string/createAccountText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

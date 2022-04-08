@@ -32,8 +32,8 @@ public class ItemAddActivity extends AppCompatActivity {
         DialogFragment added = new ConfirmationBox();
 
         try {
-            EditText name = (EditText) findViewById(R.id.inputName);
-            EditText amount = (EditText) findViewById(R.id.inputAmount);
+            EditText name = (EditText) findViewById(R.id.inputUser);
+            EditText amount = (EditText) findViewById(R.id.inputPassword);
             EditText qtyLabel = (EditText) findViewById(R.id.inputQty);
             EditText description = (EditText) findViewById(R.id.inputDescription);
 

@@ -10,7 +10,7 @@
     <string name="amountText">Amount</string>
     <string name="qtyText">Quantity Type</string>
     <string name="nameText">Name</string>
-    <string name="itemCreateButton">Create Item</string>
+    <string name="itemCreateButton">Create</string>
     <string name="itemStart">Showing information for\u0020</string>
     <string name="showAmount">Current amount:\u0020</string>
     <string name="addStock">Add Stock</string>

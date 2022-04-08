@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Moves to the create account page on click
+    public void createAccountSwitch(View view){
+        Intent create = new Intent(this, CreateAccountActivity.class);
+        startActivity(create);
+    }
+
     /* code based off of provided sample-project by instructors */
     private void copyDatabaseToDevice() {
         final String DB_PATH = "db";

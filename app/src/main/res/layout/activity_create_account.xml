@@ -4,7 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="presentation.ItemAddActivity">
+    tools:context="presentation.CreateAccountActivity">
+
+    <EditText
+        android:id="@+id/verifyPassword"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Verify Password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="?attr/colorOnBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputPasword" />
+
+    <EditText
+        android:id="@+id/inputPasword"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="?attr/colorOnBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputUser" />
 
     <TextView
         android:id="@+id/addItemText"
@@ -40,59 +75,6 @@
         app:layout_constraintTop_toBottomOf="@+id/addItemText"
         tools:ignore="LabelFor" />
 
-    <EditText
-        android:id="@+id/inputPassword"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/amountText"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:textColor="@color/design_default_color_background"
-        android:textColorHint="?attr/colorOnBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputUser" />
-
-    <EditText
-        android:id="@+id/inputQty"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/qtyText"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="?attr/colorOnBackground"
-        android:textColorHint="?attr/colorOnBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword"
-        tools:ignore="LabelFor" />
-
-    <EditText
-        android:id="@+id/inputDescription"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/descriptionText"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="?attr/colorOnBackground"
-        android:textColorHint="?attr/colorOnBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputQty"
-        tools:ignore="LabelFor" />
-
     <Button
         android:id="@+id/itemCreate"
         android:layout_width="0dp"
@@ -100,10 +82,23 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:onClick="createItem"
         android:text="@string/itemCreateButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/isAdmin" />
+
+    <CheckBox
+        android:id="@+id/isAdmin"
+        android:layout_width="129dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:text="Is Admin"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

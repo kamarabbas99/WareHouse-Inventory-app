@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
         <activity
+            android:name="presentation.CreateAccountActivity"
+            android:exported="false"
+            android:parentActivityName="presentation.MainActivity"/>
+        <activity
             android:name="presentation.MainMenuActivity"
             android:exported="false" />
         <activity
