@@ -35,22 +35,14 @@ public class AccountPersistence implements IDBLayer{
         {
             Account acc = null;
             // prepare the query
-//            System.out.println("Attempting to find existing account");
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = ?");
             preparedStatement.setString(1, Integer.toString(id));
-//            System.out.println("prepared the statement");
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
-//            System.out.println("statement executed");
             // translate the result into the account object if the result set found the account
             if (resultSet.next())
             {
-//                System.out.println("result.next activated");
                 acc = decipherResultSet(resultSet); // may throw SQLException
-            }
-            else
-            {
-//                System.out.println("did not find existing account");
             }
             // close open connections
             resultSet.close();
@@ -261,13 +253,11 @@ public class AccountPersistence implements IDBLayer{
      */
     private Account decipherResultSet(final ResultSet resultSet) throws SQLException
     {
-//        System.out.println("deciphering result");
         String accountID = resultSet.getString("ACCOUNTID");
         String username = resultSet.getString("USERNAME");
         String pass = resultSet.getString("ACCOUNTPASSWORD");
         String privilege = resultSet.getString("PRIVILEGE");
         Timestamp dateCreated = resultSet.getTimestamp("DATECREATED");
-//        System.out.println("done deciphering result");
         return new Account(Integer.parseInt(accountID), username, pass, Integer.parseInt(privilege), dateCreated);
     }
 

@@ -30,6 +30,24 @@ public class Transaction implements IDSO
         dateCreated = new Timestamp(new Date().getTime());
     }
 
+    public Transaction(int accountID, int inventoryID, int itemID, String transactionType, int quantity) throws NullPointerException
+    {
+        this.transactionID = -1;
+        this.accountID = accountID;
+        this.inventoryID = inventoryID;
+        this.itemID = itemID;
+        if (transactionType == null)
+        {
+            throw new NullPointerException("Cannot create a transaction without a type.");
+        }
+        else
+        {
+            this.transactionType = transactionType;
+        }
+        this.quantity = quantity;
+        this.dateCreated = new Timestamp(new Date().getTime());
+    }
+
     public Transaction(int transactionID, int accountID, int inventoryID, int itemID, String transactionType, int quantity, Timestamp dateCreated) throws NullPointerException
     {
         this.transactionID = transactionID;
