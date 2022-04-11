@@ -2,6 +2,7 @@ package objects;
 
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.*;
 
 public class Transaction implements IDSO
 {
@@ -90,4 +91,25 @@ public class Transaction implements IDSO
 
     // endregion
 
+    public String toString()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("transactionID:");
+        stringBuilder.append(transactionID);
+        stringBuilder.append(",accountID:");
+        stringBuilder.append(accountID);
+        stringBuilder.append(",inventoryID:");
+        stringBuilder.append(inventoryID);
+        stringBuilder.append(",itemID:");
+        stringBuilder.append(itemID);
+        stringBuilder.append(",transactionType:");
+        stringBuilder.append(transactionType);
+        stringBuilder.append(",quantity:");
+        stringBuilder.append(quantity);
+        stringBuilder.append(",dateCreated:");
+        stringBuilder.append(dateCreated);
+
+        return stringBuilder.toString();
+    }
 }
