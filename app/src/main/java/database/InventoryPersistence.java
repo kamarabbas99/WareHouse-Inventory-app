@@ -15,6 +15,7 @@ public class InventoryPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
+    private TransactionPersistence transactionPersistence;
 
     // endregion
 
@@ -24,6 +25,7 @@ public class InventoryPersistence implements IDBLayer{
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
+        transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
     @Override
@@ -101,7 +103,8 @@ public class InventoryPersistence implements IDBLayer{
                 invStatement.executeUpdate();
                 // close open connections
                 invStatement.close();
-
+                // log the creation in the Transactions Table
+                transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), id, -1, "create", 0));
             }
 
             // return the INVENTORYID of the newly created Inventory
@@ -120,41 +123,55 @@ public class InventoryPersistence implements IDBLayer{
 
     /* DELETE
     PURPOSE:
-        Deletes the entry in the Inventories table.
-
+        (Theoretically) Deletes the entry in the Inventory table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     INPUT:
-        The INVENTORYID to look for and delete from the INVENTORIES table.
+        id              The inventoryID to look for and delete from the Inventory table.
     OUTPUT:
         Throws a PersistenceException if something went wrong with the query.
     */
     @Override
-    public void delete(int id) {
-        // connect to DB
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORIES WHERE INVENTORYID = ?");
-            inventoryStatement.setString(1, Integer.toString(id) );
-            // execute the query
-            inventoryStatement.executeUpdate();
-            // close open connections
-            inventoryStatement.close();
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+    public void delete(int id) throws PersistenceException
+    {
+        Exception exception = new Exception("Cannot delete an Inventory from the Inventories table.");
+        throw new PersistenceException(exception);
     }
 
+    /* ADD
+    PURPOSE:
+        Does not make sense for the Inventories table.
+    NOTES:
+        This method is not implemented since you the Inventories table does not have a quantity column.
+    INPUT:
+        id              The inventoryID to look for.
+        quantity        The amount to increase the quantity of the inventory by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
     public IDSO add(int id, int quantity)
-    {return null;
+    {
+        Exception exception = new Exception("Cannot add a quantity to the Inventories table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
+    /* REMOVE
+    PURPOSE:
+        Does not make sense for the Inventories table.
+    NOTES:
+        This method is not implemented since you the Inventories table does not have a quantity column.
+    INPUT:
+        id              The inventoryID to look for in the active inventory.
+        quantity        The amount to decrease the quantity of the item by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
-    public IDSO remove(int id, int quantity) {
-        return null;
+    public IDSO remove(int id, int quantity) throws PersistenceException
+    {
+        Exception exception = new Exception("Cannot remove a quantity to the Items table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
     /* GETDB
@@ -203,34 +220,18 @@ public class InventoryPersistence implements IDBLayer{
 
     /* CLEARDB
     PURPOSE:
-        Completely removes all INVENTORIES.
-        This only affects the INVENTORIES table.
+        (Theoretically) Completely removes all items from the Inventories table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     OUTPUT:
         Throws a SQLException if something went wrong with the query.
      */
     @Override
-    public void clearDB() {
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement invStatement = connection.prepareStatement("DELETE FROM INVENTORIES WHERE 1=1");
-            // execute the query
-            invStatement.executeUpdate();
-            // close open connections
-            invStatement.close();
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+    public void clearDB() throws PersistenceException
+    {
+        Exception exception = new Exception("Cannot delete the entire Inventories table.");
+        throw new PersistenceException(exception);
     }
-
-    // Unsure about this methods' purpose (mcquarrc)
-    public boolean verifyID(int id) {
-        return false;
-    }
-
 
     // endregion
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import objects.IDSO;
 import objects.Item;
+import objects.Transaction;
 
 public class InventoryManagerPersistence implements IDBLayer
 {
@@ -16,6 +17,7 @@ public class InventoryManagerPersistence implements IDBLayer
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
+    private TransactionPersistence transactionPersistence;
 
     // endregion
 
@@ -25,6 +27,7 @@ public class InventoryManagerPersistence implements IDBLayer
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
+        transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
     // endregions
@@ -109,6 +112,8 @@ public class InventoryManagerPersistence implements IDBLayer
             // case: item inside the Items table with the same id was not found
             if (foundItem == null) {
                 id = itemDB.create(itemToCreate); // create an entry for the item in the Items table
+                // log the creation in the Transactions Table
+                transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "create", 0));
                 add(id, itemToCreate.getQuantity()); // may throw PersistenceException
             }
             // case: item with the same id was found
@@ -148,6 +153,8 @@ public class InventoryManagerPersistence implements IDBLayer
             inventoryStatement.executeUpdate();
             // close open connections
             inventoryStatement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "delete", 0));
         }
         catch (final SQLException exception)
         {
@@ -219,6 +226,8 @@ public class InventoryManagerPersistence implements IDBLayer
             inventoryStatement.executeUpdate();
             // close open connections
             inventoryStatement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), -1, "deleteAll", 0));
         }
         catch (final SQLException exception)
         {
@@ -290,6 +299,8 @@ public class InventoryManagerPersistence implements IDBLayer
             }
 
             itemToAdd = (Item) get(id); // retrieve update Item entry
+            // log the addition in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "add", quantity));
             // return updated item
             return itemToAdd;
         }
@@ -344,13 +355,16 @@ public class InventoryManagerPersistence implements IDBLayer
                 {
                     delete(id); // may throw a PersistenceException
                     itemToRemove = null;
+                    // log the removal in the Transactions Table
+                    transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "remove", quantity));
                 }
                 else if (previousQuantity - quantity == 0)
                 {
                     throw new PersistenceException(new Exception("The amount specified to remove was too large."));
                 }
                 // case: removal does not delete the item
-                else {
+                else
+                {
                     String newQuantity = Integer.toString(previousQuantity - quantity);
                     // prepare the query
                     final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
@@ -363,6 +377,8 @@ public class InventoryManagerPersistence implements IDBLayer
                     inventoryStatement.close();
                     // update old reference to item
                     itemToRemove = (Item) get(id);
+                    // log the removal in the Transactions Table
+                    transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "remove", quantity));
                 }
             }
             // return updated item from DB

@@ -15,6 +15,7 @@ public class AccountPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
+    private TransactionPersistence transactionPersistence;
 
     // endregion
 
@@ -24,6 +25,7 @@ public class AccountPersistence implements IDBLayer{
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
+        transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
 
@@ -103,6 +105,8 @@ public class AccountPersistence implements IDBLayer{
                 accStatement.executeUpdate();
                 // close open connections
                 accStatement.close();
+                // log the creation in the Transactions Table
+                transactionPersistence.create(new Transaction(id, -1, -1, "create", 0));
             }
             // return the ACCOUNTID of the newly created item
             return id;
@@ -139,6 +143,8 @@ public class AccountPersistence implements IDBLayer{
             inventoryStatement.executeUpdate();
             // close open connections
             inventoryStatement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(id, -1, -1, "create", 0));
 
         }
         catch (final SQLException exception)
