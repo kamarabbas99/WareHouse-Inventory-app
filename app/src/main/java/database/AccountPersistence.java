@@ -79,7 +79,6 @@ public class AccountPersistence implements IDBLayer{
     public int create(IDSO object)
     {
         Account accToCreate;
-//        System.out.println("Attempting to create new account");
         // a check to verify the provided parameter is an instance of the Item class
         if (object instanceof Account)
         {
@@ -97,29 +96,19 @@ public class AccountPersistence implements IDBLayer{
             Account foundAccount;
             // a check to see if an account with the given ID already exists
             // case: account with the same id wasn't found
-//            System.out.println("Looking for accountID " + id);
             if ((foundAccount = (Account) get(id)) == null) {
                 // retrieve a new ID to give to the account.
-//                System.out.println("Creating new ID");
                 id = createNewID();
-//                System.out.println("Done creating new ID");
                 // prepare the query
                 final PreparedStatement accStatement = connection.prepareStatement("INSERT INTO ACCOUNTS VALUES (?, ?, ?, ?, ?)");
                 // fill out the query variables
-//                System.out.println("Create account with ID " + id);
                 accStatement.setString(1, Integer.toString(id));
-//                System.out.println("Create account with username " + accToCreate.getUsername());
                 accStatement.setString(2, accToCreate.getUsername());
-//                System.out.println("Create account with password " + accToCreate.getPassword());
                 accStatement.setString(3, accToCreate.getPassword());
-//                System.out.println("Create account with privilege " + accToCreate.getPrivilege());
                 accStatement.setString(4, Integer.toString(accToCreate.getPrivilege()));
-//                System.out.println("Create account with datecreated " + accToCreate.getDateCreated().toString());
                 accStatement.setString(5,accToCreate.getDateCreated().toString());
                 // execute the query
-//                System.out.println("Executing query");
                 accStatement.executeUpdate();
-//                System.out.println("Done executing query");
                 // close open connections
                 accStatement.close();
             }
