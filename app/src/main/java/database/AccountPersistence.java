@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Timestamp;
 
 import objects.*;
 
@@ -34,15 +35,22 @@ public class AccountPersistence implements IDBLayer{
         {
             Account acc = null;
             // prepare the query
-            final PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = ?");
+//            System.out.println("Attempting to find existing account");
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = ?");
             preparedStatement.setString(1, Integer.toString(id));
+//            System.out.println("prepared the statement");
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
+//            System.out.println("statement executed");
             // translate the result into the account object if the result set found the account
             if (resultSet.next())
             {
+//                System.out.println("result.next activated");
                 acc = decipherResultSet(resultSet); // may throw SQLException
+            }
+            else
+            {
+//                System.out.println("did not find existing account");
             }
             // close open connections
             resultSet.close();
@@ -71,7 +79,7 @@ public class AccountPersistence implements IDBLayer{
     public int create(IDSO object)
     {
         Account accToCreate;
-
+//        System.out.println("Attempting to create new account");
         // a check to verify the provided parameter is an instance of the Item class
         if (object instanceof Account)
         {
@@ -86,26 +94,35 @@ public class AccountPersistence implements IDBLayer{
         try (final Connection connection = connect())
         {
             int id = accToCreate.getID(); // the returned value
+            Account foundAccount;
             // a check to see if an account with the given ID already exists
             // case: account with the same id wasn't found
-            if (((Account) get(accToCreate.getID())) == null) {
+//            System.out.println("Looking for accountID " + id);
+            if ((foundAccount = (Account) get(id)) == null) {
                 // retrieve a new ID to give to the account.
+//                System.out.println("Creating new ID");
                 id = createNewID();
+//                System.out.println("Done creating new ID");
                 // prepare the query
                 final PreparedStatement accStatement = connection.prepareStatement("INSERT INTO ACCOUNTS VALUES (?, ?, ?, ?, ?)");
                 // fill out the query variables
+//                System.out.println("Create account with ID " + id);
                 accStatement.setString(1, Integer.toString(id));
+//                System.out.println("Create account with username " + accToCreate.getUsername());
                 accStatement.setString(2, accToCreate.getUsername());
-                accStatement.setString(3, "123456");
+//                System.out.println("Create account with password " + accToCreate.getPassword());
+                accStatement.setString(3, accToCreate.getPassword());
+//                System.out.println("Create account with privilege " + accToCreate.getPrivilege());
                 accStatement.setString(4, Integer.toString(accToCreate.getPrivilege()));
-                accStatement.setString(5, String.valueOf(accToCreate.getDateCreated()));
+//                System.out.println("Create account with datecreated " + accToCreate.getDateCreated().toString());
+                accStatement.setString(5,accToCreate.getDateCreated().toString());
                 // execute the query
+//                System.out.println("Executing query");
                 accStatement.executeUpdate();
+//                System.out.println("Done executing query");
                 // close open connections
                 accStatement.close();
-
             }
-
             // return the ACCOUNTID of the newly created item
             return id;
         }
@@ -255,11 +272,14 @@ public class AccountPersistence implements IDBLayer{
      */
     private Account decipherResultSet(final ResultSet resultSet) throws SQLException
     {
+//        System.out.println("deciphering result");
         String accountID = resultSet.getString("ACCOUNTID");
         String username = resultSet.getString("USERNAME");
         String pass = resultSet.getString("ACCOUNTPASSWORD");
         String privilege = resultSet.getString("PRIVILEGE");
-        return new Account(Integer.parseInt(accountID), username, pass, Integer.parseInt(privilege));
+        Timestamp dateCreated = resultSet.getTimestamp("DATECREATED");
+//        System.out.println("done deciphering result");
+        return new Account(Integer.parseInt(accountID), username, pass, Integer.parseInt(privilege), dateCreated);
     }
 
     /* CREATENEWID
@@ -274,13 +294,16 @@ public class AccountPersistence implements IDBLayer{
         // connect to DB
         try (final Connection connection = connect())
         {
-            int id;
+            int id = -1;
             // prepare the query
             final Statement statement = connection.createStatement();
             // execute the query
-            final ResultSet resultSet = statement.executeQuery("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = (SELECT MAX(ACCOUNTID) FROM ACCOUNTS)");
+            final ResultSet resultSet = statement.executeQuery("SELECT MAX(ACCOUNTID) AS MAXID FROM ACCOUNTS");
             // translate the query result into an integer
-            id = Integer.valueOf(resultSet.getString("ACCOUNTID"));
+            if (resultSet.next())
+            {
+                id = resultSet.getInt("maxID");
+            }
             // close open connections
             resultSet.close();
             statement.close();

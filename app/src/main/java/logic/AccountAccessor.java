@@ -2,27 +2,26 @@ package logic;
 
 import database.IDBLayer;
 import database.DatabaseManager;
-import database.PersistenceException;
 import objects.IDSO;
 import objects.Account;
 
 public class AccountAccessor {
 
-    private IDBLayer AccountDB;
+    private IDBLayer accountDB;
 
     // default constructor
     public AccountAccessor() {
-        this.AccountDB = DatabaseManager.getAccountPersistence();
+        this.accountDB = DatabaseManager.getAccountPersistence();
     }
 
     // constructor
     public AccountAccessor(IDBLayer db) {
-        this.AccountDB = db;
+        this.accountDB = db;
     }
 
     public int getCurrentPrivilege() {
         int id = DatabaseManager.getActiveAccount();
-        Account account = (Account) AccountDB.get(id);
+        Account account = (Account) accountDB.get(id);
         if (account != null) {
             return account.getPrivilege();
         }
@@ -32,9 +31,11 @@ public class AccountAccessor {
     // method that creates the account
     public Account createAccount(String username, String password, int privilege) {
         Account newAccount = new Account(-1, username, password, privilege);
-        int id = AccountDB.create(newAccount);
+        assert(accountDB != null);
+        int id = accountDB.create(newAccount);
         DatabaseManager.setActiveAccount(id);
-        newAccount = (Account) AccountDB.get(id);
+        System.out.println("New id = " + id);
+        newAccount = (Account) accountDB.get(id);
         if (newAccount == null) {
             System.out.println("Null account");
         }
@@ -43,7 +44,7 @@ public class AccountAccessor {
 
     // Method that deletes the account with parameter passed
     public void deleteAccount(int id) {
-        AccountDB.delete(id);
+        accountDB.delete(id);
     }
 
     // method that verifies an account with given username and password exists in
@@ -62,7 +63,7 @@ public class AccountAccessor {
 
     // method that return an array of all account existed
     private Account[] getAllAccounts() {
-        IDSO[] accountsAsIDSO = AccountDB.getDB();
+        IDSO[] accountsAsIDSO = accountDB.getDB();
         Account[] accounts = new Account[accountsAsIDSO.length];
 
         for (int i = 0; i < accountsAsIDSO.length; i++) {
@@ -74,6 +75,6 @@ public class AccountAccessor {
 
     // method that delete all account
     public void deleteAllAccounts() {
-        AccountDB.clearDB();
+        accountDB.clearDB();
     }
 }
