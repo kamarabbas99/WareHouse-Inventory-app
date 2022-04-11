@@ -59,14 +59,7 @@ public class AccountIntegrationTest {
     @Test
     public void createNewAccount() {
 
-        //assertEquals(1,1);
-        //accountPersistence.create(new Account(-1, "test", "1234", 0));
-//        Account account = (Account) accountPersistence.get(6);
-//        Account newAccount = new Account(-1, "test", "1234", 0);
-//        int id = accountPersistence.create(newAccount);
-//        DatabaseManager.setActiveAccount(id);
-//        newAccount = (Account) accountPersistence.get(id);
-//        assertNotNull(newAccount);
+
         Account check = accountAccessor.createAccount("test", "1234", 0);
         //Account account = (Account) accountPersistence.get(6);
         System.out.println("New id = " + check.getID());
@@ -74,9 +67,5 @@ public class AccountIntegrationTest {
         System.out.println("Username = " + check.getUsername());
         System.out.println("Password = " + check.getPassword());
         System.out.println("Privilege = " + check.getPrivilege());
-//        assertEquals("test", check.getUsername());
-//
-//        Account fromDatabase = accountAccessor.getAccount(check.getID());
-//        assertEquals(fromDatabase.getName(), "Item1");
     }
 }
