@@ -45,7 +45,7 @@ public class ItemAddActivity extends AppCompatActivity {
             Messages.integerError(this, "Please give a correct number for the amount of the item");
         }
         catch(PersistenceException e){
-            Messages.itemFailAdd(this, e.getMessage() + "\nPlease try restarting the application");
+            Messages.itemFailAdd(this,"Item" ,e.getMessage() + "\nPlease try restarting the application");
         }
     }
 }

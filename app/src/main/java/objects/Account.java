@@ -3,6 +3,7 @@ package objects;
 import android.text.SpanWatcher;
 
 import java.util.Date;
+import java.sql.Timestamp;
 
 /*
 This class contains information related to accounts that are stored in the database.
@@ -18,7 +19,7 @@ public class Account implements IDSO {
     private String username;
     private String password;
     private int privilege;
-    private Date dateCreated;
+    private Timestamp dateCreated;
 
     // endregion
 
@@ -29,7 +30,7 @@ public class Account implements IDSO {
         username = "default";
         password = "123";
         privilege = 1;
-        dateCreated = new Date();
+        dateCreated = new Timestamp(new Date().getTime());
     }
 
     public Account(int id, String username, String password, int privilege) throws NullPointerException {
@@ -51,7 +52,36 @@ public class Account implements IDSO {
             this.password = password;
         }
         this.privilege = privilege;
-        dateCreated = new Date();
+        dateCreated = new Timestamp(new Date().getTime());
+    }
+
+    public Account(int id, String username, String password, int privilege, Timestamp dateCreated) throws NullPointerException {
+        this.id = id;
+        if (username == null)
+        {
+            throw new NullPointerException("Cannot create an account without a username.");
+        }
+        else
+        {
+            this.username = username;
+        }
+        if (password == null)
+        {
+            throw new NullPointerException("Cannot create an account without a password.");
+        }
+        else
+        {
+            this.password = password;
+        }
+        this.privilege = privilege;
+        if (dateCreated == null)
+        {
+            this.dateCreated = new Timestamp(new Date().getTime());
+        }
+        else
+        {
+            this.dateCreated = dateCreated;
+        }
     }
 
     // endregion
@@ -70,6 +100,8 @@ public class Account implements IDSO {
     public String getUsername(){
         return username;
     }
+
+    public String getPassword() { return password; }
 
     public Date getDateCreated(){
         return dateCreated;

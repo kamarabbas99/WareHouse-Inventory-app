@@ -10,7 +10,7 @@
     <string name="amountText">Amount</string>
     <string name="qtyText">Quantity Type</string>
     <string name="nameText">Name</string>
-    <string name="itemCreateButton">Create Item</string>
+    <string name="itemCreateButton">Create</string>
     <string name="itemStart">Showing information for\u0020</string>
     <string name="showAmount">Current amount:\u0020</string>
     <string name="addStock">Add Stock</string>
@@ -20,4 +20,7 @@
     <string name="ItemAddedMessage">Item added successfully</string>
     <string name="askNumber">Please enter a value:</string>
     <string name="integerError">ERROR: Valid number not given</string>
+    <string name="loginMsg">Please log in:</string>
+    <string name="logInButton">Log In</string>
+    <string name="createAccountText">Create Account</string>
 </resources>
