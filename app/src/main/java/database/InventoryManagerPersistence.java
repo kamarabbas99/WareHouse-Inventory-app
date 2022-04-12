@@ -1,5 +1,7 @@
 package database;
 
+import android.provider.ContactsContract;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -54,10 +56,10 @@ public class InventoryManagerPersistence implements IDBLayer
             Item item = null;
             // prepare the query
             final PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
+                    ("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID = ITEMS.ITEMID " +
                             "WHERE ITEMS.ITEMID = ? AND INVENTORYMANAGERS.INVENTORYID = ?");
             preparedStatement.setString(1, Integer.toString(id));
-            preparedStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
+            preparedStatement.setString(2, Integer.toString(DatabaseManager.getActiveInventory()));
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
             // translate the result into the Item object if the result set found the item
@@ -148,7 +150,7 @@ public class InventoryManagerPersistence implements IDBLayer
             // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORYMANAGERS WHERE ITEMID = ? AND INVENTORYID = ?");
             inventoryStatement.setString(1, Integer.toString(id));
-            inventoryStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
+            inventoryStatement.setString(2, Integer.toString(DatabaseManager.getActiveInventory()));
             // execute the query
             inventoryStatement.executeUpdate();
             // close open connections
@@ -181,7 +183,7 @@ public class InventoryManagerPersistence implements IDBLayer
             // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("SELECT * FROM INVENTORYMANAGERS INNER JOIN ITEMS ON INVENTORYMANAGERS.ITEMID=ITEMS.ITEMID " +
                     "WHERE INVENTORYMANAGERS.INVENTORYID = ?");
-            inventoryStatement.setString(1, Integer.toString(dbManager.getActiveInventory()));
+            inventoryStatement.setString(1, Integer.toString(DatabaseManager.getActiveInventory()));
             // execute the query
             final ResultSet resultSet = inventoryStatement.executeQuery();
             // cycle through the result and add the items to the list
@@ -221,7 +223,7 @@ public class InventoryManagerPersistence implements IDBLayer
         {
             // prepare the query
             final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM INVENTORYMANAGERS WHERE INVENTORYID = ?");
-            inventoryStatement.setString(1, Integer.toString(dbManager.getActiveInventory()));
+            inventoryStatement.setString(1, Integer.toString(DatabaseManager.getActiveInventory()));
             // execute the query
             inventoryStatement.executeUpdate();
             // close open connections
@@ -266,7 +268,7 @@ public class InventoryManagerPersistence implements IDBLayer
                 {
                     final PreparedStatement inventoryStatement = connection.prepareStatement("INSERT INTO INVENTORYMANAGERS VALUES (?, ?, ?, ?)");
                     inventoryStatement.setString(1, Integer.toString(id));
-                    inventoryStatement.setString(2, Integer.toString(dbManager.getActiveInventory()));
+                    inventoryStatement.setString(2, Integer.toString(DatabaseManager.getActiveInventory()));
                     inventoryStatement.setString(3, Integer.toString(quantity));
                     inventoryStatement.setString(4, Integer.toString(foundItem.getLowThreshold()));
                     // execute the query
@@ -291,7 +293,7 @@ public class InventoryManagerPersistence implements IDBLayer
                 final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
                 inventoryStatement.setString(1, newQuantity);
                 inventoryStatement.setString(2, Integer.toString(id));
-                inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
+                inventoryStatement.setString(3, Integer.toString(DatabaseManager.getActiveInventory()));
                 // execute the query
                 inventoryStatement.executeUpdate();
                 // close open connections
@@ -370,7 +372,7 @@ public class InventoryManagerPersistence implements IDBLayer
                     final PreparedStatement inventoryStatement = connection.prepareStatement("UPDATE INVENTORYMANAGERS SET QUANTITY = ? WHERE ITEMID = ? AND INVENTORYID = ?");
                     inventoryStatement.setString(1, newQuantity);
                     inventoryStatement.setString(2, Integer.toString(id));
-                    inventoryStatement.setString(3, Integer.toString(dbManager.getActiveInventory()));
+                    inventoryStatement.setString(3, Integer.toString(DatabaseManager.getActiveInventory()));
                     // execute the query
                     inventoryStatement.executeUpdate();
                     // close open connections
@@ -408,6 +410,7 @@ public class InventoryManagerPersistence implements IDBLayer
      */
     private Connection connect() throws SQLException
     {
+        System.out.println("dbFilePath = " + dbFilePath);
         return DriverManager.getConnection("jdbc:hsqldb:file:" + dbFilePath + ";shutdown=true", "SA", "");
     }
 

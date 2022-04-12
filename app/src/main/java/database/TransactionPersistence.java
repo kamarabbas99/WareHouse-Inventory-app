@@ -103,9 +103,7 @@ public class TransactionPersistence implements IDBLayer {
         try (final Connection connection = connect())
         {
             // retrieve a new ID to give to the item.
-            System.out.println("creating new id");
             int id = createNewID();
-            System.out.println("done creating new id");
             // prepare the query
             final PreparedStatement statement = connection.prepareStatement("INSERT INTO TRANSACTIONS VALUES (?, ?, ?, ?, ?, ?, ?)");
             // fill out the query variables
@@ -117,9 +115,7 @@ public class TransactionPersistence implements IDBLayer {
             statement.setInt(6, transactionToCreate.getQuantity());
             statement.setString(7, transactionToCreate.getDateCreated().toString());
             // execute the query
-            System.out.println("executing statement");
             statement.executeUpdate();
-            System.out.println("done executing statement");
             // close open connections
             statement.close();
             // case: item with the same id was found (do nothing)
@@ -305,17 +301,12 @@ public class TransactionPersistence implements IDBLayer {
             // prepare the query
             final Statement statement = connection.createStatement();
             // execute the query
-            System.out.println("executing statement");
             final ResultSet resultSet = statement.executeQuery("SELECT MAX(TRANSACTIONID) AS MAXID FROM TRANSACTIONS");
-            System.out.println("done executing statement");
             // translate the query result into an integer
-            System.out.println("retrieving result");
             if (resultSet.next())
             {
-                System.out.println("there is a result");
                 id = resultSet.getInt("maxID");
             }
-            System.out.println("done retrieving result");
 
             // close open connections
             resultSet.close();

@@ -24,6 +24,7 @@ import logic.AccountAccessor;
 //  Immediately starts up main layout
 //  Allows users to move between different pages in the app, and acts as a home page
 public class MainActivity extends AppCompatActivity {
+    private static boolean isFirstCall = false;
     AccountAccessor accounts;
     EditText username;
     EditText password;
@@ -34,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Gets database on device and grabs account database
-        copyDatabaseToDevice();
-        accounts = new AccountAccessor();
+        if (!isFirstCall)
+        {
+            copyDatabaseToDevice();
+            isFirstCall = true;
+        }
+            accounts = new AccountAccessor();
     }
 
     //Checks if the username and password are valid, if so logs user in and switches to the main menu
