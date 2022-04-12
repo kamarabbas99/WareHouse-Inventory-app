@@ -15,6 +15,7 @@ public class AccountPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
+    private TransactionPersistence transactionPersistence;
 
     // endregion
 
@@ -24,6 +25,7 @@ public class AccountPersistence implements IDBLayer{
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
+        transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
 
@@ -35,22 +37,14 @@ public class AccountPersistence implements IDBLayer{
         {
             Account acc = null;
             // prepare the query
-//            System.out.println("Attempting to find existing account");
             final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS WHERE ACCOUNTID = ?");
             preparedStatement.setString(1, Integer.toString(id));
-//            System.out.println("prepared the statement");
             // execute the query
             final ResultSet resultSet = preparedStatement.executeQuery();
-//            System.out.println("statement executed");
             // translate the result into the account object if the result set found the account
             if (resultSet.next())
             {
-//                System.out.println("result.next activated");
                 acc = decipherResultSet(resultSet); // may throw SQLException
-            }
-            else
-            {
-//                System.out.println("did not find existing account");
             }
             // close open connections
             resultSet.close();
@@ -79,7 +73,6 @@ public class AccountPersistence implements IDBLayer{
     public int create(IDSO object)
     {
         Account accToCreate;
-//        System.out.println("Attempting to create new account");
         // a check to verify the provided parameter is an instance of the Item class
         if (object instanceof Account)
         {
@@ -97,31 +90,23 @@ public class AccountPersistence implements IDBLayer{
             Account foundAccount;
             // a check to see if an account with the given ID already exists
             // case: account with the same id wasn't found
-//            System.out.println("Looking for accountID " + id);
             if ((foundAccount = (Account) get(id)) == null) {
                 // retrieve a new ID to give to the account.
-//                System.out.println("Creating new ID");
                 id = createNewID();
-//                System.out.println("Done creating new ID");
                 // prepare the query
                 final PreparedStatement accStatement = connection.prepareStatement("INSERT INTO ACCOUNTS VALUES (?, ?, ?, ?, ?)");
                 // fill out the query variables
-//                System.out.println("Create account with ID " + id);
                 accStatement.setString(1, Integer.toString(id));
-//                System.out.println("Create account with username " + accToCreate.getUsername());
                 accStatement.setString(2, accToCreate.getUsername());
-//                System.out.println("Create account with password " + accToCreate.getPassword());
                 accStatement.setString(3, accToCreate.getPassword());
-//                System.out.println("Create account with privilege " + accToCreate.getPrivilege());
                 accStatement.setString(4, Integer.toString(accToCreate.getPrivilege()));
-//                System.out.println("Create account with datecreated " + accToCreate.getDateCreated().toString());
                 accStatement.setString(5,accToCreate.getDateCreated().toString());
                 // execute the query
-//                System.out.println("Executing query");
                 accStatement.executeUpdate();
-//                System.out.println("Done executing query");
                 // close open connections
                 accStatement.close();
+                // log the creation in the Transactions Table
+                transactionPersistence.create(new Transaction(id, -1, -1, "create", 0));
             }
             // return the ACCOUNTID of the newly created item
             return id;
@@ -139,42 +124,54 @@ public class AccountPersistence implements IDBLayer{
 
     /* DELETE
     PURPOSE:
-        Deletes the entry in the account.
-
+        (Theoretically) Deletes the entry in the Accounts table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     INPUT:
-        The ACCOUNTID to look for and delete from the account table.
+        id              The accountID to look for and delete from the Accounts table.
     OUTPUT:
         Throws a PersistenceException if something went wrong with the query.
     */
     @Override
     public void delete(int id) {
-        // connect to DB
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE ACCOUNTID = ?");
-            inventoryStatement.setString(1, Integer.toString(id) );
-            // execute the query
-            inventoryStatement.executeUpdate();
-            // close open connections
-            inventoryStatement.close();
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+        Exception exception = new Exception("Cannot delete an account from the Accounts table.");
+        throw new PersistenceException(exception);
     }
 
+    /* ADD
+    PURPOSE:
+        Does not make sense for the Accounts table.
+    NOTES:
+        This method is not implemented since you the Accounts table does not have a quantity column.
+    INPUT:
+        id              The accountID to look for.
+        quantity        The amount to increase the quantity of the account by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
     public IDSO add(int id, int quantity)
     {
-        return null;
+        Exception exception = new Exception("Cannot add a quantity to the Accounts table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
+    /* REMOVE
+    PURPOSE:
+        Does not make sense for the Accounts table.
+    NOTES:
+        This method is not implemented since you the Accounts table does not have a quantity column.
+    INPUT:
+        id              The accountID to look for in the active inventory.
+        quantity        The amount to decrease the quantity of the account by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
-    public IDSO remove(int id, int quantity) {
-        return null;
+    public IDSO remove(int id, int quantity)
+    {
+        Exception exception = new Exception("Cannot remove a quantity to the Accounts table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
     /* GETDB
@@ -223,27 +220,16 @@ public class AccountPersistence implements IDBLayer{
 
     /* CLEARDB
     PURPOSE:
-        Completely removes all accounts.
-        This only affects the accounts table.
+        (Theoretically) Completely removes all accounts from the Accounts table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     OUTPUT:
         Throws a SQLException if something went wrong with the query.
      */
     @Override
     public void clearDB() {
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement accountStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE 1=1");
-            // execute the query
-            accountStatement.executeUpdate();
-            // close open connections
-            accountStatement.close();
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+        Exception exception = new Exception("Cannot delete the entire Accounts table.");
+        throw new PersistenceException(exception);
     }
     // endregion
 
@@ -272,13 +258,11 @@ public class AccountPersistence implements IDBLayer{
      */
     private Account decipherResultSet(final ResultSet resultSet) throws SQLException
     {
-//        System.out.println("deciphering result");
         String accountID = resultSet.getString("ACCOUNTID");
         String username = resultSet.getString("USERNAME");
         String pass = resultSet.getString("ACCOUNTPASSWORD");
         String privilege = resultSet.getString("PRIVILEGE");
         Timestamp dateCreated = resultSet.getTimestamp("DATECREATED");
-//        System.out.println("done deciphering result");
         return new Account(Integer.parseInt(accountID), username, pass, Integer.parseInt(privilege), dateCreated);
     }
 

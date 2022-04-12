@@ -34,7 +34,6 @@ public class AccountAccessor {
         assert(accountDB != null);
         int id = accountDB.create(newAccount);
         DatabaseManager.setActiveAccount(id);
-        System.out.println("New id = " + id);
         newAccount = (Account) accountDB.get(id);
         if (newAccount == null) {
             System.out.println("Null account");

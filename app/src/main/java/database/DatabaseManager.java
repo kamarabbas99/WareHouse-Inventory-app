@@ -1,5 +1,7 @@
 package database;
 
+import objects.Transaction;
+
 /*
 A singleton class to hold the reference to the database file path.
 Required because it needs to be used on startup.
@@ -17,6 +19,7 @@ public class DatabaseManager {
     private static InventoryManagerPersistence inventoryManagerPersistence = null;
     private static InventoryPersistence inventoryPersistence = null;
     private static AccountPersistence accountPersistence = null;
+    private static TransactionPersistence transactionPersistence = null;
 
     // endregion
 
@@ -79,7 +82,7 @@ public class DatabaseManager {
     }
 
     /*
-    Retrieves and (if needed) creates an InventoryManagerPersistence.
+    Retrieves and (if needed) creates an AccountPersistence.
      */
     public static AccountPersistence getAccountPersistence()
     {
@@ -88,6 +91,18 @@ public class DatabaseManager {
             accountPersistence = new AccountPersistence(DatabaseManager.Instance.getDBFilePath());
         }
         return accountPersistence;
+    }
+
+    /*
+    Retrieves and (if needed) creates an TransactionPersistence.
+     */
+    public static TransactionPersistence getTransactionPersistence()
+    {
+        if (transactionPersistence == null)
+        {
+            transactionPersistence = new TransactionPersistence(DatabaseManager.Instance.getDBFilePath());
+        }
+        return transactionPersistence;
     }
 
     // endregion

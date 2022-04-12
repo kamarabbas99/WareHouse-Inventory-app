@@ -1,5 +1,7 @@
 package database;
 
+import android.provider.ContactsContract;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,6 +22,7 @@ public class ItemPersistence implements IDBLayer{
 
     private final String dbFilePath;
     private DatabaseManager dbManager;
+    private TransactionPersistence transactionPersistence;
 
     // endregion
 
@@ -29,6 +32,7 @@ public class ItemPersistence implements IDBLayer{
     {
         this.dbFilePath = dbFilePath;
         dbManager = DatabaseManager.getInstance();
+        transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
     // endregions
@@ -124,7 +128,8 @@ public class ItemPersistence implements IDBLayer{
                 itemStatement.executeUpdate();
                 // close open connections
                 itemStatement.close();
-
+                // log the creation in the Transactions Table
+                transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "create", 0));
             }
             // case: item with the same id was found (do nothing)
 
