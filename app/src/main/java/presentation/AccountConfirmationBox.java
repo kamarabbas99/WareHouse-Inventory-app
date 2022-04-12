@@ -6,8 +6,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.warehouseinventorysystem.R;
-
 public class AccountConfirmationBox extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){

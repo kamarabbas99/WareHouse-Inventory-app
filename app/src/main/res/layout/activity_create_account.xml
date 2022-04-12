@@ -48,7 +48,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/addItemMsg"
+        android:text="@string/createAcctMsg"
         android:textAlignment="center"
         android:textColor="?attr/colorOnBackground"
         android:textSize="34sp"

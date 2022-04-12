@@ -37,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             //Checks if the two password boxes match
             if(verify.getText().toString().equals(password.getText().toString())) {
-                //Checks if the new user will be an admin
+                //Checks if the new user will be an admin, if so changes its clearance
                 if (admin.isChecked()) {clearance = 0;}
 
                 //Adds user to the system
