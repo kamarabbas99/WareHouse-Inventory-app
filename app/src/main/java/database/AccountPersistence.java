@@ -124,44 +124,54 @@ public class AccountPersistence implements IDBLayer{
 
     /* DELETE
     PURPOSE:
-        Deletes the entry in the account.
-
+        (Theoretically) Deletes the entry in the Accounts table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     INPUT:
-        The ACCOUNTID to look for and delete from the account table.
+        id              The accountID to look for and delete from the Accounts table.
     OUTPUT:
         Throws a PersistenceException if something went wrong with the query.
     */
     @Override
     public void delete(int id) {
-        // connect to DB
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement inventoryStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE ACCOUNTID = ?");
-            inventoryStatement.setString(1, Integer.toString(id) );
-            // execute the query
-            inventoryStatement.executeUpdate();
-            // close open connections
-            inventoryStatement.close();
-            // log the deletion in the Transactions Table
-            transactionPersistence.create(new Transaction(id, -1, -1, "create", 0));
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+        Exception exception = new Exception("Cannot delete an account from the Accounts table.");
+        throw new PersistenceException(exception);
     }
 
+    /* ADD
+    PURPOSE:
+        Does not make sense for the Accounts table.
+    NOTES:
+        This method is not implemented since you the Accounts table does not have a quantity column.
+    INPUT:
+        id              The accountID to look for.
+        quantity        The amount to increase the quantity of the account by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
     public IDSO add(int id, int quantity)
     {
-        return null;
+        Exception exception = new Exception("Cannot add a quantity to the Accounts table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
+    /* REMOVE
+    PURPOSE:
+        Does not make sense for the Accounts table.
+    NOTES:
+        This method is not implemented since you the Accounts table does not have a quantity column.
+    INPUT:
+        id              The accountID to look for in the active inventory.
+        quantity        The amount to decrease the quantity of the account by.
+    OUTPUT:
+        Always throws a PersistenceException.
+     */
     @Override
-    public IDSO remove(int id, int quantity) {
-        return null;
+    public IDSO remove(int id, int quantity)
+    {
+        Exception exception = new Exception("Cannot remove a quantity to the Accounts table since it does not have a quantity column.");
+        throw new PersistenceException(exception);
     }
 
     /* GETDB
@@ -210,27 +220,16 @@ public class AccountPersistence implements IDBLayer{
 
     /* CLEARDB
     PURPOSE:
-        Completely removes all accounts.
-        This only affects the accounts table.
+        (Theoretically) Completely removes all accounts from the Accounts table.
+    NOTES:
+        Not implemented to prevent the deletion of transaction history.
     OUTPUT:
         Throws a SQLException if something went wrong with the query.
      */
     @Override
     public void clearDB() {
-        try (final Connection connection = connect())
-        {
-            // prepare the query
-            final PreparedStatement accountStatement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE 1=1");
-            // execute the query
-            accountStatement.executeUpdate();
-            // close open connections
-            accountStatement.close();
-
-        }
-        catch (final SQLException exception)
-        {
-            throw new PersistenceException(exception);
-        }
+        Exception exception = new Exception("Cannot delete the entire Accounts table.");
+        throw new PersistenceException(exception);
     }
     // endregion
 
