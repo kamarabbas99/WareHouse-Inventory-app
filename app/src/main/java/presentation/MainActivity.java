@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         //If username and password are correct
         if(accounts.verifyLogin(username.getText().toString(), password.getText().toString())){
-            Intent main = new Intent(this, MainMenuActivity.class);
+            Intent main = new Intent(this, InventoryViewActivity.class);
             startActivity(main);
         }
 

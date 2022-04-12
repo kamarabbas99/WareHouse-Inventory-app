@@ -23,4 +23,7 @@
     <string name="loginMsg">Please log in:</string>
     <string name="logInButton">Log In</string>
     <string name="createAccountText">Create Account</string>
+    <string name="createAcctMsg">Please Input Data for User:</string>
+    <string name="inventoryText">Current Inventories</string>
+    <string name="askName">Please enter a name:</string>
 </resources>
