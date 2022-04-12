@@ -2,6 +2,8 @@ package logic;
 
 import static org.junit.Assert.*;
 
+import android.provider.ContactsContract;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +59,11 @@ public class AccountIntegrationTest {
     }
 
     @Test
-    public void createNewAccount() {
+    public void createNewAccountTest() {
+
+        Account newAcc=accountAccessor.createAccount("user1","pass1",0);
+        assertEquals(newAcc.getUsername(),"user1");
+        assertEquals(newAcc.getPrivilege(),0);
 
         //assertEquals(1,1);
         //accountPersistence.create(new Account(-1, "test", "1234", 0));
@@ -66,17 +72,44 @@ public class AccountIntegrationTest {
 //        int id = accountPersistence.create(newAccount);
 //        DatabaseManager.setActiveAccount(id);
 //        newAccount = (Account) accountPersistence.get(id);
-//        assertNotNull(newAccount);
-        Account check = accountAccessor.createAccount("test", "1234", 0);
-        //Account account = (Account) accountPersistence.get(6);
-        System.out.println("New id = " + check.getID());
-        assertNotNull(check);
-        System.out.println("Username = " + check.getUsername());
-        System.out.println("Password = " + check.getPassword());
-        System.out.println("Privilege = " + check.getPrivilege());
+////        assertNotNull(newAccount);
+//        Account check = accountAccessor.createAccount("test", "1234", 0);
+//        //Account account = (Account) accountPersistence.get(6);
+//        System.out.println("New id = " + check.getID());
+//        assertNotNull(check);
+//        System.out.println("Username = " + check.getUsername());
+//        System.out.println("Password = " + check.getPassword());
+//        System.out.println("Privilege = " + check.getPrivilege());
 //        assertEquals("test", check.getUsername());
 //
 //        Account fromDatabase = accountAccessor.getAccount(check.getID());
 //        assertEquals(fromDatabase.getName(), "Item1");
+    }
+
+    @Test
+    public void getAccountPrivTest()
+    {
+
+        Account newAcc=accountAccessor.createAccount("user1","pass1",3);
+        assertEquals(3,accountAccessor.getCurrentPrivilege());
+    }
+
+    @Test
+    public void deleteTest()
+    {
+        //int currID=DatabaseManager.getActiveInventory();
+
+        Account newAcc=accountAccessor.createAccount("userD","passD",5);
+        //System.out.println("Active "+newAcc.getID());
+        accountAccessor.deleteAccount(newAcc.getID());
+        assertNotEquals(5,accountAccessor.getCurrentPrivilege());
+    }
+
+    @Test
+    public void verifyTest()
+    {
+
+        Account newAcc=accountAccessor.createAccount("userC","passC",3);
+        assertTrue(accountAccessor.verifyLogin("userC","passC"));
     }
 }
