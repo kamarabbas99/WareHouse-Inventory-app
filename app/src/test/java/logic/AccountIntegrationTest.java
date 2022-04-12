@@ -52,12 +52,6 @@ public class AccountIntegrationTest {
         // endregion
     }
 
-    @After
-    public void tearDown() throws Exception {
-        //imPersistence.clearDB(); // clear all data add to the InventoryManagers table
-        //itemPersistence.clearDB(); // clear all data add to the Items table
-    }
-
     @Test
     public void createNewAccountTest() {
 
@@ -65,25 +59,6 @@ public class AccountIntegrationTest {
         assertEquals(newAcc.getUsername(),"user1");
         assertEquals(newAcc.getPrivilege(),0);
 
-        //assertEquals(1,1);
-        //accountPersistence.create(new Account(-1, "test", "1234", 0));
-//        Account account = (Account) accountPersistence.get(6);
-//        Account newAccount = new Account(-1, "test", "1234", 0);
-//        int id = accountPersistence.create(newAccount);
-//        DatabaseManager.setActiveAccount(id);
-//        newAccount = (Account) accountPersistence.get(id);
-////        assertNotNull(newAccount);
-//        Account check = accountAccessor.createAccount("test", "1234", 0);
-//        //Account account = (Account) accountPersistence.get(6);
-//        System.out.println("New id = " + check.getID());
-//        assertNotNull(check);
-//        System.out.println("Username = " + check.getUsername());
-//        System.out.println("Password = " + check.getPassword());
-//        System.out.println("Privilege = " + check.getPrivilege());
-//        assertEquals("test", check.getUsername());
-//
-//        Account fromDatabase = accountAccessor.getAccount(check.getID());
-//        assertEquals(fromDatabase.getName(), "Item1");
     }
 
     @Test
@@ -97,10 +72,8 @@ public class AccountIntegrationTest {
     @Test
     public void deleteTest()
     {
-        //int currID=DatabaseManager.getActiveInventory();
 
         Account newAcc=accountAccessor.createAccount("userD","passD",5);
-        //System.out.println("Active "+newAcc.getID());
         accountAccessor.deleteAccount(newAcc.getID());
         assertNotEquals(5,accountAccessor.getCurrentPrivilege());
     }
@@ -108,8 +81,17 @@ public class AccountIntegrationTest {
     @Test
     public void verifyTest()
     {
-
         Account newAcc=accountAccessor.createAccount("userC","passC",3);
         assertTrue(accountAccessor.verifyLogin("userC","passC"));
+    }
+
+    @Test
+    public void deleteAll()
+    {
+
+        assertTrue(accountAccessor.verifyLogin("userC","passC"));
+        accountAccessor.deleteAllAccounts();
+        assertEquals(0,accountAccessor.getCurrentPrivilege());
+        //assertFalse(accountAccessor.verifyLogin("userC","passC"));
     }
 }

@@ -39,7 +39,6 @@ public class AccountAccessorTest {
 
         int temp=DatabaseManager.getActiveAccount();
 
-        //when(accPerMock.create(acc)).thenReturn(acc.getID());
         Account some = new Account(-1, "username1", "password1", 1);
         when(accPerMock.create(some)).thenReturn(1);
         when(accPerMock.get(0)).thenReturn(acc);
@@ -52,6 +51,9 @@ public class AccountAccessorTest {
 
     @Test
     public void verifyLoginTest() {
+        Account[] toReturn={new Account(1,"test1","test1",1)};
+        when(accPerMock.getDB()).thenReturn(toReturn);
+        assertFalse(aa.verifyLogin("test1","test2"));
 
     }
 //
@@ -65,23 +67,11 @@ public class AccountAccessorTest {
     @Test
     public void getCurrPrivTest()
     {
-        //when(DatabaseManager.getActiveAccount()).thenReturn(2);
-        //aa.getCurrentPrivilege();
-
         int temp=DatabaseManager.getActiveAccount();
 
         when(accPerMock.get(temp)).thenReturn(acc);
         assertNotEquals(2,aa.getCurrentPrivilege());
     }
-
-
-  //Uncomment if the method is public
-//    @Test
-//    public void testGetAllAccounts() {
-//        Account[] toReturn={new Account(1,"test1","test1",1)};
-//        when(accPerMock.getDB()).thenReturn(toReturn);
-//        assertArrayEquals(toReturn,aa.getAllAccounts());
-//    }
 
 
     @Test
