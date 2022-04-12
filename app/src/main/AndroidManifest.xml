@@ -19,7 +19,7 @@
         <activity
             android:name="presentation.MainMenuActivity"
             android:exported="false"
-            android:parentActivityName="presentation.InventoryViewActivity"/>
+            android:parentActivityName="presentation.InventoryViewActivity" />
         <activity
             android:name="presentation.ItemViewActivity"
             android:exported="false"

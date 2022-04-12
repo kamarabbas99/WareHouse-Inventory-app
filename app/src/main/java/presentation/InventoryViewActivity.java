@@ -1,6 +1,7 @@
 package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +16,7 @@ import database.PersistenceException;
 import logic.InventoryAccessor;
 import objects.Inventory;
 
-public class InventoryViewActivity extends AppCompatActivity implements InventoryAdapter.OnInventoryListener{
+public class InventoryViewActivity extends AppCompatActivity implements InventoryAdapter.OnInventoryListener, InventoryNameBox.NameListener{
     //Holds every inventory object currently in the database
     Inventory[] inventories;
 
@@ -46,8 +47,28 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
         }
     }
 
+    //Moves to page to create a new inventory
     public void createInvOnClick(View view){
+        DialogFragment newInv = new InventoryNameBox();
+        newInv.show(getSupportFragmentManager(), "name");
+    }
 
+    //Creates a new inventory with the name inputted by the user
+    @Override
+    public void onChangeClick(DialogFragment dialog, String name){
+        try{
+            //Creates new inventory with the entered name
+            inv.createInventory(name);
+
+            //Reloads the page to get the updates
+            finish();
+            startActivity(getIntent());
+        }
+
+        catch(PersistenceException e){
+            Messages.itemFailAdd(this, "Inventory", "\nPlease try restarting the application");
+            System.out.println(e.getMessage());
+        }
     }
 
     //When an inventory is clicked, sets the current inventory
