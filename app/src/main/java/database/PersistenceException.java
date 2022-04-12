@@ -1,5 +1,7 @@
 package database;
 
+import java.sql.SQLOutput;
+
 /*
 Exceptions that are thrown from the database layer.
 Required because the database classes already try and catch SQLExceptions but
@@ -12,6 +14,6 @@ public class PersistenceException extends RuntimeException
     public PersistenceException(final Exception cause)
     {
         super(cause);
-    }
+     }
 
 }
