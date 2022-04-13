@@ -1,5 +1,7 @@
 package logic;
 
+import java.sql.SQLOutput;
+
 import database.IDBLayer;
 import database.DatabaseManager;
 import database.PersistenceException;
@@ -21,7 +23,9 @@ public class InventoryAccessor {
 
     public Inventory createInventory(String name){
         Inventory newInv = new Inventory(-1, name);
+        System.out.println("Trying to create inventory");
         int id = InventoryDB.create(newInv);
+        System.out.println("Inventory created");
         newInv = (Inventory) InventoryDB.get(id);
         if (newInv == null){
             System.out.println("Null Inventory");

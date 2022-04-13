@@ -73,7 +73,7 @@ public class InventoryPersistence implements IDBLayer{
     public int create(IDSO object)
     {
         Inventory invToCreate;
-
+        System.out.println("Creating new Inventory");
         // a check to verify the provided parameter is an instance of the Inventory class
         if (object instanceof Inventory)
         {
@@ -98,7 +98,7 @@ public class InventoryPersistence implements IDBLayer{
                 // fill out the query variables
                 invStatement.setString(1, Integer.toString(id));
                 invStatement.setString(2, invToCreate.getName());
-                invStatement.setString(5, String.valueOf(invToCreate.getDateCreated()));
+                invStatement.setString(3, invToCreate.getDateCreated().toString());
                 // execute the query
                 invStatement.executeUpdate();
                 // close open connections
@@ -106,7 +106,7 @@ public class InventoryPersistence implements IDBLayer{
                 // log the creation in the Transactions Table
                 transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), id, -1, "create", 0));
             }
-
+            System.out.println("Done creating new Inventory");
             // return the INVENTORYID of the newly created Inventory
             return id;
         }
@@ -277,17 +277,22 @@ public class InventoryPersistence implements IDBLayer{
         // connect to DB
         try (final Connection connection = connect())
         {
-            int id;
+            System.out.println("Creating a new ID");
+            int id = -1;
             // prepare the query
             final Statement statement = connection.createStatement();
             // execute the query
-            final ResultSet resultSet = statement.executeQuery("SELECT * FROM INVENTORIES WHERE INVENTORYID = (SELECT MAX(INVENTORYID) FROM INVENTORIES)");
+            final ResultSet resultSet = statement.executeQuery("SELECT MAX(INVENTORYID) AS MAXID FROM INVENTORIES");
             // translate the query result into an integer
-            id = Integer.valueOf(resultSet.getString("INVENTORYID"));
+            if (resultSet.next())
+            {
+                id = resultSet.getInt("maxID");
+            }
             // close open connections
             resultSet.close();
             statement.close();
             // return the new incremented id
+            System.out.println("Done creating a new ID = " + (id+1));
             return id + 1;
         }
     }

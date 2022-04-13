@@ -1,12 +1,13 @@
 package objects;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Inventory implements IDSO {
 
     private int id;
     private String name;
-    private Date dateCreated;
+    private Timestamp dateCreated;
 
     // endregion
 
@@ -15,7 +16,7 @@ public class Inventory implements IDSO {
     public Inventory(){
         id = -1;
         name = "default";
-        dateCreated = new Date();
+        dateCreated = new Timestamp(new Date().getTime());
     }
 
     public Inventory(int id, String name) throws NullPointerException {
@@ -28,7 +29,7 @@ public class Inventory implements IDSO {
         {
             this.name = name;
         }
-        dateCreated = new Date();
+        dateCreated = new Timestamp(new Date().getTime());
     }
 
     // endregion
@@ -48,7 +49,7 @@ public class Inventory implements IDSO {
         return name;
     }
 
-    public Date getDateCreated(){
+    public Timestamp getDateCreated(){
         return dateCreated;
     }
 
