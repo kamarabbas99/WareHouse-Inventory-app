@@ -84,6 +84,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         //Gets needed views from the passed item views
         TextView name = holder.itemName;
+        Button button = holder.goToItemView;
 
         //Assigns views data from the current object
         name.setText(item.getName() + " (" + Integer.toString(item.getQuantity()) + " " + item.getQuantityMetric() + ")");
@@ -91,7 +92,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         //If the quantity of item goes below the low threshold, its text is flagged as red
         if(item.getQuantity() <= item.getLowThreshold()) {
             System.out.println(item.getLowThreshold() + " " + item.getQuantity());
-            name.setTextColor(Color.RED);
+            name.setTextColor(Color.YELLOW);
+            button.setText("LOW");
         }
     }
 
