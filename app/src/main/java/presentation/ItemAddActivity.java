@@ -36,8 +36,10 @@ public class ItemAddActivity extends AppCompatActivity {
             EditText amount = (EditText) findViewById(R.id.inputAmount);
             EditText qtyLabel = (EditText) findViewById(R.id.inputQty);
             EditText description = (EditText) findViewById(R.id.inputDescription);
+            EditText low = (EditText) findViewById(R.id.inputLowThreshhold);
 
-            items.createItem(name.getText().toString(), description.getText().toString(), Integer.parseInt(amount.getText().toString()), qtyLabel.getText().toString(), 0);
+            //Creates a new item
+            items.createItem(name.getText().toString(), description.getText().toString(), Integer.parseInt(amount.getText().toString()), qtyLabel.getText().toString(), Integer.parseInt(low.getText().toString()));
 
             added.show(getSupportFragmentManager(), "added");
         }

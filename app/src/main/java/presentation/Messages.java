@@ -76,4 +76,13 @@ public class Messages {
 
         dialog.show();
     }
+
+    public static void invalidClearance(final Activity owner, String message){
+        AlertDialog dialog = new AlertDialog.Builder(owner).create();
+
+        dialog.setTitle("You do not have clearance to perform this action");
+        dialog.setMessage(message);
+
+        dialog.show();
+    }
 }
