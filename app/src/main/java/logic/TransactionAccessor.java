@@ -7,15 +7,15 @@ import objects.IDSO;
 import objects.Transaction;
 
 public class TransactionAccessor {
-    private IDBLayer TransactionDB;
+    private TransactionPersistence TransactionDB;
 
     // default constructor
-    public InventoryAccessor(){
-        this.TransactionDB = DatabaseManager.getTransactionPersistence();
+    public TransactionAccessor(){
+        this.TransactionDB = (TransactionPersistence) DatabaseManager.getTransactionPersistence();
     }
 
     // constructor
-    public InventoryAccessor(IDBLayer db) {
+    public TransactionAccessor(IDBLayer db) {
         this.TransactionDB = (TransactionPersistence) db;
     }
 
@@ -38,7 +38,7 @@ public class TransactionAccessor {
     }
 
     public String getAllTransactions() {
-        IDSO[] transactionsAsIDSO = TransactionDB.getItemTransactions(itemID);
+        IDSO[] transactionsAsIDSO = TransactionDB.getDB();
         Transaction[] transactions = new Transaction[transactionsAsIDSO.length];
 
         for (int i = 0; i < transactionsAsIDSO.length; i++) {
