@@ -93,6 +93,25 @@
         app:layout_constraintTop_toBottomOf="@+id/inputQty"
         tools:ignore="LabelFor" />
 
+    <EditText
+        android:id="@+id/inputLowThreshhold"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Low Stock Warning Level"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textColor="?attr/colorOnBackground"
+        android:textColorHint="?attr/colorOnBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputDescription"
+        tools:ignore="LabelFor" />
+
     <Button
         android:id="@+id/itemCreate"
         android:layout_width="0dp"
@@ -103,7 +122,8 @@
         android:onClick="createItem"
         android:text="@string/itemCreateButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLowThreshhold" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

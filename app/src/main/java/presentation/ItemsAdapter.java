@@ -1,6 +1,7 @@
 package presentation;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         //Assigns views data from the current object
         name.setText(item.getName() + " (" + Integer.toString(item.getQuantity()) + " " + item.getQuantityMetric() + ")");
+
+        //If the quantity of item goes below the low threshold, its text is flagged as red
+        if(item.getQuantity() <= item.getLowThreshold()) {
+            System.out.println(item.getLowThreshold() + " " + item.getQuantity());
+            name.setTextColor(Color.RED);
+        }
     }
 
     //Returns total count of items currently in the array

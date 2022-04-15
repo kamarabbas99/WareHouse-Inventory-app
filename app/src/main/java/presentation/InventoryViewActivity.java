@@ -13,6 +13,7 @@ import com.example.warehouseinventorysystem.R;
 
 import database.DatabaseManager;
 import database.PersistenceException;
+import logic.AccountAccessor;
 import logic.InventoryAccessor;
 import objects.Inventory;
 
@@ -22,6 +23,8 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
 
     //Creates new inventory manager
     InventoryAccessor inv = new InventoryAccessor();
+
+    AccountAccessor account = new AccountAccessor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,17 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
 
     //Moves to page to create a new inventory
     public void createInvOnClick(View view){
-        DialogFragment newInv = new InventoryNameBox();
-        newInv.show(getSupportFragmentManager(), "name");
+        //Checks if the current account is an admin
+        //If so opens dialog box to create new inventory
+        if(account.getCurrentPrivilege() == 0) {
+            DialogFragment newInv = new InventoryNameBox();
+            newInv.show(getSupportFragmentManager(), "name");
+        }
+
+        //Else, shows error message
+        else {
+            Messages.invalidClearance(this, "Please ask an administrator");
+        }
     }
 
     //Creates a new inventory with the name inputted by the user
@@ -66,8 +78,7 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
         }
 
         catch(PersistenceException e){
-            Messages.itemFailAdd(this, "Inventory", "\nPlease try restarting the application");
-            System.out.println(e.getMessage());
+            Messages.itemFailAdd(this, "Inventory", e.getMessage() + "\nPlease try restarting the application");
         }
     }
 
@@ -75,6 +86,7 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
     @Override
     public void onInventoryClick(int index){
         Intent getMain = new Intent(this, MainMenuActivity.class);
+        getMain.putExtra("invID", inventories[index].getID());
         DatabaseManager.setActiveInventory(inventories[index].getID());
         startActivity(getMain);
     }

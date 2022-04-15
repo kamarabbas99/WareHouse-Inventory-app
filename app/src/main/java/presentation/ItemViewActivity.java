@@ -48,6 +48,7 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
         }
         catch (Exception e){
             Messages.itemNotFound(this, "ERROR: Item could not be found, please restart app and try again");
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 
