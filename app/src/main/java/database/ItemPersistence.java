@@ -118,12 +118,13 @@ public class ItemPersistence implements IDBLayer{
                 // retrieve a new ID to give to the item.
                 id = createNewID();
                 // prepare the query
-                final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?)");
+                final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?, ?)");
                 // fill out the query variables
                 itemStatement.setString(1, Integer.toString(id));
                 itemStatement.setString(2, itemToCreate.getName());
                 itemStatement.setString(3, itemToCreate.getDescription());
                 itemStatement.setString(4, itemToCreate.getQuantityMetric());
+                itemStatement.setInt(5, itemToCreate.getLowThreshold());
                 // execute the query
                 itemStatement.executeUpdate();
                 // close open connections
@@ -160,8 +161,22 @@ public class ItemPersistence implements IDBLayer{
     @Override
     public void delete(int id) throws PersistenceException
     {
-        Exception exception = new Exception("Cannot delete an Item from the Items table.");
-        throw new PersistenceException(exception);
+        try(final Connection connection = connect())
+        {
+            // prepare the query
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM ITEMS WHERE ITEMID = ?");
+            statement.setInt(1, id);
+            // execute the query
+            statement.executeUpdate();
+            // close open connections
+            statement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveInventory(), DatabaseManager.getActiveInventory(), id, "delete", 0));
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
     /* GETDB

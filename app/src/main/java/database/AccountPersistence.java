@@ -61,7 +61,6 @@ public class AccountPersistence implements IDBLayer{
     /* CREATE
     PURPOSE:
         Creates a new account with the values inside the given DSO.
-
     INPUT:
         The account object to create in the account table.
     OUTPUT:
@@ -134,8 +133,22 @@ public class AccountPersistence implements IDBLayer{
     */
     @Override
     public void delete(int id) {
-        Exception exception = new Exception("Cannot delete an account from the Accounts table.");
-        throw new PersistenceException(exception);
+        try(final Connection connection = connect())
+        {
+            // prepare the query
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM ACCOUNTS WHERE ACCOUNTID = ?");
+            statement.setInt(1, id);
+            // execute the query
+            statement.executeUpdate();
+            // close open connections
+            statement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(id, -1, -1, "delete", 0));
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
     /* ADD
@@ -227,7 +240,8 @@ public class AccountPersistence implements IDBLayer{
         Throws a SQLException if something went wrong with the query.
      */
     @Override
-    public void clearDB() {
+    public void clearDB() throws PersistenceException
+    {
         Exception exception = new Exception("Cannot delete the entire Accounts table.");
         throw new PersistenceException(exception);
     }

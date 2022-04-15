@@ -41,7 +41,8 @@ public class InventoryAccessor {
         return gotItem;
     }
 
-    public void deleteInventory(int id){
+    public void deleteInventory(int id)
+    {
         InventoryDB.delete(id);
     }
 
@@ -56,7 +57,8 @@ public class InventoryAccessor {
         return inventories;
     }
 
-    public void deleteAllInventories(){
+    public void deleteAllInventories()
+    {
         InventoryDB.clearDB();
     }
 }

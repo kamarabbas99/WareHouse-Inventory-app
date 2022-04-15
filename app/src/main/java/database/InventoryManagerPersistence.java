@@ -410,7 +410,6 @@ public class InventoryManagerPersistence implements IDBLayer
      */
     private Connection connect() throws SQLException
     {
-        System.out.println("dbFilePath = " + dbFilePath);
         return DriverManager.getConnection("jdbc:hsqldb:file:" + dbFilePath + ";shutdown=true", "SA", "");
     }
 
