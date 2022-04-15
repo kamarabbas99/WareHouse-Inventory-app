@@ -20,6 +20,7 @@ public class InventoryManagerPersistence implements IDBLayer
     private final String dbFilePath;
     private DatabaseManager dbManager;
     private TransactionPersistence transactionPersistence;
+    private int lowThreshold = -1;
 
     // endregion
 
@@ -116,6 +117,7 @@ public class InventoryManagerPersistence implements IDBLayer
                 id = itemDB.create(itemToCreate); // create an entry for the item in the Items table
                 // log the creation in the Transactions Table
                 transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), DatabaseManager.getActiveInventory(), id, "create", 0));
+                lowThreshold = itemToCreate.getLowThreshold();
                 add(id, itemToCreate.getQuantity()); // may throw PersistenceException
             }
             // case: item with the same id was found
@@ -270,7 +272,15 @@ public class InventoryManagerPersistence implements IDBLayer
                     inventoryStatement.setString(1, Integer.toString(id));
                     inventoryStatement.setString(2, Integer.toString(DatabaseManager.getActiveInventory()));
                     inventoryStatement.setString(3, Integer.toString(quantity));
-                    inventoryStatement.setString(4, Integer.toString(foundItem.getLowThreshold()));
+                    if (lowThreshold > 0)
+                    {
+                        inventoryStatement.setInt(4, lowThreshold);
+                        lowThreshold = -1;
+                    }
+                    else
+                    {
+                        inventoryStatement.setInt(4, foundItem.getLowThreshold());
+                    }
                     // execute the query
                     inventoryStatement.executeUpdate();
                     // close open connections

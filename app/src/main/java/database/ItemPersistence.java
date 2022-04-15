@@ -118,13 +118,13 @@ public class ItemPersistence implements IDBLayer{
                 // retrieve a new ID to give to the item.
                 id = createNewID();
                 // prepare the query
-                final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?, ?)");
+                final PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO ITEMS VALUES (?, ?, ?, ?)");
                 // fill out the query variables
                 itemStatement.setString(1, Integer.toString(id));
                 itemStatement.setString(2, itemToCreate.getName());
                 itemStatement.setString(3, itemToCreate.getDescription());
                 itemStatement.setString(4, itemToCreate.getQuantityMetric());
-                itemStatement.setInt(5, itemToCreate.getLowThreshold());
+
                 // execute the query
                 itemStatement.executeUpdate();
                 // close open connections
