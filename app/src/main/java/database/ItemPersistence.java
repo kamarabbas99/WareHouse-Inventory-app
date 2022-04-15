@@ -160,8 +160,22 @@ public class ItemPersistence implements IDBLayer{
     @Override
     public void delete(int id) throws PersistenceException
     {
-        Exception exception = new Exception("Cannot delete an Item from the Items table.");
-        throw new PersistenceException(exception);
+        try(final Connection connection = connect())
+        {
+            // prepare the query
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM ITEMS WHERE ITEMID = ?");
+            statement.setInt(1, id);
+            // execute the query
+            statement.executeUpdate();
+            // close open connections
+            statement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveInventory(), DatabaseManager.getActiveInventory(), id, "delete", 0));
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
     /* GETDB

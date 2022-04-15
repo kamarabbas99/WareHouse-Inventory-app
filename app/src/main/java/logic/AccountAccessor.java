@@ -2,6 +2,7 @@ package logic;
 
 import database.IDBLayer;
 import database.DatabaseManager;
+import database.PersistenceException;
 import objects.IDSO;
 import objects.Account;
 
@@ -10,9 +11,7 @@ public class AccountAccessor {
     private IDBLayer accountDB;
 
     // default constructor
-    public AccountAccessor() {
-        this.accountDB = DatabaseManager.getAccountPersistence();
-    }
+    public AccountAccessor() { this.accountDB = DatabaseManager.getAccountPersistence(); }
 
     // constructor
     public AccountAccessor(IDBLayer db) {
@@ -35,15 +34,24 @@ public class AccountAccessor {
         int id = accountDB.create(newAccount);
         DatabaseManager.setActiveAccount(id);
         newAccount = (Account) accountDB.get(id);
-        if (newAccount == null) {
+        if (newAccount == null)
+        {
             System.out.println("Null account");
         }
         return newAccount;
     }
 
     // Method that deletes the account with parameter passed
-    public void deleteAccount(int id) {
-        accountDB.delete(id);
+    public void deleteAccount(int id)
+    {
+        if (DatabaseManager.getActiveAccount() != id)
+        {
+            accountDB.delete(id);
+        }
+        else
+        {
+            System.out.println("Cannot delete the active account. Please sign into another account to delete this one.");
+        }
     }
 
     // method that verifies an account with given username and password exists in
@@ -65,7 +73,8 @@ public class AccountAccessor {
         IDSO[] accountsAsIDSO = accountDB.getDB();
         Account[] accounts = new Account[accountsAsIDSO.length];
 
-        for (int i = 0; i < accountsAsIDSO.length; i++) {
+        for (int i = 0; i < accountsAsIDSO.length; i++)
+        {
             accounts[i] = (Account) accountsAsIDSO[i];
         }
 
@@ -74,6 +83,13 @@ public class AccountAccessor {
 
     // method that delete all account
     public void deleteAllAccounts() {
-        accountDB.clearDB();
+        try
+        {
+            accountDB.clearDB();
+        }
+        catch (PersistenceException exception)
+        {
+            System.out.println("Cannot delete all accounts");
+        }
     }
 }

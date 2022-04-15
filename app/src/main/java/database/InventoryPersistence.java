@@ -73,7 +73,6 @@ public class InventoryPersistence implements IDBLayer{
     public int create(IDSO object)
     {
         Inventory invToCreate;
-        System.out.println("Creating new Inventory");
         // a check to verify the provided parameter is an instance of the Inventory class
         if (object instanceof Inventory)
         {
@@ -106,7 +105,6 @@ public class InventoryPersistence implements IDBLayer{
                 // log the creation in the Transactions Table
                 transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), id, -1, "create", 0));
             }
-            System.out.println("Done creating new Inventory");
             // return the INVENTORYID of the newly created Inventory
             return id;
         }
@@ -134,8 +132,22 @@ public class InventoryPersistence implements IDBLayer{
     @Override
     public void delete(int id) throws PersistenceException
     {
-        Exception exception = new Exception("Cannot delete an Inventory from the Inventories table.");
-        throw new PersistenceException(exception);
+        try(final Connection connection = connect())
+        {
+            // prepare the query
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM INVENTORIES WHERE INVENTORYID = ?");
+            statement.setInt(1, id);
+            // execute the query
+            statement.executeUpdate();
+            // close open connections
+            statement.close();
+            // log the deletion in the Transactions Table
+            transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), id, -1, "delete", 0));
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
     /* ADD
@@ -277,7 +289,6 @@ public class InventoryPersistence implements IDBLayer{
         // connect to DB
         try (final Connection connection = connect())
         {
-            System.out.println("Creating a new ID");
             int id = -1;
             // prepare the query
             final Statement statement = connection.createStatement();
@@ -292,7 +303,6 @@ public class InventoryPersistence implements IDBLayer{
             resultSet.close();
             statement.close();
             // return the new incremented id
-            System.out.println("Done creating a new ID = " + (id+1));
             return id + 1;
         }
     }

@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import database.DatabaseManager;
 import database.AccountPersistence;
 import database.InventoryManagerPersistence;
+import database.InventoryPersistence;
 import database.ItemPersistence;
 import objects.Account;
 import objects.Item;
@@ -47,6 +48,7 @@ public class AccountIntegrationTest {
         // region $inventoryManagerSetup
         accountPersistence = DatabaseManager.getAccountPersistence();
         assertNotNull(accountPersistence);
+
         accountAccessor = new AccountAccessor(accountPersistence);
         assertNotNull(accountAccessor);
         // endregion
@@ -72,8 +74,16 @@ public class AccountIntegrationTest {
     @Test
     public void deleteTest()
     {
-
         Account newAcc=accountAccessor.createAccount("userD","passD",5);
+        accountAccessor.deleteAccount(newAcc.getID());
+        assertNotEquals(5,accountAccessor.getCurrentPrivilege());
+    }
+
+    @Test
+    public void deleteActiveAccountTest()
+    {
+        Account newAcc=accountAccessor.createAccount("Test","test",5);
+        DatabaseManager.setActiveAccount(newAcc.getID());
         accountAccessor.deleteAccount(newAcc.getID());
         assertNotEquals(5,accountAccessor.getCurrentPrivilege());
     }
@@ -88,7 +98,6 @@ public class AccountIntegrationTest {
     @Test
     public void deleteAll()
     {
-
         assertTrue(accountAccessor.verifyLogin("userC","passC"));
         accountAccessor.deleteAllAccounts();
         assertEquals(0,accountAccessor.getCurrentPrivilege());
