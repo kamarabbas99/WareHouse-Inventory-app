@@ -18,14 +18,14 @@ public class AlertBox extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.DialogDeleteWarning)
+                //If no button is clicked nothing is sent and the text dialog exits
+                .setNegativeButton("No", null)
                 //If yes button is clicked, message is sent to calling class via the listener
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id){
                         listener.onPositiveClick(AlertBox.this);
                     }
-                })
-                //If no button is clicked nothing is sent and the text dialog exits
-                .setNegativeButton("No", null);
+                });
 
         //Returns a created box
         return builder.create();

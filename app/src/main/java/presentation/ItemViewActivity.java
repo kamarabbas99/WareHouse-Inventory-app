@@ -91,16 +91,33 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
             //Adds item to current stock
             if (dialog.getTag().equals("add")) {
                 inventory.addItem(item.getID(), amount);
+
+                //Reloads the activity to have the page updated
+                finish();
+                startActivity(getIntent());
             }
 
             //Removes item from current stock
             else if (dialog.getTag().equals("remove")) {
-                inventory.removeItem(item.getID(), amount);
-            }
+                //Checks if there is enough stock to perform this action
+                if(amount < item.getQuantity()) {
+                    inventory.removeItem(item.getID(), amount);
 
-            //Reloads the activity to have the page updated
-            finish();
-            startActivity(getIntent());
+                    //If the item amount is still greater than 0 after remove call, page is refreshed to show changes
+                    finish();
+                    startActivity(getIntent());
+                }
+
+                //If the item quantity is equal to the item quantity, item will be deleted
+                //User is warned before this action
+                else if(amount == item.getQuantity()){
+                    DialogFragment warning = new AlertBox();
+                    warning.show(getSupportFragmentManager(), "warn");
+                }
+
+                //Else shows error message to user
+                else{Messages.integerError(this, "You do not have enough stock to process this request");}
+            }
         }
 
         catch (PersistenceException e){
