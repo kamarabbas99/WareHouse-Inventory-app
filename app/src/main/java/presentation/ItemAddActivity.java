@@ -38,14 +38,22 @@ public class ItemAddActivity extends AppCompatActivity {
             EditText description = (EditText) findViewById(R.id.inputDescription);
             EditText low = (EditText) findViewById(R.id.inputLowThreshhold);
 
-            //Creates a new item
-            items.createItem(name.getText().toString(), description.getText().toString(), Integer.parseInt(amount.getText().toString()), qtyLabel.getText().toString(), Integer.parseInt(low.getText().toString()));
+            //Checks the amount specified is greater than 0
+            if(Integer.parseInt(amount.getText().toString()) > 0) {
+                //Creates a new item and shows success message to user
+                items.createItem(name.getText().toString(), description.getText().toString(), Integer.parseInt(amount.getText().toString()), qtyLabel.getText().toString(), Integer.parseInt(low.getText().toString()));
+                added.show(getSupportFragmentManager(), "added");
+            }
 
-            added.show(getSupportFragmentManager(), "added");
+            //Else, shows error message to user and asks them to input a non negative number
+            else{Messages.integerError(this, "Please enter an amount greater than 0");}
         }
+        //If the user does not specify an actual number
         catch(NumberFormatException e){
             Messages.integerError(this, "Please give a correct number for the amount of the item");
         }
+
+        //Database error
         catch(PersistenceException e){
             Messages.itemFailAdd(this,"Item" ,e.getMessage() + "\nPlease try restarting the application");
         }
