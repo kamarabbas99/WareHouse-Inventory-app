@@ -61,4 +61,21 @@ public class InventoryAccessor {
     {
         InventoryDB.clearDB();
     }
+
+    public void clearInventory(int id){
+        IDBLayer InventoryManagerDB = DatabaseManager.getInventoryManagerPersistence();
+        int prevActiveID = DatabaseManager.getActiveInventory();
+        DatabaseManager.setActiveInventory(id);
+        InventoryManagerDB.clearDB();
+        DatabaseManager.setActiveInventory(prevActiveID);
+    }
+
+    public int getActiveID(){
+        return DatabaseManager.getActiveInventory();
+    }
+
+    public void setActiveID(int id){
+        DatabaseManager.setActiveInventory(id);
+    }
+
 }
