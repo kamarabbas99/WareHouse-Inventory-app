@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         //If username or password are incorrect
         else {
-           Messages.incorrectLogin(this, "Please try a correct username and password");
+           Messages.incorrectLogin(this, "Please enter a valid username and password");
         }
     }
 

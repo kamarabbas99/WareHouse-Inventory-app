@@ -6,11 +6,13 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
 
 import logic.AccountAccessor;
 import logic.InventoryAccessor;
+import objects.Inventory;
 
 public class MainMenuActivity extends AppCompatActivity implements AlertBox.AlertListener{
 
@@ -18,6 +20,7 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
     InventoryAccessor inventory = new InventoryAccessor();
     AccountAccessor account = new AccountAccessor();
 
+    //Id of the current inventory instance
     int id;
 
     @Override
@@ -27,6 +30,10 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
 
         //Gets the ID of the current active inventory
         id = getIntent().getIntExtra("invID", -1);
+        String name = inventory.getInventory(id).getName();
+
+        TextView textName = findViewById(R.id.currentInventory);
+        textName.setText("Viewing " + name);
     }
 
     //Called when user taps the "View Stock" Button
@@ -65,8 +72,6 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
 
     @Override
     public void onPositiveClick(DialogFragment dialog) {
-        Intent back = new Intent(this, InventoryViewActivity.class);
-        //TODO Insert clear call
-        startActivity(back);
+        inventory.clearInventory(id);
     }
 }
