@@ -20,8 +20,9 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
     InventoryAccessor inventory = new InventoryAccessor();
     AccountAccessor account = new AccountAccessor();
 
-    //Id of the current inventory instance
+    //Id and name of the current inventory instance
     int id;
+    String invName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,10 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
 
         //Gets the ID of the current active inventory
         id = getIntent().getIntExtra("invID", -1);
-        String name = inventory.getInventory(id).getName();
+        invName = inventory.getInventory(id).getName();
 
         TextView textName = findViewById(R.id.currentInventory);
-        textName.setText("Viewing " + name);
+        textName.setText("Viewing " + invName);
     }
 
     //Called when user taps the "View Stock" Button
@@ -50,6 +51,19 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
         if(account.getCurrentPrivilege() == 0) {
             Intent addView = new Intent(this, ItemAddActivity.class);
             startActivity(addView);
+        }
+        //Else, error message is printed
+        else {
+            Messages.invalidClearance(this, "Please contact an administrator");
+        }
+    }
+
+    public void viewReport(View view){
+        Intent report = new Intent(this, ReportViewActivity.class);
+
+        //Checks if user is admin, if so opens the add item activity
+        if(account.getCurrentPrivilege() == 0) {
+            startActivity(report);
         }
         //Else, error message is printed
         else {

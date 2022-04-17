@@ -67,6 +67,21 @@
         app:layout_constraintTop_toBottomOf="@+id/ItemViewButton" />
 
     <Button
+        android:id="@+id/ViewReportButton"
+        android:layout_width="0dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="viewReport"
+        android:text="View Inventory Report"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddItemButton" />
+
+    <Button
         android:id="@+id/clearInvButton"
         android:layout_width="0dp"
         android:layout_height="94dp"
@@ -80,6 +95,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddItemButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ViewReportButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

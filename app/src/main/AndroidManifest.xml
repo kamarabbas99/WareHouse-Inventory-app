@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WarehouseInventorySystem">
         <activity
+            android:name="presentation.ReportViewActivity"
+            android:parentActivityName="presentation.MainMenuActivity"
+            android:exported="false" />
+        <activity
             android:name="presentation.InventoryViewActivity"
             android:exported="false" />
         <activity
@@ -19,6 +23,7 @@
         <activity
             android:name="presentation.MainMenuActivity"
             android:exported="false"
+            android:launchMode="singleTask"
             android:parentActivityName="presentation.InventoryViewActivity" />
         <activity
             android:name="presentation.ItemViewActivity"
