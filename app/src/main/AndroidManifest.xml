@@ -15,6 +15,7 @@
             android:exported="false" />
         <activity
             android:name="presentation.InventoryViewActivity"
+            android:parentActivityName="presentation.MainActivity"
             android:exported="false" />
         <activity
             android:name="presentation.CreateAccountActivity"

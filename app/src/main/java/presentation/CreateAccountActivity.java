@@ -14,7 +14,7 @@ import com.example.warehouseinventorysystem.R;
 import database.PersistenceException;
 import logic.AccountAccessor;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity implements AccountConfirmationBox.AccountListener{
     AccountAccessor accounts = new AccountAccessor();
 
     @Override
@@ -59,5 +59,10 @@ public class CreateAccountActivity extends AppCompatActivity {
             Messages.itemFailAdd(this, "Account",e.getMessage() + "\nPlease try restarting the application");
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void onPositiveClick(DialogFragment dialog){
+        finish();
     }
 }

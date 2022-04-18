@@ -48,12 +48,6 @@ public class ReportViewActivity extends AppCompatActivity {
             case "item":
                 transaction.setText(transactions.getItemTransactions(id));
                 break;
-            case "account":
-                transaction.setText(transactions.getAccountTransactions(id));
-                break;
-            default:
-                transaction.setText(transactions.getAllTransactions());
-                break;
         }
     }
 
@@ -76,12 +70,6 @@ public class ReportViewActivity extends AppCompatActivity {
             case "item":
                 parent = new Intent(this, ItemViewActivity.class);
                 parent.putExtra("itemID", id);
-                break;
-            case "account":
-                parent = null;
-                break;
-            default:
-                parent = null;
                 break;
         }
 

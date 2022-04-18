@@ -21,9 +21,8 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
     //Holds every inventory object currently in the database
     Inventory[] inventories;
 
-    //Creates new inventory manager
+    //Creates new inventory accessor and Account accessor
     InventoryAccessor inv = new InventoryAccessor();
-
     AccountAccessor account = new AccountAccessor();
 
     @Override
