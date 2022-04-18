@@ -32,8 +32,17 @@ public class AccountAccessor {
         Account newAccount = new Account(-1, username, password, privilege);
         assert(accountDB != null);
         int id = accountDB.create(newAccount);
-        DatabaseManager.setActiveAccount(id);
-        newAccount = (Account) accountDB.get(id);
+        // case A: account already exists with same name
+        if (id < 0)
+        {
+            newAccount = null;
+        }
+        // case B: account did not already exist
+        else{
+            DatabaseManager.setActiveAccount(id);
+            newAccount = (Account) accountDB.get(id);
+        }
+
         if (newAccount == null)
         {
             System.out.println("Null account");
@@ -44,10 +53,12 @@ public class AccountAccessor {
     // Method that deletes the account with parameter passed
     public void deleteAccount(int id)
     {
+        // case A: account you're trying to delete is not the active account
         if (DatabaseManager.getActiveAccount() != id)
         {
             accountDB.delete(id);
         }
+        // case B: account you're trying to delete is the active account
         else
         {
             System.out.println("Cannot delete the active account. Please sign into another account to delete this one.");
@@ -85,7 +96,14 @@ public class AccountAccessor {
     public void deleteAllAccounts() {
         try
         {
-            accountDB.clearDB();
+            Account[] accounts = getAllAccounts();
+            for (Account account : accounts)
+            {
+                if (account.getID() != DatabaseManager.getActiveAccount())
+                {
+                    accountDB.delete(account.getID());
+                }
+            }
         }
         catch (PersistenceException exception)
         {

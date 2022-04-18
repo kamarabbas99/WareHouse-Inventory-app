@@ -65,7 +65,8 @@ public class AccountPersistence implements IDBLayer{
         The account object to create in the account table.
     OUTPUT:
         Returns the ACCOUNTID of the newly created account.
-        Returns -1 if the provided parameter is not an instance of the Account class.\
+        Returns -1 if the provided parameter is not an instance of the Account class.
+        Returns -2 if the account already exists.
         Throws a PersistenceException if something went wrong with query.
      */
     @Override
@@ -87,9 +88,14 @@ public class AccountPersistence implements IDBLayer{
         {
             int id = accToCreate.getID(); // the returned value
             Account foundAccount;
-            // a check to see if an account with the given ID already exists
-            // case: account with the same id wasn't found
-            if ((foundAccount = (Account) get(id)) == null) {
+            // a check to see if an account with the given ID or username already exists
+            if ((foundAccount = (Account) get(id)) == null)
+            {
+                foundAccount = (Account) get(accToCreate.getUsername());
+            }
+
+            // case A: account with the same id or username wasn't found
+            if (foundAccount == null) {
                 // retrieve a new ID to give to the account.
                 id = createNewID();
                 // prepare the query
@@ -107,7 +113,12 @@ public class AccountPersistence implements IDBLayer{
                 // log the creation in the Transactions Table
                 transactionPersistence.create(new Transaction(id, -1, -1, "create", 0));
             }
-            // return the ACCOUNTID of the newly created item
+            // case B: account already exists
+            else
+            {
+                id = -2;
+            }
+
             return id;
         }
         catch (final SQLException exception)
@@ -310,5 +321,33 @@ public class AccountPersistence implements IDBLayer{
         }
     }
 
-
+    // region $public
+    public IDSO get(String name)
+    {
+        // connect to the DB
+        try (final Connection connection = connect())
+        {
+            Account acc = null;
+            // prepare the query
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS WHERE USERNAME = ?");
+            preparedStatement.setString(1, name);
+            // execute the query
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            // translate the result into the account object if the result set found the account
+            if (resultSet.next())
+            {
+                acc = decipherResultSet(resultSet); // may throw SQLException
+            }
+            // close open connections
+            resultSet.close();
+            preparedStatement.close();
+            // return the newly obtained account
+            return acc;
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
+    }
+    // endregion
 }
