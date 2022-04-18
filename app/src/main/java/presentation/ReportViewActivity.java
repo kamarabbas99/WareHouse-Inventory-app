@@ -2,6 +2,7 @@ package presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.ScrollView;
@@ -25,7 +26,7 @@ public class ReportViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_view);
 
         //Gets passed variables
-        id = getIntent().getIntExtra("id", -1);
+        id = getIntent().getIntExtra("ID", -1);
         invName = getIntent().getStringExtra("name");
         type = getIntent().getStringExtra("type");
 
@@ -54,5 +55,36 @@ public class ReportViewActivity extends AppCompatActivity {
                 transaction.setText(transactions.getAllTransactions());
                 break;
         }
+    }
+
+    //Override standard parent activity so that it can be dynamically selected
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        return getParentActivityIntentImpl(); }
+    @Override
+    public Intent getParentActivityIntent() {
+        return getParentActivityIntentImpl(); }
+
+    //Changes parent activity based on what type was passed
+    private Intent getParentActivityIntentImpl(){
+        Intent parent = null;
+
+        switch (type) {
+            case "inventory":
+                parent = new Intent(this, MainMenuActivity.class);
+                break;
+            case "item":
+                parent = new Intent(this, ItemViewActivity.class);
+                parent.putExtra("itemID", id);
+                break;
+            case "account":
+                parent = null;
+                break;
+            default:
+                parent = null;
+                break;
+        }
+
+        return parent;
     }
 }
