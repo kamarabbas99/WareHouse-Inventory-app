@@ -63,6 +63,20 @@
         app:layout_constraintTop_toBottomOf="@+id/itemDesc" />
 
     <Button
+        android:id="@+id/itemTransactionButton"
+        android:layout_width="0dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="viewTransactions"
+        android:text="View Item Report"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RemoveStock" />
+
+    <Button
         android:id="@+id/RemoveStock"
         android:layout_width="0dp"
         android:layout_height="85dp"
@@ -86,6 +100,7 @@
         android:onClick="deleteItem"
         android:text="@string/DeleteItem"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RemoveStock" />
+        app:layout_constraintTop_toBottomOf="@+id/itemTransactionButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

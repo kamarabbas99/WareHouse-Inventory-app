@@ -59,10 +59,17 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
     }
 
     public void viewReport(View view){
-        Intent report = new Intent(this, ReportViewActivity.class);
 
         //Checks if user is admin, if so opens the add item activity
         if(account.getCurrentPrivilege() == 0) {
+            Intent report = new Intent(this, ReportViewActivity.class);
+
+            //Puts the name, id, and type of item as extras
+            report.putExtra("ID", id);
+            report.putExtra("name", invName);
+            report.putExtra("type", "inventory");
+
+            //Starts the activity
             startActivity(report);
         }
         //Else, error message is printed

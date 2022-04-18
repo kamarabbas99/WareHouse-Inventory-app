@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.warehouseinventorysystem.R;
 
 import database.PersistenceException;
+import logic.AccountAccessor;
 import logic.InventoryManagerAccessor;
 import objects.Item;
 
@@ -19,6 +20,7 @@ import objects.Item;
 //The item can also be deleted from the system entirely
 public class ItemViewActivity extends AppCompatActivity implements AlertBox.AlertListener, AmountBox.AmountListener {
     InventoryManagerAccessor inventory = new InventoryManagerAccessor();
+    AccountAccessor account = new AccountAccessor();
     Item item;
 
     //Text views and buttons on page
@@ -71,6 +73,25 @@ public class ItemViewActivity extends AppCompatActivity implements AlertBox.Aler
     public void removeStock(View view) {
         DialogFragment add = new AmountBox();
         add.show(getSupportFragmentManager(), "remove");
+    }
+
+    //On a transaction view press starts up transaction activity
+    public void viewTransactions(View view){
+        if(account.getCurrentPrivilege() == 0) {
+            Intent report = new Intent(this, ReportViewActivity.class);
+
+            //Puts the name, id, and type of item as extras
+            report.putExtra("ID", item.getID());
+            report.putExtra("name", item.getName());
+            report.putExtra("type", "item");
+
+            //Starts the activity
+            startActivity(report);
+        }
+        //Else, error message is printed
+        else {
+            Messages.invalidClearance(this, "Please contact an administrator");
+        }
     }
 
     //On positive button click, the items amount is set to 0, and the page returns to stock view
