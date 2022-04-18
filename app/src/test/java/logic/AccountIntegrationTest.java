@@ -57,8 +57,8 @@ public class AccountIntegrationTest {
     @Test
     public void createNewAccountTest() {
 
-        Account newAcc=accountAccessor.createAccount("user1","pass1",0);
-        assertEquals(newAcc.getUsername(),"user1");
+        Account newAcc=accountAccessor.createAccount("createNewTest","pass1",0);
+        assertEquals(newAcc.getUsername(),"createNewTest");
         assertEquals(newAcc.getPrivilege(),0);
 
     }
@@ -76,7 +76,7 @@ public class AccountIntegrationTest {
     public void getAccountPrivTest()
     {
 
-        Account newAcc=accountAccessor.createAccount("user1","pass1",3);
+        Account newAcc=accountAccessor.createAccount("getPrivilegeTest","pass1",3);
         assertEquals(3,accountAccessor.getCurrentPrivilege());
     }
 

@@ -87,9 +87,15 @@ public class InventoryPersistence implements IDBLayer{
         try (final Connection connection = connect())
         {
             int id = invToCreate.getID(); // the returned value
-            // a check to see if an Inventory with the given ID already exists
+            Inventory foundInventory;
+            // a check to see if an account with the given ID or username already exists
+            if ((foundInventory = (Inventory) get(id)) == null)
+            {
+                foundInventory = (Inventory) get(invToCreate.getName());
+            }
+
             // case: Inventory with the same id wasn't found
-            if (((Inventory) get(invToCreate.getID())) == null) {
+            if (foundInventory == null) {
                 // retrieve a new ID to give to the Inventory.
                 id = createNewID();
                 // prepare the query
@@ -104,6 +110,10 @@ public class InventoryPersistence implements IDBLayer{
                 invStatement.close();
                 // log the creation in the Transactions Table
                 transactionPersistence.create(new Transaction(DatabaseManager.getActiveAccount(), id, -1, "create", 0));
+            }
+            else
+            {
+                id = -2;
             }
             // return the INVENTORYID of the newly created Inventory
             return id;
@@ -307,6 +317,35 @@ public class InventoryPersistence implements IDBLayer{
         }
     }
 
-
+    // region $public
+    private IDSO get(String name)
+    {
+        // connect to the DB
+        try (final Connection connection = connect())
+        {
+            Inventory inv = null;
+            // prepare the query
+            final PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM INVENTORIES WHERE NAME = ?");
+            preparedStatement.setString(1, name);
+            // execute the query
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            // translate the result into the Inventory object if the result set found the Inventory
+            if (resultSet.next())
+            {
+                inv = decipherResultSet(resultSet); // may throw SQLException
+            }
+            // close open connections
+            resultSet.close();
+            preparedStatement.close();
+            // return the newly obtained Inventory
+            return inv;
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
+    }
+    // endregion
 }
 

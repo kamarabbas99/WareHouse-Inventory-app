@@ -322,7 +322,7 @@ public class AccountPersistence implements IDBLayer{
     }
 
     // region $public
-    public IDSO get(String name)
+    private IDSO get(String name)
     {
         // connect to the DB
         try (final Connection connection = connect())

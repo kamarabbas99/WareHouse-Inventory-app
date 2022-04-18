@@ -35,7 +35,7 @@ public class ItemPersistence implements IDBLayer{
         transactionPersistence = DatabaseManager.getTransactionPersistence();
     }
 
-    // endregions
+    // endregion
 
     // region $interfaceOverrides
 
@@ -112,9 +112,10 @@ public class ItemPersistence implements IDBLayer{
         {
             int id = itemToCreate.getID(); // the returned value
             Item foundItem;
+
             // a check to see if an item with the given ID already exists
             // case: item with the same id wasn't found
-            if ((foundItem = (Item) get(itemToCreate.getID())) == null) {
+            if ((foundItem = (Item) get(id)) == null) {
                 // retrieve a new ID to give to the item.
                 id = createNewID();
                 // prepare the query
@@ -332,7 +333,6 @@ public class ItemPersistence implements IDBLayer{
             {
                 id = resultSet.getInt("maxID");
             }
-
             // close open connections
             resultSet.close();
             statement.close();
@@ -342,5 +342,4 @@ public class ItemPersistence implements IDBLayer{
     }
 
     // endregion
-
 }

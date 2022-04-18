@@ -17,6 +17,7 @@ import database.DatabaseManager;
 import database.InventoryManagerPersistence;
 import database.InventoryPersistence;
 import database.PersistenceException;
+import objects.Account;
 import objects.Inventory;
 
 /* INVENTORYINTEGRATIONTEST
@@ -67,6 +68,15 @@ public class InventoryIntegrationTest {
     {
         Inventory newInventory = inventoryAccessor.createInventory("createTest");
         assertEquals(newInventory.getName(),"createTest");
+    }
+
+    @Test
+    public void createExistingInventoryTest()
+    {
+        Inventory newInventory = inventoryAccessor.createInventory("existingInventoryTest");
+        Inventory existingInventory = inventoryAccessor.createInventory("existingInventoryTest");
+        assertNull(existingInventory);
+        inventoryAccessor.deleteInventory(newInventory.getID());
     }
 
     @Test

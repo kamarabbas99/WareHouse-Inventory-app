@@ -1,5 +1,7 @@
 package logic;
 
+import android.provider.ContactsContract;
+
 import java.sql.SQLOutput;
 
 import database.IDBLayer;
@@ -23,10 +25,15 @@ public class InventoryAccessor {
 
     public Inventory createInventory(String name){
         Inventory newInv = new Inventory(-1, name);
-        System.out.println("Trying to create inventory");
         int id = InventoryDB.create(newInv);
-        System.out.println("Inventory created");
-        newInv = (Inventory) InventoryDB.get(id);
+        if (id < 0)
+        {
+            newInv = null;
+        }
+        else
+        {
+            newInv = (Inventory) InventoryDB.get(id);
+        }
         if (newInv == null){
             System.out.println("Null Inventory");
         }
