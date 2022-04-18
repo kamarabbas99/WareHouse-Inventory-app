@@ -69,11 +69,16 @@ public class InventoryViewActivity extends AppCompatActivity implements Inventor
     public void onChangeClick(DialogFragment dialog, String name){
         try{
             //Creates new inventory with the entered name
-            inv.createInventory(name);
+            if(inv.createInventory(name) != null) {
+                //Reloads the page to get the updates
+                finish();
+                startActivity(getIntent());
+            }
 
-            //Reloads the page to get the updates
-            finish();
-            startActivity(getIntent());
+            //If the name is already taken, an error is shown to user
+            else{
+                Messages.invalidName(this, "Inventory name", "Please enter a different name");
+            }
         }
 
         catch(PersistenceException e){

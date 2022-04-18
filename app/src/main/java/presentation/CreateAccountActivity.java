@@ -42,10 +42,14 @@ public class CreateAccountActivity extends AppCompatActivity implements AccountC
                 if (admin.isChecked()) {clearance = 0;}
 
                 //Adds user to the system
-                accounts.createAccount(name.getText().toString(), password.getText().toString(), clearance);
+                if(accounts.createAccount(name.getText().toString(), password.getText().toString(), clearance) != null) {
+                    //Shows success dialog box
+                    created.show(getSupportFragmentManager(), "created");
+                }
 
-                //Shows success dialog box
-                created.show(getSupportFragmentManager(), "created");
+                else {
+                    Messages.invalidName(this, "Username", "Please enter a different username");
+                }
             }
 
             //Passwords do not match, shows error to user and asks them to try again

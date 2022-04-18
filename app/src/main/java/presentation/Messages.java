@@ -85,4 +85,13 @@ public class Messages {
 
         dialog.show();
     }
+
+    public static void invalidName(final Activity owner, String type, String message){
+        AlertDialog dialog = new AlertDialog.Builder(owner).create();
+
+        dialog.setTitle(type + " is already taken");
+        dialog.setMessage(message);
+
+        dialog.show();
+    }
 }
