@@ -40,18 +40,24 @@ public class ReportViewActivity extends AppCompatActivity {
         //Sets the transaction list to scroll and puts the text into the box
         transaction.setMovementMethod(new ScrollingMovementMethod());
 
-        //Accesses the transactions depending on the type
-        switch (type) {
-            case "inventory":
-                transaction.setText(transactions.getInventoryTransactions(id));
-                break;
-            case "item":
-                transaction.setText(transactions.getItemTransactions(id));
-                break;
+        try {
+            //Accesses the transactions depending on the type
+            switch (type) {
+                case "inventory":
+                    transaction.setText(transactions.getInventoryTransactions(id));
+                    break;
+                case "item":
+                    transaction.setText(transactions.getItemTransactions(id));
+                    break;
+            }
+        }
+        //If there are no transactions, prints an empty message
+        catch(NullPointerException e){
+            transaction.setText("There is nothing to report yet");
         }
     }
 
-    //Override standard parent activity so that it can be dynamically selected
+    //Override standard parent activity so that it can be dynamically selected depending on the page that called it
     @Override
     public Intent getSupportParentActivityIntent() {
         return getParentActivityIntentImpl(); }
