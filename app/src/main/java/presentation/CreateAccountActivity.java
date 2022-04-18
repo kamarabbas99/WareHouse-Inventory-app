@@ -3,6 +3,7 @@ package presentation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,7 +14,7 @@ import com.example.warehouseinventorysystem.R;
 import database.PersistenceException;
 import logic.AccountAccessor;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity implements AccountConfirmationBox.AccountListener{
     AccountAccessor accounts = new AccountAccessor();
 
     @Override
@@ -41,10 +42,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (admin.isChecked()) {clearance = 0;}
 
                 //Adds user to the system
-                accounts.createAccount(name.getText().toString(), password.getText().toString(), clearance);
+                if(accounts.createAccount(name.getText().toString(), password.getText().toString(), clearance) != null) {
+                    //Shows success dialog box
+                    created.show(getSupportFragmentManager(), "created");
+                }
 
-                //Shows success dialog box
-                created.show(getSupportFragmentManager(), "created");
+                else {
+                    Messages.invalidName(this, "Username", "Please enter a different username");
+                }
             }
 
             //Passwords do not match, shows error to user and asks them to try again
@@ -58,5 +63,10 @@ public class CreateAccountActivity extends AppCompatActivity {
             Messages.itemFailAdd(this, "Account",e.getMessage() + "\nPlease try restarting the application");
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void onPositiveClick(DialogFragment dialog){
+        finish();
     }
 }

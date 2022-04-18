@@ -54,7 +54,7 @@ public class TransactionAccessor {
 
         for (Transaction transaction : transactions) {
             if (transaction != null) {
-                report += transaction.toString() + "\n";
+                report += transaction.toString() + "\n\n";
             }
         }
 

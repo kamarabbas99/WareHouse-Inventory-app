@@ -6,11 +6,13 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.warehouseinventorysystem.R;
 
 import logic.AccountAccessor;
 import logic.InventoryAccessor;
+import objects.Inventory;
 
 public class MainMenuActivity extends AppCompatActivity implements AlertBox.AlertListener{
 
@@ -18,7 +20,9 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
     InventoryAccessor inventory = new InventoryAccessor();
     AccountAccessor account = new AccountAccessor();
 
+    //Id and name of the current inventory instance
     int id;
+    String invName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,10 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
 
         //Gets the ID of the current active inventory
         id = getIntent().getIntExtra("invID", -1);
+        invName = inventory.getInventory(id).getName();
+
+        TextView textName = findViewById(R.id.currentInventory);
+        textName.setText("Viewing " + invName);
     }
 
     //Called when user taps the "View Stock" Button
@@ -50,6 +58,26 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
         }
     }
 
+    public void viewReport(View view){
+
+        //Checks if user is admin, if so opens the add item activity
+        if(account.getCurrentPrivilege() == 0) {
+            Intent report = new Intent(this, ReportViewActivity.class);
+
+            //Puts the name, id, and type of item as extras
+            report.putExtra("ID", id);
+            report.putExtra("name", invName);
+            report.putExtra("type", "inventory");
+
+            //Starts the activity
+            startActivity(report);
+        }
+        //Else, error message is printed
+        else {
+            Messages.invalidClearance(this, "Please contact an administrator");
+        }
+    }
+
     //Clears the current selected inventory
     public void clearInventory(View view) {
         //Checks if user is admin, if so clears the inventory
@@ -65,8 +93,6 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
 
     @Override
     public void onPositiveClick(DialogFragment dialog) {
-        Intent back = new Intent(this, InventoryViewActivity.class);
-        //TODO Insert clear call
-        startActivity(back);
+        inventory.clearInventory(id);
     }
 }
