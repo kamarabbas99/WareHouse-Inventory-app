@@ -147,8 +147,21 @@ public class TransactionPersistence implements IDBLayer {
     @Override
     public void delete(int id) throws PersistenceException
     {
-        Exception exception = new Exception("Cannot delete an Transaction from the Transactions table.");
-        throw new PersistenceException(exception);
+        // connect to DB
+        try (final Connection connection = connect())
+        {
+            // prepare the query
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM TRANSACTIONS WHERE TRANSACTIONID = ?");
+            statement.setInt(1, id);
+            // execute the query
+            statement.executeUpdate();
+            // close open connections
+            statement.close();
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
     }
 
     /* GETDB

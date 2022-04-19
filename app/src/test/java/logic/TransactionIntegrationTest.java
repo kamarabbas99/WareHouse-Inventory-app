@@ -76,6 +76,40 @@ public class TransactionIntegrationTest {
         assertEquals(testTrans.getAccountID(), 1);
         assertEquals(testTrans.getInventoryID(), 2);
         assertEquals(testTrans.getItemID(), 3);
+    }
+
+    @Test
+    public void deleteTest()
+    {
+        int testID = transPersistence.create(new Transaction());
+        assertTrue(testID > 0);
+        Transaction testTransaction = (Transaction) transPersistence.get(testID);
+        assertNotNull(testTransaction);
+        transPersistence.delete(testID);
+        testTransaction = (Transaction) transPersistence.get(testID);
+        assertNull(testTransaction);
+    }
+
+    @Test
+    public void clearTest()
+    {
+        int testIDArray[] = new int[32];
+        // populate the table with transactions
+        for (int loopCount = 0; loopCount < 32; loopCount++)
+        {
+            testIDArray[loopCount] = transPersistence.create(new Transaction());
+            assertTrue(testIDArray[loopCount] > 0);
+            Transaction testTransaction = (Transaction) transPersistence.get(testIDArray[loopCount]);
+            assertNotNull(testTransaction);
+        }
+        // remove all transactions
+        for (int loopCount = 0; loopCount < 32; loopCount++)
+        {
+            transPersistence.delete(testIDArray[loopCount]);
+            Transaction testTransaction = (Transaction) transPersistence.get(testIDArray[loopCount]);
+            assertNull(testTransaction);
+        }
+
 
     }
 
