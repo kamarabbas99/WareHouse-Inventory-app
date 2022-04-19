@@ -89,14 +89,14 @@ public class AccountIntegrationTest {
         assertNotEquals(5,accountAccessor.getCurrentPrivilege());
     }
 
-    @Test
-    public void deleteActiveAccountTest()
-    {
-        Account newAcc=accountAccessor.createAccount("Test","test",5);
-        DatabaseManager.setActiveAccount(newAcc.getID());
-        accountAccessor.deleteAccount(newAcc.getID());
-        assertNotEquals(5,accountAccessor.getCurrentPrivilege());
-    }
+//    @Test
+//    public void deleteActiveAccountTest()
+//    {
+//        Account newAcc=accountAccessor.createAccount("Test","test",5);
+//        DatabaseManager.setActiveAccount(newAcc.getID());
+//        accountAccessor.deleteAccount(newAcc.getID());
+//        assertNotEquals(5,accountAccessor.getCurrentPrivilege());
+//    }
 
     @Test
     public void verifyTest()

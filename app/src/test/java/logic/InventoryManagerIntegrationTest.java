@@ -52,11 +52,7 @@ public class InventoryManagerIntegrationTest {
         // endregion
     }
 
-    @After
-    public void tearDown() throws Exception {
-        //imPersistence.clearDB(); // clear all data add to the InventoryManagers table
-        //itemPersistence.clearDB(); // clear all data add to the Items table
-    }
+
 
 
     @Test
@@ -74,19 +70,16 @@ public class InventoryManagerIntegrationTest {
 
     @Test
     public void createExistingItem() {
-        //Inventory newInventory = imAccessor.createItem("existingInventoryTest");
-        //Inventory existingInventory = imAccessor.createItem("existingInventoryTest");
-        //assertNull(existingInventory);
-        //imAccessor.deleteItem(newInventory.getID());
 
-//        Item check = imAccessor.getItem(1);
-//        imAccessor.addItem(1, 3);
-//        Item check2 = imAccessor.getItem(1);
-//        assertEquals(check.getQuantity() + 3, check2.getQuantity());
+        Item check = imAccessor.getItem(1);
+        imAccessor.addItem(1, 3);
+        Item check2 = imAccessor.getItem(1);
+        assertEquals(check.getQuantity() + 3, check2.getQuantity());
     }
 
     @Test
     public void removeExistingItem() {
+        //imAccessor.createItem("Item1", "Item1:desc", 2, "Item1:Met", 1);
         Item check = imAccessor.getItem(1);
         imAccessor.removeItem(1, 3);
         Item check2 = imAccessor.getItem(1);

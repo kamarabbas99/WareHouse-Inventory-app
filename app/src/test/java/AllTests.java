@@ -16,7 +16,6 @@ import objects.InventoryTest;
         InventoryManagerTest.class,
         AccountAccesserTest.class,
         ItemAccesserTest.class,
-        InventoryManagerIntegrationTest.class,
         InventoryTest.class
 })
 public class AllTests {

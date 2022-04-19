@@ -61,6 +61,7 @@ public class InventoryIntegrationTest {
 
     @After
     public void tearDown() throws Exception {
+
     }
 
     @Test
@@ -68,6 +69,7 @@ public class InventoryIntegrationTest {
     {
         Inventory newInventory = inventoryAccessor.createInventory("createTest");
         assertEquals(newInventory.getName(),"createTest");
+        inventoryAccessor.deleteInventory(newInventory.getID());
     }
 
     @Test
@@ -85,6 +87,7 @@ public class InventoryIntegrationTest {
         Inventory newInventory = inventoryAccessor.createInventory("getTest");
         Inventory inventory = inventoryAccessor.getInventory(newInventory.getID());
         assertNotNull(inventory);
+        inventoryAccessor.deleteInventory(newInventory.getID());
     }
 
     @Test
