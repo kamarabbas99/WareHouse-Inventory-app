@@ -112,26 +112,5 @@ public class InventoryManagerIntegrationTest {
         assertEquals(allItems[len - 1].getName(), "ItemLast");
     }
 
-/*
-     @Test
-    public void removeAllItemTest()
-     {
-         imAccessor.removeAllItems();
-         Item[] allItems=imAccessor.getAllItems();
-         assertNull(allItems);
-     }
-
-     @Test
-     public void fixDatabaseToReRun()
-     {
-        createNewItem();
-        createExistingItem();
-        removeExistingItem();
-        getItemTest();
-        getAllItemTest();
-     }
-
-
- */
 }
 
