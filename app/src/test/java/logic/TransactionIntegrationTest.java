@@ -1,6 +1,7 @@
 package logic;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,6 +25,13 @@ public class TransactionIntegrationTest {
     TransactionPersistence transPersistence; // used only in tear down to remove added data
     DatabaseManager dbManager;
     String dbFilePath;
+    int testID;
+    TransactionAccessor ta;
+    int accountID=0;
+    int inventoryID=0;
+    int itemID=0;
+    String transType="test";
+    int quantity=0;
 
     @Before
     public void setUp() throws Exception {
@@ -45,18 +53,24 @@ public class TransactionIntegrationTest {
         //transAccessor = new TransactionAccessor(transPersistence);
         //assertNotNull(transAccessor);
         // endregion
+
+        transType="test";
+        ta=new TransactionAccessor(transPersistence);
+
     }
 
     @After
     public void tearDown() throws Exception {
         //imPersistence.clearDB(); // clear all data add to the InventoryManagers table
         //itemPersistence.clearDB(); // clear all data add to the Items table
+        //transPersistence.clearDB();
     }
 
     @Test
     public void createAndGetNewTransaction()
     {
-        int testID = transPersistence.create(new Transaction(1, 2, 3, "add", 10));
+
+        testID = transPersistence.create(new Transaction(1, 2, 3, "add", 10));
         Transaction testTrans = (Transaction) transPersistence.get(testID);
         assertNotNull(testTrans);
         assertEquals(testTrans.getAccountID(), 1);
@@ -97,6 +111,47 @@ public class TransactionIntegrationTest {
         }
 
 
+    }
+
+    @Test
+    public void testGetAccountTransactions(){
+
+        accountID++;
+        inventoryID++;
+        itemID++;
+        quantity++;
+        testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
+        assertEquals(ta.getAccountTransactions(accountID).contains("accountID:"+accountID),true);
+    }
+
+    @Test
+    public void testGetItemTransactions() {
+        accountID++;
+        inventoryID++;
+        itemID++;
+        quantity++;
+        testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
+        assertEquals(ta.getItemTransactions(itemID).contains("itemID:"+itemID),true);
+    }
+
+    @Test
+    public void testGetInventoryTransactions() {
+        accountID++;
+        inventoryID++;
+        itemID++;
+        quantity++;
+        testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
+        assertEquals(ta.getInventoryTransactions(inventoryID).contains("inventoryID:"+inventoryID),true);
+    }
+
+    @Test
+    public void testGetAllTransactions() {
+        accountID++;
+        inventoryID++;
+        itemID++;
+        quantity++;
+        testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
+        assertEquals(ta.getAllTransactions().contains("itemID:"+itemID),true);
     }
 
 }
