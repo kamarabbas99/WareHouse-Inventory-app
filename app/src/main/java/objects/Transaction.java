@@ -26,6 +26,7 @@ public class Transaction implements IDSO
         accountID = -1;
         inventoryID = -1;
         itemID = -1;
+        quantity = -1;
         transactionType = "default";
         dateCreated = new Timestamp(new Date().getTime());
     }

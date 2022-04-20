@@ -56,14 +56,12 @@ public class TransactionIntegrationTest {
 
         transType="test";
         ta=new TransactionAccessor(transPersistence);
-
     }
 
 
     @Test
     public void createAndGetNewTransaction()
     {
-
         testID = transPersistence.create(new Transaction(1, 2, 3, "add", 10));
         Transaction testTrans = (Transaction) transPersistence.get(testID);
         assertNotNull(testTrans);

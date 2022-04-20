@@ -6,13 +6,16 @@ import logic.InventoryManagerIntegrationTest;
 import logic.ItemAccesserTest;
 import objects.AccountTest;
 import objects.ItemTest;
+import objects.TransactionTest;
 import logic.InventoryManagerTest;
 import objects.InventoryTest;
+import objects.Transaction;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AccountTest.class,
         ItemTest.class,
+        TransactionTest.class,
         InventoryManagerTest.class,
         AccountAccesserTest.class,
         ItemAccesserTest.class,
