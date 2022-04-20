@@ -21,5 +21,5 @@ import objects.Transaction;
         ItemAccesserTest.class,
         InventoryTest.class
 })
-public class AllTests {
+public class AllUnitTests {
 }

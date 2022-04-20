@@ -14,5 +14,5 @@ import objects.Transaction;
         AccountIntegrationTest.class,
         TransactionIntegrationTest.class
 })
-public class IntegrationTest {
+public class AllIntegrationTests {
 }
