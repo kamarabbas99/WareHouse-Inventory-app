@@ -2,7 +2,6 @@ package presentation;
 
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -31,6 +30,10 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import database.DatabaseManager;
+import database.ItemPersistence;
+import objects.Item;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -109,7 +112,7 @@ public class CreateItemSystemTest {
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText4.perform(replaceText("test item"), closeSoftKeyboard());
+        appCompatEditText4.perform(replaceText("Test Item"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText5 = onView(
                 allOf(withId(R.id.inputAmount),
@@ -139,7 +142,7 @@ public class CreateItemSystemTest {
                                         0),
                                 4),
                         isDisplayed()));
-        appCompatEditText7.perform(replaceText("stuff stuff stuff"), closeSoftKeyboard());
+        appCompatEditText7.perform(replaceText("A test item."), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText8 = onView(
                 allOf(withId(R.id.inputLowThreshhold),
@@ -171,8 +174,6 @@ public class CreateItemSystemTest {
                                 3),
                         isDisplayed()));
         materialButton5.perform(click());
-
-        pressBack();
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -225,6 +226,10 @@ public class CreateItemSystemTest {
                                 3),
                         isDisplayed()));
         materialButton9.perform(click());
+
+        ItemPersistence itemDB = DatabaseManager.getItemPersistence();
+        Item item = (Item) itemDB.get("Test Item");
+        itemDB.delete(item.getID());
     }
 
     private static Matcher<View> childAtPosition(

@@ -342,4 +342,44 @@ public class ItemPersistence implements IDBLayer{
     }
 
     // endregion
+
+    // region $publicTest
+    /* GET
+    PURPOSE:
+        Retrieves the item with the given id if found in the Items table.
+    INPUT:
+        id              The Item object to look for in the Items table.
+    OUTPUT:
+        Returns the obtained Item from the Items table.
+        Returns a null if the item is not found.
+        Throws a Persistence Exception if something went wrong with the query.
+     */
+    public IDSO get(String name)
+    {
+        // connect to the DB
+        try (final Connection connection = connect())
+        {
+            Item item = null;
+            // prepare the query
+            final PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ITEMS WHERE NAME = ?");
+            preparedStatement.setString(1, name);
+            // execute the query
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            // translate the result into the Item object if the result set found the item
+            if (resultSet.next())
+            {
+                item = decipherResultSet(resultSet); // may throw SQLException
+            }
+            // close open connections
+            resultSet.close();
+            preparedStatement.close();
+            // return the newly obtained Item
+            return item;
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
+    }
+    // endregion
 }
