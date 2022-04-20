@@ -30,6 +30,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import database.DatabaseManager;
+import database.InventoryPersistence;
+import objects.Inventory;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class CreateInventorySystemTest {
@@ -47,19 +51,9 @@ public class CreateInventorySystemTest {
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatEditText.perform(click());
+        appCompatEditText.perform(replaceText("Administrator"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.username),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatEditText2.perform(replaceText("Administrator"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.password),
                         childAtPosition(
                                 childAtPosition(
@@ -67,7 +61,7 @@ public class CreateInventorySystemTest {
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("admin"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("admin"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.logInButton), withText("Log In"),
@@ -89,7 +83,7 @@ public class CreateInventorySystemTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        ViewInteraction appCompatEditText4 = onView(
+        ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.name),
                         childAtPosition(
                                 childAtPosition(
@@ -97,7 +91,7 @@ public class CreateInventorySystemTest {
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText4.perform(replaceText("testing"), closeSoftKeyboard());
+        appCompatEditText3.perform(replaceText("Test Inventory"), closeSoftKeyboard());
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(android.R.id.button1), withText("Ok"),
@@ -109,6 +103,31 @@ public class CreateInventorySystemTest {
                                 3),
                         isDisplayed()));
         materialButton3.perform(click());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.itemPageButton), withText(">"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.InventoryRV),
+                                        1),
+                                1),
+                        isDisplayed()));
+        materialButton4.perform(click());
+
+        ViewInteraction materialButton5 = onView(
+                allOf(withId(R.id.ItemViewButton), withText("View Stock"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        materialButton5.perform(click());
+
+        InventoryPersistence inventoryDB = DatabaseManager.getInventoryPersistence();
+        Inventory inventory = (Inventory) inventoryDB.get(DatabaseManager.getActiveInventory());
+        DatabaseManager.setActiveInventory(1);
+        inventoryDB.delete(inventory.getID());
     }
 
     private static Matcher<View> childAtPosition(
