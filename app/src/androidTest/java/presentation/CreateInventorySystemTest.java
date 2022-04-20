@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 
 import database.DatabaseManager;
 import database.InventoryPersistence;
+import database.TransactionPersistence;
 import objects.Inventory;
 
 @LargeTest
@@ -128,6 +129,8 @@ public class CreateInventorySystemTest {
         Inventory inventory = (Inventory) inventoryDB.get(DatabaseManager.getActiveInventory());
         DatabaseManager.setActiveInventory(1);
         inventoryDB.delete(inventory.getID());
+        TransactionPersistence transactionDB = DatabaseManager.getTransactionPersistence();
+        transactionDB.clearDB();
     }
 
     private static Matcher<View> childAtPosition(

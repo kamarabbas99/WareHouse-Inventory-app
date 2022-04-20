@@ -30,6 +30,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import database.DatabaseManager;
+import database.TransactionPersistence;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddItemSystemTest {
@@ -160,6 +163,9 @@ public class AddItemSystemTest {
                                 3),
                         isDisplayed()));
         materialButton8.perform(click());
+
+        TransactionPersistence transactionDB = DatabaseManager.getTransactionPersistence();
+        transactionDB.clearDB();
     }
 
     private static Matcher<View> childAtPosition(

@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ import org.junit.runner.RunWith;
 
 import database.DatabaseManager;
 import database.ItemPersistence;
+import database.TransactionPersistence;
 import objects.Item;
+import objects.Transaction;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -230,6 +233,8 @@ public class CreateItemSystemTest {
         ItemPersistence itemDB = DatabaseManager.getItemPersistence();
         Item item = (Item) itemDB.get("Test Item");
         itemDB.delete(item.getID());
+        TransactionPersistence transactionDB = DatabaseManager.getTransactionPersistence();
+        transactionDB.clearDB();
     }
 
     private static Matcher<View> childAtPosition(

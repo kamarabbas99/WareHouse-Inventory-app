@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 
 import database.AccountPersistence;
 import database.DatabaseManager;
+import database.TransactionPersistence;
 import objects.Account;
 
 @LargeTest
@@ -148,6 +149,8 @@ public class AccountCreationSystemTest {
         Account account = (Account) accountDB.get(DatabaseManager.getActiveAccount());
         DatabaseManager.setActiveAccount(1);
         accountDB.delete(account.getID());
+        TransactionPersistence transactionDB = DatabaseManager.getTransactionPersistence();
+        transactionDB.clearDB();
     }
 
     private static Matcher<View> childAtPosition(

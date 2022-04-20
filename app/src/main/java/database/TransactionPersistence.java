@@ -221,8 +221,24 @@ public class TransactionPersistence implements IDBLayer {
     @Override
     public void clearDB() throws PersistenceException
     {
-        Exception exception = new Exception("Cannot delete the entire Transactions table.");
-        throw new PersistenceException(exception);
+        // connect to DB
+        try (final Connection connection = connect())
+        {
+            // initialize collections
+            // prepare the query
+            final Statement statement = connection.createStatement();
+            // execute the query
+            final ResultSet resultSet = statement.executeQuery("DELETE FROM TRANSACTIONS");
+            // close open connections
+            resultSet.close();
+            statement.close();
+        }
+        catch (final SQLException exception)
+        {
+            throw new PersistenceException(exception);
+        }
+//        Exception exception = new Exception("Cannot delete the entire Transactions table.");
+//        throw new PersistenceException(exception);
     }
 
     /* ADD

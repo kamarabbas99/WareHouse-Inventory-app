@@ -94,10 +94,10 @@ public class TransactionIntegrationTest {
             Transaction testTransaction = (Transaction) transPersistence.get(testIDArray[loopCount]);
             assertNotNull(testTransaction);
         }
+        transPersistence.clearDB();
         // remove all transactions
         for (int loopCount = 0; loopCount < 32; loopCount++)
         {
-            transPersistence.delete(testIDArray[loopCount]);
             Transaction testTransaction = (Transaction) transPersistence.get(testIDArray[loopCount]);
             assertNull(testTransaction);
         }
