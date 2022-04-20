@@ -59,12 +59,6 @@ public class TransactionIntegrationTest {
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-        //imPersistence.clearDB(); // clear all data add to the InventoryManagers table
-        //itemPersistence.clearDB(); // clear all data add to the Items table
-        //transPersistence.clearDB();
-    }
 
     @Test
     public void createAndGetNewTransaction()
@@ -122,6 +116,7 @@ public class TransactionIntegrationTest {
         quantity++;
         testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
         assertEquals(ta.getAccountTransactions(accountID).contains("accountID:"+accountID),true);
+        transPersistence.delete(testID);
     }
 
     @Test
@@ -132,6 +127,7 @@ public class TransactionIntegrationTest {
         quantity++;
         testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
         assertEquals(ta.getItemTransactions(itemID).contains("itemID:"+itemID),true);
+        transPersistence.delete(testID);
     }
 
     @Test
@@ -142,6 +138,7 @@ public class TransactionIntegrationTest {
         quantity++;
         testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
         assertEquals(ta.getInventoryTransactions(inventoryID).contains("inventoryID:"+inventoryID),true);
+        transPersistence.delete(testID);
     }
 
     @Test
@@ -152,6 +149,7 @@ public class TransactionIntegrationTest {
         quantity++;
         testID = transPersistence.create(new Transaction(accountID, inventoryID, itemID, transType, quantity));
         assertEquals(ta.getAllTransactions().contains("itemID:"+itemID),true);
+        transPersistence.delete(testID);
     }
 
 }

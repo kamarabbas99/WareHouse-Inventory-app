@@ -59,15 +59,13 @@ public class InventoryIntegrationTest {
         // endregion
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
 
     @Test
     public void createInventoryTest()
     {
         Inventory newInventory = inventoryAccessor.createInventory("createTest");
         assertEquals(newInventory.getName(),"createTest");
+        inventoryAccessor.deleteInventory(newInventory.getID());
     }
 
     @Test
@@ -85,6 +83,7 @@ public class InventoryIntegrationTest {
         Inventory newInventory = inventoryAccessor.createInventory("getTest");
         Inventory inventory = inventoryAccessor.getInventory(newInventory.getID());
         assertNotNull(inventory);
+        inventoryAccessor.deleteInventory(newInventory.getID());
     }
 
     @Test
@@ -94,6 +93,28 @@ public class InventoryIntegrationTest {
         int id = newInventory.getID();
         inventoryAccessor.deleteInventory(id);
         assertNull(inventoryAccessor.getInventory(id));
+    }
+
+    @Test
+    public void getAllInventoryTest()
+    {
+        Inventory newInventory = inventoryAccessor.createInventory("getsome");
+        int id = newInventory.getID();
+        Inventory[] inv=inventoryAccessor.getAllInventories();
+        assertEquals(inv[inv.length-1].getName(),"getsome");
+        inventoryAccessor.deleteInventory(newInventory.getID());
+    }
+
+    @Test
+    public void getAndSetTest()
+    {
+        int curr=inventoryAccessor.getActiveID();
+        inventoryAccessor.setActiveID(1);
+        assertEquals(inventoryAccessor.getActiveID(),1);
+        inventoryAccessor.setActiveID(0);
+        assertEquals(inventoryAccessor.getActiveID(),0);
+        inventoryAccessor.setActiveID(curr);
+
     }
 
     @Test
@@ -115,4 +136,7 @@ public class InventoryIntegrationTest {
     {
         inventoryAccessor.deleteAllInventories();
     }
+
+
+
 }
