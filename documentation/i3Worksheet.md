@@ -19,17 +19,15 @@ In this iteration the following commit is where we payed of this debt:
 
 ## What technical debt did you leave?
 
-We completely forgot to implement unique names for our inventories, accounts and items. This meant we had to try and implement it later. Accounts and inventories were patched in, but the items database classes were too hard to modify quickly, therefore we had to leave it in. This type of debt was reckless inadvertant as we ignored design to move quickly.
+The technical debt that we left 
+What one item would you like to fix, and can't? Anything you write will not
+be marked negatively. Classify this debt.
 
 ## Discuss a Feature or User Story that was cut/re-prioritized
 
 When did you change the priority of a Feature or User Story? Why was it
 re-prioritized? Provide a link to the Feature or User Story. This can be from any
 iteration.
-
-Feature: [Ordering](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/16)
-
-This feature was cut. We were planning on making our app be able to order items from a shop page, however at the start of this iteration, we decided that this was not as important as the other features, so we cut this feature. This was not a major feature from the start and it was always lower priority than the other features.
 
 ## Acceptance test/end-to-end
 
@@ -38,10 +36,15 @@ how did you set up the test so it was not flaky? Provide a link to that test.
 
 ## Acceptance test, untestable
 
-Some challenges we ran into when creating acceptance tests was figuring out a way to appropriately test if a feature worked.
-This was typically with the features "View Inventory", "Stock Item Information", and "Report".
-Since these features involved just checking that you can view some details. 
+A challenge that we ran into when creating the acceptance tests was figuring out a way to appropriately test if a actaully feature worked.
+This was specifically with the features "View Inventory", "Stock Item Information", and "Report".
+Since these features only involved checking that you can view some details, no data was changed. 
 To test these, we simply made sure that the user could navigate to these pages.
+
+Another challenge that we ran into was narrowing down part of the feature that the test should test.
+This happened with our "Add Inventory" feature could be interpreted differently.
+We could have interpreted it as being able to create an inventory, or add quantity to an existing item, or add a new item.
+We ended up testing new item creation and changing the quantity.
 
 ## Velocity/teamwork
 
