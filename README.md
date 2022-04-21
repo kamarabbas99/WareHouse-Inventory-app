@@ -1,7 +1,7 @@
 # Warehouse Inventory System(WIS)
 
 ## Vision Statement
-- [Vision Statement](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/visionStatement.md) is documented here.
+- [Vision Statement](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/documentation/visionStatement.md) is documented here.
 
 ## Work Sheets
 - [Iteration 1](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/i1Worksheet.md) worksheet can be found here.
