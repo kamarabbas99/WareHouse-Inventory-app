@@ -19,7 +19,9 @@ In this iteration the following commit is where we payed of this debt:
 
 ## What technical debt did you leave?
 
-We completely forgot to implement unique names for our inventories, accounts and items. This meant we had to try and implement it later. Accounts and inventories were patched in, but the items database classes were too hard to modify quickly, therefore we had to leave it in. This type of debt was reckless inadvertant as we ignored design to move quickly.
+The technical debt that we left 
+What one item would you like to fix, and can't? Anything you write will not
+be marked negatively. Classify this debt.
 
 ## Discuss a Feature or User Story that was cut/re-prioritized
 
@@ -34,8 +36,10 @@ how did you set up the test so it was not flaky? Provide a link to that test.
 
 ## Acceptance test, untestable
 
-What challenges did you face when creating acceptance tests? What was difficult
-or impossible to test?
+Some challenges we ran into when creating acceptance tests was figuring out a way to appropriately test if a feature worked.
+This was typically with the features "View Inventory", "Stock Item Information", and "Report".
+Since these features involved just checking that you can view some details. 
+To test these, we simply made sure that the user could navigate to these pages.
 
 ## Velocity/teamwork
 
