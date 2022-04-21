@@ -23,9 +23,9 @@ We completely forgot to implement unique names for our inventories, accounts and
 
 ## Discuss a Feature or User Story that was cut/re-prioritized
 
-When did you change the priority of a Feature or User Story? Why was it
-re-prioritized? Provide a link to the Feature or User Story. This can be from any
-iteration.
+Feature: [Ordering](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/issues/16)
+
+This feature was cut. We were planning on making our app be able to order items from a shop page, however at the start of this iteration, we decided that this was not as important as the other features, so we cut this feature. This was not a major feature from the start and it was always lower priority than the other features.
 
 ## Acceptance test/end-to-end
 
