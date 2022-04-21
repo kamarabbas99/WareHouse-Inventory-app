@@ -19,9 +19,7 @@ In this iteration the following commit is where we payed of this debt:
 
 ## What technical debt did you leave?
 
-The technical debt that we left 
-What one item would you like to fix, and can't? Anything you write will not
-be marked negatively. Classify this debt.
+We completely forgot to implement unique names for our inventories, accounts and items. This meant we had to try and implement it later. Accounts and inventories were patched in, but the items database classes were too hard to modify quickly, therefore we had to leave it in. This type of debt was reckless inadvertant as we ignored design to move quickly.
 
 ## Discuss a Feature or User Story that was cut/re-prioritized
 
