@@ -6,6 +6,7 @@
 ## Work Sheets
 - [Iteration 1](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/i1Worksheet.md) worksheet can be found here.
 - [Iteration 2](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/documentation/i2Worksheet.md) worksheet can be found here.
+- [Iteration 3](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/documentation/i3Worksheet.md) worksheet can be found here.
 
 ## Branching Strategy
 -  [Branching strategy](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/readme/documentation/BranchingStrategy.md) is discussed in this document.
