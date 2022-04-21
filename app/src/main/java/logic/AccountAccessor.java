@@ -18,6 +18,7 @@ public class AccountAccessor {
         this.accountDB = db;
     }
 
+    // method that returns the privilege value of the current active account
     public int getCurrentPrivilege() {
         int id = DatabaseManager.getActiveAccount();
         Account account = (Account) accountDB.get(id);
@@ -27,7 +28,7 @@ public class AccountAccessor {
         return 0;
     }
 
-    // method that creates the account
+    // method that creates the account with the given information
     public Account createAccount(String username, String password, int privilege) {
         Account newAccount = new Account(-1, username, password, privilege);
         assert(accountDB != null);
@@ -50,7 +51,7 @@ public class AccountAccessor {
         return newAccount;
     }
 
-    // Method that deletes the account with parameter passed
+    // Method that deletes the account with given id
     public void deleteAccount(int id)
     {
         // case A: account you're trying to delete is not the active account
@@ -84,6 +85,7 @@ public class AccountAccessor {
         IDSO[] accountsAsIDSO = accountDB.getDB();
         Account[] accounts = new Account[accountsAsIDSO.length];
 
+        // stores every element of accountsAsIDSO in accounts after typecasting to Account
         for (int i = 0; i < accountsAsIDSO.length; i++)
         {
             accounts[i] = (Account) accountsAsIDSO[i];
@@ -92,13 +94,14 @@ public class AccountAccessor {
         return accounts;
     }
 
-    // method that delete all account
+    // method that deletes all accounts
     public void deleteAllAccounts() {
         try
         {
             Account[] accounts = getAllAccounts();
             for (Account account : accounts)
             {
+                // if the account id is not the active account's id, then delete the account
                 if (account.getID() != DatabaseManager.getActiveAccount())
                 {
                     accountDB.delete(account.getID());
