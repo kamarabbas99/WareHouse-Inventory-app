@@ -29,8 +29,9 @@ This feature was cut. We were planning on making our app be able to order items 
 
 ## Acceptance test/end-to-end
 
-Write a discussion about an end-to-end test that you wrote. What did you test,
-how did you set up the test so it was not flaky? Provide a link to that test.
+Test: [Create Item](https://code.cs.umanitoba.ca/winter-2022-a02/group-14/warehouse-inventory-system/-/blob/development/app/src/androidTest/java/presentation/CreateItemSystemTest.java)
+
+We wrote a test for adding a new item to the system. This test would log in to the system on a builtin account, move to a builtin test inventory and add a new item. We made this test not flaky by having the test clean up after itself by manipulating the database to remove the item. This makes it so that the item can be added repediately without causing an error.
 
 ## Acceptance test, untestable
 
