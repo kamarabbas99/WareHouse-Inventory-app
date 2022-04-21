@@ -69,13 +69,13 @@ public class InventoryManagerAccessor {
             IDSO[] itemsAsIDSO = ItemDB.getDB();
             Item[] items = new Item[itemsAsIDSO.length];
 
+            // stores all elements of itemsAsIDSO in items after typecasting to Item
             for (int i = 0; i < itemsAsIDSO.length; i++) {
                 items[i] = (Item) itemsAsIDSO[i];
             }
 
             return items;
-        }
-        catch (final NullPointerException nullException) {
+        } catch (final NullPointerException nullException) {
             nullException.printStackTrace();
             return null;
         }
