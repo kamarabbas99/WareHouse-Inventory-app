@@ -7,12 +7,10 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,20 +31,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import database.DatabaseManager;
-import database.ItemPersistence;
 import database.TransactionPersistence;
-import objects.Item;
 
-// This system test goes through the interface to test our create item feature.
+// This system test goes through the interface to determine if an admin can view the report of an item.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CreateItemSystemTest {
+public class ReportSystemTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void createItemSystemTest() {
+    public void reportSystemTest() {
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.username),
                         childAtPosition(
@@ -98,98 +94,6 @@ public class CreateItemSystemTest {
         materialButton2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.AddItemButton), withText("Add New Items"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        materialButton3.perform(click());
-
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.inputName),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText4.perform(replaceText("Test Item"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.inputAmount),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatEditText5.perform(replaceText("10"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.inputQty),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        appCompatEditText6.perform(replaceText("qty"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText7 = onView(
-                allOf(withId(R.id.inputDescription),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatEditText7.perform(replaceText("A test item."), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText8 = onView(
-                allOf(withId(R.id.inputLowThreshhold),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
-                        isDisplayed()));
-        appCompatEditText8.perform(replaceText("3"), closeSoftKeyboard());
-
-        ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.itemCreate), withText("Create"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                6),
-                        isDisplayed()));
-        materialButton4.perform(click());
-
-        ViewInteraction materialButton5 = onView(
-                allOf(withId(android.R.id.button1), withText("Continue"),
-                        childAtPosition(
-                                allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                3)),
-                                3),
-                        isDisplayed()));
-        materialButton5.perform(click());
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Navigate up"),
-                        childAtPosition(
-                                allOf(withId(androidx.appcompat.R.id.action_bar),
-                                        childAtPosition(
-                                                withId(androidx.appcompat.R.id.action_bar_container),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-
-        ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.ItemViewButton), withText("View Stock"),
                         childAtPosition(
                                 childAtPosition(
@@ -197,30 +101,40 @@ public class CreateItemSystemTest {
                                         0),
                                 2),
                         isDisplayed()));
-        materialButton6.perform(click());
+        materialButton3.perform(click());
 
-        ViewInteraction materialButton7 = onView(
+        ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.itemPageButton), withText(">"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.itemRV),
-                                        10),
+                                        8),
                                 1),
                         isDisplayed()));
-        materialButton7.perform(click());
+        materialButton4.perform(click());
 
-        ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.DeleteItem), withText("Delete Item From Inventory"),
+        ViewInteraction materialButton5 = onView(
+                allOf(withId(R.id.RemoveStock), withText("Remove Stock"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                6),
+                                5),
                         isDisplayed()));
-        materialButton8.perform(click());
+        materialButton5.perform(click());
 
-        ViewInteraction materialButton9 = onView(
-                allOf(withId(android.R.id.button1), withText("Yes"),
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.amount),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatEditText4.perform(replaceText("10"), closeSoftKeyboard());
+
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Ok"),
                         childAtPosition(
                                 allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
                                         childAtPosition(
@@ -228,11 +142,49 @@ public class CreateItemSystemTest {
                                                 3)),
                                 3),
                         isDisplayed()));
+        materialButton6.perform(click());
+
+        ViewInteraction materialButton7 = onView(
+                allOf(withId(R.id.AddStock), withText("Add Stock"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                3),
+                        isDisplayed()));
+        materialButton7.perform(click());
+
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.amount),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatEditText5.perform(replaceText("10"), closeSoftKeyboard());
+
+        ViewInteraction materialButton8 = onView(
+                allOf(withId(android.R.id.button1), withText("Ok"),
+                        childAtPosition(
+                                allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                3)),
+                                3),
+                        isDisplayed()));
+        materialButton8.perform(click());
+
+        ViewInteraction materialButton9 = onView(
+                allOf(withId(R.id.itemTransactionButton), withText("View Item Report"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
+                        isDisplayed()));
         materialButton9.perform(click());
 
-        ItemPersistence itemDB = DatabaseManager.getItemPersistence();
-        Item item = (Item) itemDB.get("Test Item");
-        itemDB.delete(item.getID());
         TransactionPersistence transactionDB = DatabaseManager.getTransactionPersistence();
         transactionDB.clearDB();
     }
