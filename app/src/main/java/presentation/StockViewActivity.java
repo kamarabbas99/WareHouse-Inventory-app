@@ -1,11 +1,11 @@
 package presentation;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.warehouseinventorysystem.R;
 
@@ -49,6 +49,7 @@ public class StockViewActivity extends AppCompatActivity implements ItemsAdapter
         }
     }
 
+    //Gets the current item and goes to the item view specifically for its data
     @Override
     public void onItemClick(int index) {
         Intent getItemView = new Intent(this, ItemViewActivity.class);

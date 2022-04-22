@@ -1,13 +1,13 @@
 package presentation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.warehouseinventorysystem.R;
 
@@ -22,10 +22,14 @@ import logic.AccountAccessor;
 //Main Activity:
 //  Start activity of entire program
 //  Immediately starts up main layout
-//  Allows users to move between different pages in the app, and acts as a home page
+//  Is the login page of the app, users can login to an existing account or navigate to a page to create a new one
 public class MainActivity extends AppCompatActivity {
     private static boolean isFirstCall = false;
+
+    //Accessor for every account in the system
     AccountAccessor accounts;
+
+    //Text boxes from the layout
     EditText username;
     EditText password;
 
