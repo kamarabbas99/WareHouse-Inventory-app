@@ -74,15 +74,6 @@ public class AccountAccessorTest {
     }
 
 
-//    @Test
-//    public void testDeleteAllAccounts() {
-//        Account[] toReturn={new Account(1,"test1","test1",1)};
-//        aa.deleteAllAccounts();
-//        when(accPerMock.getDB()).thenReturn(toReturn);
-//        verify(accPerMock).clearDB();
-//
-//    }
-
 
 
 

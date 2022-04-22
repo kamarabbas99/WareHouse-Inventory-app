@@ -30,7 +30,6 @@ public class InventoryAccessor {
         try {
             newInv = new Inventory(-1, name);
             int id = InventoryDB.create(newInv);
-
             if (id < 0) { // if inventory with given name cannot be created
                 newInv = null;
             } else {
@@ -94,11 +93,8 @@ public class InventoryAccessor {
 
     // method that deletes all inventories
     public void deleteAllInventories() {
-        try {
             InventoryDB.clearDB();
-        } catch (final PersistenceException exception) {
-            exception.printStackTrace();
-        }
+
     }
 
     // method that clears the inventory with given id
