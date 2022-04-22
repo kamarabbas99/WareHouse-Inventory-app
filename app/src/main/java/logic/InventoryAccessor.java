@@ -14,7 +14,7 @@ public class InventoryAccessor {
     private IDBLayer InventoryDB;
 
     // default constructor
-    public InventoryAccessor(){
+    public InventoryAccessor() {
         this.InventoryDB = DatabaseManager.getInventoryPersistence();
     }
 
@@ -23,53 +23,57 @@ public class InventoryAccessor {
         this.InventoryDB = db;
     }
 
-    public Inventory createInventory(String name){
+    // method that creates a new Inventory using the given name and returns it
+    public Inventory createInventory(String name) {
         Inventory newInv = new Inventory(-1, name);
         int id = InventoryDB.create(newInv);
-        if (id < 0)
-        {
+
+        if (id < 0) { // if inventory with given name cannot be created
             newInv = null;
-        }
-        else
-        {
+        } else {
             newInv = (Inventory) InventoryDB.get(id);
         }
-        if (newInv == null){
+        if (newInv == null) {
             System.out.println("Null Inventory");
         }
         return newInv;
     }
 
-    public Inventory getInventory(int id){
+    // method that returns the inventory with given id from the database if possible
+    public Inventory getInventory(int id) {
         Inventory gotItem = (Inventory) InventoryDB.get(id);
-        if (gotItem == null){
+
+        if (gotItem == null) { // if there is no inventory with given id
             System.out.println("Null Inventory");
         }
         return gotItem;
     }
 
-    public void deleteInventory(int id)
-    {
+    // method that deletes the inventory with given id
+    public void deleteInventory(int id) {
         InventoryDB.delete(id);
     }
 
-    public Inventory[] getAllInventories(){
+    // method that returns all the inventories
+    public Inventory[] getAllInventories() {
         IDSO[] invsAsIDSO = InventoryDB.getDB();
         Inventory[] inventories = new Inventory[invsAsIDSO.length];
 
-        for (int i = 0; i < invsAsIDSO.length; i++){
+        // stores all elements of invsAsIDSO in inventories after typecasting to Inventory
+        for (int i = 0; i < invsAsIDSO.length; i++) {
             inventories[i] = (Inventory) invsAsIDSO[i];
         }
 
         return inventories;
     }
 
-    public void deleteAllInventories()
-    {
+    // method that deletes all inventories
+    public void deleteAllInventories() {
         InventoryDB.clearDB();
     }
 
-    public void clearInventory(int id){
+    // method that clears the inventory with given id
+    public void clearInventory(int id) {
         IDBLayer InventoryManagerDB = DatabaseManager.getInventoryManagerPersistence();
         int prevActiveID = DatabaseManager.getActiveInventory();
         DatabaseManager.setActiveInventory(id);
@@ -77,11 +81,13 @@ public class InventoryAccessor {
         DatabaseManager.setActiveInventory(prevActiveID);
     }
 
-    public int getActiveID(){
+    // method that returns the id of the active inventory
+    public int getActiveID() {
         return DatabaseManager.getActiveInventory();
     }
 
-    public void setActiveID(int id){
+    // sets the active inventory to be the inventory corresponding togiven id
+    public void setActiveID(int id) {
         DatabaseManager.setActiveInventory(id);
     }
 

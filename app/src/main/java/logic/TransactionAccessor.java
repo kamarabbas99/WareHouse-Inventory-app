@@ -10,7 +10,7 @@ public class TransactionAccessor {
     private TransactionPersistence TransactionDB;
 
     // default constructor
-    public TransactionAccessor(){
+    public TransactionAccessor() {
         this.TransactionDB = (TransactionPersistence) DatabaseManager.getTransactionPersistence();
     }
 
@@ -19,24 +19,31 @@ public class TransactionAccessor {
         this.TransactionDB = (TransactionPersistence) db;
     }
 
+    // method that returns the report of all the transactions for a specific account
+    // found using the given account id
     public String getAccountTransactions(int accountID) {
         Transaction[] transactions = TransactionDB.getAccountTransactions(accountID);
         String report = getReport(transactions);
         return report;
     }
 
+    // method that returns the report of all the transactions for a specific item
+    // found using the given item id
     public String getItemTransactions(int itemID) {
         Transaction[] transactions = TransactionDB.getItemTransactions(itemID);
         String report = getReport(transactions);
         return report;
     }
 
+    // method that returns the report of all the transactions for a specific
+    // inventory found using the given inventory id
     public String getInventoryTransactions(int inventoryID) {
         Transaction[] transactions = TransactionDB.getInventoryTransactions(inventoryID);
         String report = getReport(transactions);
         return report;
     }
 
+    // method that returns the report of all the transactions
     public String getAllTransactions() {
         IDSO[] transactionsAsIDSO = TransactionDB.getDB();
         Transaction[] transactions = new Transaction[transactionsAsIDSO.length];
@@ -49,6 +56,7 @@ public class TransactionAccessor {
         return report;
     }
 
+    // method that returns a report string which is made from given transactions array
     private String getReport(Transaction[] transactions) {
         String report = "";
 
