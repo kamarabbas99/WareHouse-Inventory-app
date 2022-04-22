@@ -1,19 +1,21 @@
 package presentation;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import com.example.warehouseinventorysystem.R;
 
 import logic.AccountAccessor;
 import logic.InventoryAccessor;
-import objects.Inventory;
 
+//MAIN MENU ACTIVITY:
+// The main view of an inventory, users can view stock of an inventory and add new items to the current active inventory
+// When calling this activity, MUST bundle in an integer id, tagged with "invID"
 public class MainMenuActivity extends AppCompatActivity implements AlertBox.AlertListener{
 
     //Gets current active inventory and user
@@ -58,8 +60,8 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
         }
     }
 
+    //Moves to the report view for the current inventory
     public void viewReport(View view){
-
         //Checks if user is admin, if so opens the add item activity
         if(account.getCurrentPrivilege() == 0) {
             Intent report = new Intent(this, ReportViewActivity.class);
@@ -91,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity implements AlertBox.Aler
         }
     }
 
+    //On positive dialog clear dialog box click, the inventory is cleared
     @Override
     public void onPositiveClick(DialogFragment dialog) {
         inventory.clearInventory(id);

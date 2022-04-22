@@ -1,7 +1,5 @@
 package objects;
 
-import android.text.SpanWatcher;
-
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -11,6 +9,8 @@ It is a Domain Specific Object that will be passed through the layers of our sys
 
 An account will determine what a user can or cannot do with our system.
 e.g. can the create a new item, delete an item or add some amount to an item.
+
+NOTE: password recovery not implemented.
  */
 public class Account implements IDSO {
     // region $fields

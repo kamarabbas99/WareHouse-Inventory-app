@@ -35,6 +35,7 @@ import database.DatabaseManager;
 import database.TransactionPersistence;
 import objects.Account;
 
+// This system test goes through the interface to test our account creation feature.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AccountCreationSystemTest {

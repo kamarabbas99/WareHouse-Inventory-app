@@ -28,6 +28,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+// This system test goes through the interface to determine if a user can view all the items within a stock.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ViewInventorySystemTest {

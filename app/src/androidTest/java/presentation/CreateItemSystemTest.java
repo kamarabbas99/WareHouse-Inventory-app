@@ -36,8 +36,8 @@ import database.DatabaseManager;
 import database.ItemPersistence;
 import database.TransactionPersistence;
 import objects.Item;
-import objects.Transaction;
 
+// This system test goes through the interface to test our create item feature.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class CreateItemSystemTest {

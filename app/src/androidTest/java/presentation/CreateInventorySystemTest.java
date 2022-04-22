@@ -35,6 +35,7 @@ import database.InventoryPersistence;
 import database.TransactionPersistence;
 import objects.Inventory;
 
+// This system test goes through the interface to test our create inventory feature.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class CreateInventorySystemTest {

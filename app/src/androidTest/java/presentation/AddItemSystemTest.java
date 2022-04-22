@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 import database.DatabaseManager;
 import database.TransactionPersistence;
 
+// This system test goes through the interface to test our add inventory feature.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddItemSystemTest {
