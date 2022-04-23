@@ -25,14 +25,20 @@ public class InventoryAccessor {
 
     // method that creates a new Inventory using the given name and returns it
     public Inventory createInventory(String name) {
-        Inventory newInv = new Inventory(-1, name);
-        int id = InventoryDB.create(newInv);
+        Inventory newInv = null;
 
-        if (id < 0) { // if inventory with given name cannot be created
-            newInv = null;
-        } else {
-            newInv = (Inventory) InventoryDB.get(id);
+        try {
+            newInv = new Inventory(-1, name);
+            int id = InventoryDB.create(newInv);
+            if (id < 0) { // if inventory with given name cannot be created
+                newInv = null;
+            } else {
+                newInv = (Inventory) InventoryDB.get(id);
+            }
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
         }
+
         if (newInv == null) {
             System.out.println("Null Inventory");
         }
@@ -41,7 +47,13 @@ public class InventoryAccessor {
 
     // method that returns the inventory with given id from the database if possible
     public Inventory getInventory(int id) {
-        Inventory gotItem = (Inventory) InventoryDB.get(id);
+        Inventory gotItem = null;
+
+        try {
+            gotItem = (Inventory) InventoryDB.get(id);
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+        }
 
         if (gotItem == null) { // if there is no inventory with given id
             System.out.println("Null Inventory");
@@ -51,34 +63,52 @@ public class InventoryAccessor {
 
     // method that deletes the inventory with given id
     public void deleteInventory(int id) {
-        InventoryDB.delete(id);
+        try {
+            InventoryDB.delete(id);
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+        }
+
     }
 
     // method that returns all the inventories
     public Inventory[] getAllInventories() {
-        IDSO[] invsAsIDSO = InventoryDB.getDB();
-        Inventory[] inventories = new Inventory[invsAsIDSO.length];
+        try {
+            IDSO[] invsAsIDSO = InventoryDB.getDB();
+            Inventory[] inventories = new Inventory[invsAsIDSO.length];
 
-        // stores all elements of invsAsIDSO in inventories after typecasting to Inventory
-        for (int i = 0; i < invsAsIDSO.length; i++) {
-            inventories[i] = (Inventory) invsAsIDSO[i];
+            // stores all elements of invsAsIDSO in inventories after typecasting to
+            // Inventory
+            for (int i = 0; i < invsAsIDSO.length; i++) {
+                inventories[i] = (Inventory) invsAsIDSO[i];
+            }
+
+            return inventories;
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+            return null;
         }
 
-        return inventories;
     }
 
     // method that deletes all inventories
     public void deleteAllInventories() {
-        InventoryDB.clearDB();
+            InventoryDB.clearDB();
+
     }
 
     // method that clears the inventory with given id
     public void clearInventory(int id) {
-        IDBLayer InventoryManagerDB = DatabaseManager.getInventoryManagerPersistence();
-        int prevActiveID = DatabaseManager.getActiveInventory();
-        DatabaseManager.setActiveInventory(id);
-        InventoryManagerDB.clearDB();
-        DatabaseManager.setActiveInventory(prevActiveID);
+        try {
+            IDBLayer InventoryManagerDB = DatabaseManager.getInventoryManagerPersistence();
+            int prevActiveID = DatabaseManager.getActiveInventory();
+            DatabaseManager.setActiveInventory(id);
+            InventoryManagerDB.clearDB();
+            DatabaseManager.setActiveInventory(prevActiveID);
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+        }
+
     }
 
     // method that returns the id of the active inventory
@@ -88,7 +118,13 @@ public class InventoryAccessor {
 
     // sets the active inventory to be the inventory corresponding togiven id
     public void setActiveID(int id) {
-        DatabaseManager.setActiveInventory(id);
+        try {
+            if (InventoryDB.get(id) != null) {
+                DatabaseManager.setActiveInventory(id);
+            }
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+        }
     }
 
 }

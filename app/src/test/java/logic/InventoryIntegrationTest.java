@@ -108,12 +108,13 @@ public class InventoryIntegrationTest {
     @Test
     public void getAndSetTest()
     {
-        int curr=inventoryAccessor.getActiveID();
-        inventoryAccessor.setActiveID(1);
-        assertEquals(inventoryAccessor.getActiveID(),1);
-        inventoryAccessor.setActiveID(0);
-        assertEquals(inventoryAccessor.getActiveID(),0);
-        inventoryAccessor.setActiveID(curr);
+
+        Inventory newInventory = inventoryAccessor.createInventory("get");
+        int get= newInventory.getID();
+        inventoryAccessor.setActiveID(get);
+        assertEquals(inventoryAccessor.getActiveID(),get);
+
+        inventoryAccessor.deleteInventory(get);
 
     }
 
