@@ -29,6 +29,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+// This system test goes through the interface to determine if the stock information can be viewed in an inventory.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class StockInformationSystemTest {

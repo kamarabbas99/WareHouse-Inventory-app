@@ -35,7 +35,7 @@ import database.DatabaseManager;
 import database.TransactionPersistence;
 import objects.Account;
 
-
+// This system test goes through the interface to test our account permissions feature.
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AccountPermissionSystemTest {

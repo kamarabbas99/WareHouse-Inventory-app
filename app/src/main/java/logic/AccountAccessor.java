@@ -11,7 +11,9 @@ public class AccountAccessor {
     private IDBLayer accountDB;
 
     // default constructor
-    public AccountAccessor() { this.accountDB = DatabaseManager.getAccountPersistence(); }
+    public AccountAccessor() {
+        this.accountDB = DatabaseManager.getAccountPersistence();
+    }
 
     // constructor
     public AccountAccessor(IDBLayer db) {
@@ -20,61 +22,75 @@ public class AccountAccessor {
 
     // method that returns the privilege value of the current active account
     public int getCurrentPrivilege() {
-        int id = DatabaseManager.getActiveAccount();
-        Account account = (Account) accountDB.get(id);
-        if (account != null) {
-            return account.getPrivilege();
+        try {
+            int id = DatabaseManager.getActiveAccount();
+            Account account = (Account) accountDB.get(id);
+            if (account != null) {
+                return account.getPrivilege();
+            }
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
         }
+
         return 0;
     }
 
     // method that creates the account with the given information
     public Account createAccount(String username, String password, int privilege) {
-        Account newAccount = new Account(-1, username, password, privilege);
-        assert(accountDB != null);
-        int id = accountDB.create(newAccount);
-        // case A: account already exists with same name
-        if (id < 0)
-        {
-            newAccount = null;
-        }
-        // case B: account did not already exist
-        else{
-            DatabaseManager.setActiveAccount(id);
-            newAccount = (Account) accountDB.get(id);
-        }
+        try {
+            Account newAccount = new Account(-1, username, password, privilege);
+            int id = accountDB.create(newAccount);
+            // case A: account already exists with same name
+            if (id < 0) {
+                newAccount = null;
+            }
+            // case B: account did not already exist
+            else {
+                DatabaseManager.setActiveAccount(id);
+                newAccount = (Account) accountDB.get(id);
+            }
 
-        if (newAccount == null)
-        {
-            System.out.println("Null account");
+            if (newAccount == null) {
+                System.out.println("Null account");
+            }
+            return newAccount;
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        return newAccount;
     }
 
     // Method that deletes the account with given id
-    public void deleteAccount(int id)
-    {
-        // case A: account you're trying to delete is not the active account
-        if (DatabaseManager.getActiveAccount() != id)
-        {
-            accountDB.delete(id);
+    public void deleteAccount(int id) {
+        try {
+            // case A: account you're trying to delete is not the active account
+            if (DatabaseManager.getActiveAccount() != id) {
+                accountDB.delete(id);
+            }
+            // case B: account you're trying to delete is the active account
+            else {
+                System.out.println(
+                        "Cannot delete the active account. Please sign into another account to delete this one.");
+            }
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
         }
-        // case B: account you're trying to delete is the active account
-        else
-        {
-            System.out.println("Cannot delete the active account. Please sign into another account to delete this one.");
-        }
+
     }
 
     // method that verifies an account with given username and password exists in
     // the database or not
     public boolean verifyLogin(String username, String password) {
-        Account[] accounts = getAllAccounts();
-        for (Account account : accounts) {
-            if (account.getUsername().equals(username) && account.verifyPassword(password)) {
-                DatabaseManager.setActiveAccount(account.getID());
-                return true;
+        try {
+            Account[] accounts = getAllAccounts();
+            for (int i = 0; i < accounts.length; i++) {
+                if (accounts[i].getUsername().equals(username) && accounts[i].verifyPassword(password)) {
+                    DatabaseManager.setActiveAccount(accounts[i].getID());
+                    return true;
+                }
             }
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
         }
 
         return false;
@@ -82,34 +98,36 @@ public class AccountAccessor {
 
     // method that return an array of all account existed
     private Account[] getAllAccounts() {
-        IDSO[] accountsAsIDSO = accountDB.getDB();
-        Account[] accounts = new Account[accountsAsIDSO.length];
+        try {
+            IDSO[] accountsAsIDSO = accountDB.getDB();
+            Account[] accounts = new Account[accountsAsIDSO.length];
 
-        // stores every element of accountsAsIDSO in accounts after typecasting to Account
-        for (int i = 0; i < accountsAsIDSO.length; i++)
-        {
-            accounts[i] = (Account) accountsAsIDSO[i];
+            // stores every element of accountsAsIDSO in accounts after typecasting to
+            // Account
+            for (int i = 0; i < accountsAsIDSO.length; i++) {
+                accounts[i] = (Account) accountsAsIDSO[i];
+            }
+
+            return accounts;
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
+            return null;
         }
 
-        return accounts;
     }
 
     // method that deletes all accounts
     public void deleteAllAccounts() {
-        try
-        {
+        try {
             Account[] accounts = getAllAccounts();
-            for (Account account : accounts)
-            {
+            for (int i = 0; i < accounts.length; i++) {
                 // if the account id is not the active account's id, then delete the account
-                if (account.getID() != DatabaseManager.getActiveAccount())
-                {
-                    accountDB.delete(account.getID());
+                if (accounts[i].getID() != DatabaseManager.getActiveAccount()) {
+                    accountDB.delete(accounts[i].getID());
                 }
             }
-        }
-        catch (PersistenceException exception)
-        {
+        } catch (final PersistenceException exception) {
+            exception.printStackTrace();
             System.out.println("Cannot delete all accounts");
         }
     }

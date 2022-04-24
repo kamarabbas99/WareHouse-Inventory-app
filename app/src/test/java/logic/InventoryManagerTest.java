@@ -33,25 +33,21 @@ public class InventoryManagerTest {
     public void createT()
     {
         Item get=im.createItem("test","desc",2,"met",2);
+        assertNotNull(get);
         assertEquals("desc",get.getDescription());
     }
 
     @Test
     public void addItemT()
     {
-
         Item item1=im.getItem(1);
-        int totalQuantity= item1.getQuantity();
-        item1=im.addItem(1,2);
         assertNotNull(item1);
-
+        int prevQuantity= item1.getQuantity();
+        item1 = im.addItem(1,2);
 
         assertEquals(item1.getID(),1 );
-        assertSame(item1,im.getItem(1));
-        assertEquals(item1.getQuantity(),totalQuantity+2 );
-
-
-
+        assertEquals(item1.getID(),im.getItem(1).getID());
+        assertEquals(item1.getQuantity(),prevQuantity+2 );
     }
 
 
@@ -63,9 +59,6 @@ public class InventoryManagerTest {
 
         item1=im.removeItem(1,2);
         assertEquals(item1.getQuantity(),totalQuantity-2 );
-
-
-
     }
 
 
@@ -90,7 +83,7 @@ public class InventoryManagerTest {
     public void removeAllItems()
     {
         im.removeAllItems();
-        assertNull(im.getItem(2));
+        assertNull(im.getAllItems());
     }
 
 }

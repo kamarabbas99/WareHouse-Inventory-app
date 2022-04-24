@@ -6,6 +6,7 @@ import presentation.AccountPermissionSystemTest;
 import presentation.AddItemSystemTest;
 import presentation.CreateInventorySystemTest;
 import presentation.CreateItemSystemTest;
+import presentation.ReportSystemTest;
 import presentation.StockInformationSystemTest;
 import presentation.ViewInventorySystemTest;
 
@@ -17,7 +18,8 @@ import presentation.ViewInventorySystemTest;
         CreateInventorySystemTest.class,
         StockInformationSystemTest.class,
         ViewInventorySystemTest.class,
-        CreateItemSystemTest.class
+        CreateItemSystemTest.class,
+        ReportSystemTest.class
 })
 public class AllSystemTests {
 }
